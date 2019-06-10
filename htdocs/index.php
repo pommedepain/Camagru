@@ -8,7 +8,7 @@ session_start();
 		<link href="https://fonts.googleapis.com/css?family=Ruslan+Display&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
 		<title>Camagru</title>
-		<link rel="icon" href="favicon.ico" />
+		<link rel="shortcut icon" href="myfavicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="index.css">
 	</head>
 
@@ -17,7 +17,7 @@ session_start();
 		<div id="head">
 			<div id="title">
 				<a href="index.php"><h1>Camagru <span class="emoji">📺</span></h1></a>
-				<h3>Turn yourself into a TV star</h3>
+				<h3>Turn yourself into your favorite TV character</h3>
 			</div>
 			<nav class="account">
 				<ul>
