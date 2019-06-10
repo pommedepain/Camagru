@@ -1,12 +1,17 @@
+body
+{
+	padding: 0%;
+	margin: 0%;
+	font-family: 'VT323', monospace;
+	background-image: url("https://previews.123rf.com/images/sergt/sergt1605/sergt160500009/57935442-tv-bruit-blanc-sur-l-%C3%A9cran-lcd-r%C3%A9sum%C3%A9-de-fond.jpg");
+	background-repeat: repeat;
+}
 header
 {
 	display: flex;
 	flex-direction: row;
-	border: 1px solid red;
 	height: 5%;
 	width: 100%;
-	padding: 0;
-	margin: 0;
 }
 #head
 {
@@ -18,33 +23,56 @@ header
 	margin-right: 1%;
 	margin-top: 1%;
 	margin-bottom: 1%;
-	border: 1px solid black;
 	height: 100%;
 	width: 100%;
+	background-color: whitesmoke;
+	border-radius: 15px;
 }
-#head > a
+#title
 {
-	text-decoration: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-left: 3%;
+	/* border: 1px red solid; */
 }
 h1
 {
 	color: black;
-	font-size: 3vw;
+	/* margin-left: 20%; */
+	font-size: 3.5vw;
+	margin: 0;
+	/* border: 1px solid green; */
+	font-family: 'Ruslan Display', cursive;
+}
+span.emoji
+{
+	font-size: 2vw;
+}
+#title > a
+{
+	text-decoration: none;
+}
+h3
+{
+	margin: 0;
+	position: relative;
+	/* border: 1px green solid; */
 }
 .account
 {
 	display:flex;
 	flex-direction: column;
-	justify-items: space-between;
+	white-space: nowrap;
+	justify-content: center;
 	color : black;
-	font-size: 1.2vw;
-	border: 1px solid black;
+	font-size: 1vw;
+	padding-right: 1%;
 }
 .account > ul > li > a
 {
 	text-decoration: none;
 	color : black;
-	border: 1px solid green;
 }
 .account > ul
 {
@@ -52,7 +80,37 @@ h1
 }
 .account > ul > li
 {
-	
+	margin-top: 10%;
+	margin-bottom: 10%;
+}
+.bar
+{
+	display: flex;
+	justify-content: flex-start;
+	margin-left: 1%;
+	margin-right: 1%;
+	margin-bottom: 1%;
+	height: 3%;
+	width: 98%;
+	background-color: whitesmoke;
+	border-radius: 15px;
+}
+.bar > ul
+{
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+}
+.bar > ul > li
+{
+	margin-left: 20%;
+	margin-right: 20%;
+}
+.bar > ul > li > a
+{
+	text-decoration: none;
+	color : black;
+	font-size: 1vw;
 }
 #page
 {
