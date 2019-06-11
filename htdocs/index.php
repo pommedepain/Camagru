@@ -1,4 +1,5 @@
 <?php
+require_once('../config/setup.php');
 session_start();
 ?>
 <!DOCTYPE html>
@@ -22,7 +23,7 @@ session_start();
 			<nav class="account">
 				<ul>
 					<li><a href="#">Sign-in</a></li>
-					<li><a href="#">Create account</a></li>
+					<li><a href="create_account.php">Create account</a></li>
 					<li><a href="#">Logout</a></li>
 				</ul>
 			</nav>

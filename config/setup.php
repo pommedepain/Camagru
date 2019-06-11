@@ -1,16 +1,23 @@
-#!/usr/bin/php
 <?php
-session_start();
-$conn = mysqli_connect('localhost', 'root', 'philou1696') or die('Connexion failed : ' . mysql_error());
-if (!mysqli_select_db($conn, "camagru")); 
-{
-    mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS camagru")
-    $set_data = array();
-    $set_data[] = "USE camagru";
-    $set_data[] = 'SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO"';
-    $set_data[] = "SET AUTOCOMMIT = 0";
-    $set_data[] = "START TRANSACTION";
-	$set_data[] = 'SET time_zone = "+00:00"';
-}
-mysqli_close($conn);
+
+$PARAM_host='mysql:127.0.0.1';
+$PARAM_db_name='db_camagru';
+$db_dsn = "$PARAM_host;dbname=$PARAM_db_name";
+$PARAM_user='root';
+$PARAM_passwd='philou1696';
+
+if (!($connect = new PDO($db_dsn, $PARAM_user, $PARAM_passwd, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION))))
+        die ("Failed to connect to host ($db_host)\n" . $err->getMessage() . "N° : " . $err->getCode());
+
+$connect->exec("CREATE DATABASE IF NOT EXISTS db_camagru");
+
+$connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.account (
+        `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
+	`pseudo` VARCHAR(25) NOT NULL,
+        `firstname` VARCHAR(255),
+        `lastname` VARCHAR(255),
+        `email` VARCHAR(255) NOT NULL,
+        `passwd` VARCHAR(255) NOT NULL,
+	`group` ENUM('admin', 'member') DEFAULT 'member' NOT NULL,
+	`creation_date` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)");
 ?>
