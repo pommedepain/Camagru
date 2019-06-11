@@ -1,9 +1,9 @@
 function is_empty()
 {
-	var a=document.getElementById("pseudo").value;
-	var d=document.getElementById("email").value;
-	var e=document.getElementById("passwd1").value;
-	var f=document.getElementById("passwd2").value;
+	var a = document.getElementById("pseudo").value;
+	var d = document.getElementById("email").value;
+	var e = document.getElementById("passwd1").value;
+	var f = document.getElementById("passwd2").value;
 	if (!a)
 	{
 		var a2 = document.getElementById("pseudo_d");

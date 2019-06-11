@@ -5,6 +5,12 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 {
 	if ($_POST["submit"] == "Create" && !empty($_POST["pseudo"]) && !empty($_POST["passwd1"]) && !empty($_POST["passwd2"]) && !empty($_POST["email"]) && ($_POST["passwd1"] == $_POST["passwd2"]))
 	{
+		$answer = $connect->query("SELECT * FROM db_camagru.account");
+		while ($datas = $answer->fetch())
+		{
+			if ($_POST["pseudo"] == $datas["pseudo"])
+				
+		}
 		$pseudo = $_POST["pseudo"];
 		if (isset($_POST["firstname"]) && !empty($_POST["firstname"]))
 			$first_name = $_POST["firstname"];
@@ -14,7 +20,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 		$email = $_POST["email"];
 	}
 	
-	if ((isset($_POST["firstname"]) && !empty($_POST["firstname"])) && (!isset($_POST["lastname"]) || empty($_POST["lastname"])))
+	if ($first_name && !$last_name)
 	{
 		$req = $connect->prepare("INSERT INTO db_camagru.account(pseudo, firstname, email, passwd) 
 							VALUES(:pseudo, :firstname, :email, :passwd)");
@@ -25,7 +31,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 			'passwd' => $passwd
 		));
 	}
-	else if ((!isset($_POST["firstname"]) || empty($_POST["firstname"])) && (isset($_POST["lastname"]) && !empty($_POST["lastname"])))
+	else if (!$first_name && $last_name)
 	{
 		$req = $connect->prepare("INSERT INTO db_camagru.account(pseudo, lastname, email, passwd) 
 							VALUES(:pseudo, :lastname, :email, :passwd)");
@@ -36,7 +42,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 			'passwd' => $passwd
 		));
 	}
-	else if (isset($_POST["firstname"]) && !empty($_POST["firstname"]) && isset($_POST["lastname"]) && !empty($_POST["lastname"]))
+	else if ($first_name && $last_name)
 	{
 		$req = $connect->prepare("INSERT INTO db_camagru.account(pseudo, firstname, lastname, email, passwd) 
 							VALUES(:pseudo, :firstname, :lastname, :email, :passwd)");
