@@ -112,10 +112,3 @@ h3
 	color : black;
 	font-size: 1vw;
 }
-#page
-{
-	display: flex;
-	flex-direction: column;
-	border: 1px solid black;
-	margin-top: 1%;
-}

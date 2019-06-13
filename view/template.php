@@ -19,8 +19,8 @@
 			</div>
 			<nav class="account">
 				<ul>
-					<li><a href="#">Sign-in</a></li>
-					<li><a href="index.php?action=create_account">Create account</a></li>
+					<li><a href="index.php?action=sign_in">Sign in</a></li>
+					<li><a href="index.php?action=create_account">Register</a></li>
 					<li><a href="#">Logout</a></li>
 				</ul>
 			</nav>
@@ -29,12 +29,12 @@
 		
 		<nav class="bar">
     		<ul>
-       			<li><a href="../index.php">Home</a></li>
+       			<li><a href="index.php?action=start">Home</a></li>
 	        	<li><a href="#">Gallery</a></li>
     	    	<li><a href="#">Montage</a></li>
     		</ul>
 		</nav>
-
+	
 		<?= $content ?>
 	</body>
 </html>
