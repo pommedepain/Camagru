@@ -1,6 +1,9 @@
-<?php $title = "Create an account"; ?>
+<?php 
 
-<?php ob_start(); ?>
+$title = "Create an account";
+ob_start(); 
+
+?>
 
 <div id="all">
 	<div class="cont">
@@ -50,6 +53,10 @@
 </div>
 <script src="./public/js/register.js"></script>
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require_once('./view/template.php'); ?>
+$content = ob_get_clean();
+require_once('./view/account.php');
+require_once('./view/template.php'); 
+
+?>

@@ -8,22 +8,17 @@
 		<link rel="shortcut icon" href="myfavicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="./public/css/index.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/create.css">
+		<link rel="stylesheet" type="text/css" href="./public/css/activation.css">
 	</head>
 
-	<body>
+	<body id="special">
 		<header>
 		<div id="head">
 			<div id="title">
 				<a href="../index.php"><h1>Camagru <span class="emoji">📺</span></h1></a>
 				<h3>Turn yourself into your favorite TV character</h3>
 			</div>
-			<nav class="account">
-				<ul>
-					<li><a href="index.php?action=sign_in">Sign in</a></li>
-					<li><a href="index.php?action=create_account">Register</a></li>
-					<li><a href="#">Logout</a></li>
-				</ul>
-			</nav>
+			<?= $account ?>
 		</div>
 		</header>
 		

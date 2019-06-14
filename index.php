@@ -11,6 +11,10 @@ if (isset($_GET['action']))
 		create_account();
 	else if ($_GET['action'] == 'sign_in')
 		sign_in();
+	else if ($_GET['action'] == 'confirm_mail')
+		confirm_mail();
+	else if ($_GET['action'] == 'reset_passwd')
+		reset_passwd();
 }
 else
 	start();

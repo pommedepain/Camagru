@@ -1,7 +1,11 @@
-<?php $title = "Home"; ?>
+<?php 
 
-<?php ob_start(); ?>
+$title = "Home"; 
 
-<?php $content = ob_get_clean(); ?>
+ob_start();
+$content = ob_get_clean();
 
-<?php require('template.php'); ?>
+require_once('account.php');
+require_once('template.php');
+
+?>

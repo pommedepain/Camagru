@@ -1,6 +1,9 @@
-<?php $title = "Sign In"; ?>
+<?php 
 
-<?php ob_start(); ?>
+$title = "Sign In";
+ob_start(); 
+
+?>
 
 <div id="all">
 	<div class="cont">
@@ -22,13 +25,17 @@
 				<button class="submit" id="submit" value="submit" onclick="sign_in()">Sign In</button>
 			</div>
 		</div>
-		<div id="success">
-		</div>
+		<div id="success"></div>
+		<p id="forgot">Forgot Password ? <a href="index.php?action=reset_passwd">Reset your password</a></p>
 		</div>
 	</div>
 </div>
 <script src="./public/js/sign_in.js"></script>
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require_once('./view/template.php'); ?>
+$content = ob_get_clean();
+require_once('./view/account.php');
+require_once('./view/template.php'); 
+
+?>

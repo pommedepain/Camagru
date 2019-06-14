@@ -28,15 +28,12 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 			if ($db->check_passwd($pdo, $pseudo, $passwd))
 			{
 				echo "Password OK\n";
-				$success = "OK";
+				$_SESSION['user'] = $pseudo;
 			}
 			else
 				echo "Wrong password\n";
 		}
 		else
 			echo "Password ERROR\n";
-
-		if ($pseudo && $success)
-			$_SESSION['loggued_on_user'] = $_POST['pseudo'];
 	}
 }

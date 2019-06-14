@@ -39,16 +39,17 @@ Class AccountManager
 		return false;
 	}
 
-	public function send_register($pdo, $pseudo, $first_name, $last_name, $email, $passwd)
+	public function send_register($pdo, $pseudo, $first_name, $last_name, $email, $passwd, $key_mail)
 	{
-		$req = $pdo->prepare("INSERT INTO db_camagru.account(pseudo, firstname, lastname, email, passwd) 
-							VALUES(:pseudo, :firstname, :lastname, :email, :passwd)");
+		$req = $pdo->prepare("INSERT INTO db_camagru.account(pseudo, firstname, lastname, email, passwd, key_mail) 
+							VALUES(:pseudo, :firstname, :lastname, :email, :passwd, :key_mail)");
 			$req->execute(array(
 				'pseudo' => $pseudo,
 				'firstname' => $first_name,
 				'lastname' => $last_name,
 				'email' => $email,
-				'passwd' => $passwd
+				'passwd' => $passwd,
+				'key_mail' => $key_mail
 			));
 	}
 
@@ -59,6 +60,18 @@ Class AccountManager
 		foreach ($res as $elem)
 		{
 			if ($elem['pseudo'] == $pseudo && $elem["passwd"] == $passwd)
+				return true;
+		}
+		return false;
+	}
+
+	public function match_key($pdo, $pseudo, $key_mail)
+	{
+		$req = $pdo->query("SELECT `pseudo`,`key_mail` FROM db_camagru.account WHERE `pseudo` = $pseudo");
+		$res= $req->fetchAll();
+		foreach ($res as $elem)
+		{
+			if ($elem['pseudo'] == $pseudo && $elem["key_mail"] == $key_mail)
 				return true;
 		}
 		return false;

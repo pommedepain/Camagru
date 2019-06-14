@@ -67,6 +67,7 @@
 	background: #333;
 	color: #fff;
 	outline: none;
+	cursor: pointer;
 }
 #form button.success{
 	background: #27ae60;
@@ -198,4 +199,22 @@
 	font-style: italic;
 	font-size: 1vw;
 	opacity: 0.8;
+}
+
+#forgot
+{
+	margin-top: 5%;
+	margin-bottom: 0;
+	padding: 0;
+	text-align: right;
+}
+
+#forgot > a
+{
+	color: black;
+}
+
+#forgot > a:hover
+{
+	color: white;
 }
