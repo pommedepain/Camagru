@@ -12,8 +12,9 @@ ob_start();
 			<div class="text-center">
 				<p>Your account has been verified and is now active.</p>
 			</div>
-			<div class="text-center" id="linky">
-				<a class="submit" id="clicked" value="clicked" href="index.php?action=sign_in">Sign In</a>
+			</div>
+			<div id="success"></div>
+				<p id="wanna">Want to <a href="index.php?action=sign_in">Sign In</a> ?</p>
 			</div>
 		</div>
 	</div>

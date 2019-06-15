@@ -47,49 +47,6 @@
 		z-index: -1;
 	width: 100%;
 }
-#form #clicked
-{
-	font-family: 'VT323', monospace;
-	text-decoration: none;
-	color : black;
-}
-#linky
-{
-	position: relative;
-	margin-top: 8%;
-}
-#form #clicked.submit{
-	background: rgba(255,255,255,0.25);
-	border: 1px solid #333;
-	line-height: 1em;
-	padding: 0.5em 0.5em;
-	-webkit-transition: all 0.25s;
-	transition: all 0.25s;
-}
-#form #clicked:hover,
-#form #clicked:focus,
-#form #clicked:active,
-#form #clicked.loading{
-	background: #333;
-	color: #fff;
-	outline: none;
-	cursor: pointer;
-}
-#form #clicked.success{
-	background: #27ae60;
-	border-color: #27ae60; 
-	color: #fff;
-}
-#form #clicked span.loading-spinner{
-	-webkit-animation: spin 0.5s linear infinite;
-	animation: spin 0.5s linear infinite;
-	border: 2px solid #fff;
-	border-top-color: transparent;
-	border-radius: 50%;
-	display: inline-block;
-	height: 1vw;
-	width: 1vw;
-}
 #f_h1{
 	font-size: 3vw;
 	margin: 0 0 0.5em 0;
@@ -98,4 +55,21 @@
 }
 .text-center{
 	text-align: center;
+}
+#wanna
+{
+	margin-top: 5%;
+	margin-bottom: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#wanna > a
+{
+	color: black;
+}
+
+#wanna > a:hover
+{
+	color: white;
 }
