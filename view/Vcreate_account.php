@@ -1,6 +1,6 @@
 <?php 
 
-$title = "Create an account";
+$title = "Register";
 ob_start(); 
 
 ?>

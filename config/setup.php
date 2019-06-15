@@ -7,7 +7,7 @@ $PARAM_user='root';
 $PARAM_passwd='philou1696';
 
 if (!($connect = new PDO($db_dsn, $PARAM_user, $PARAM_passwd, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION))))
-        die ("Failed to connect to host ($db_host)\n" . $err->getMessage() . "N° : " . $err->getCode());
+        die ("Failed to connect to host ($db_host)" . $err->getMessage() . "N° : " . $err->getCode());
 
 $connect->exec("CREATE DATABASE IF NOT EXISTS db_camagru");
 
@@ -19,6 +19,10 @@ $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.account (
         `email` VARCHAR(255) NOT NULL,
         `passwd` VARCHAR(255) NOT NULL,
 	`group` ENUM('admin', 'member', 'not_confirmed') DEFAULT 'not_confirmed' NOT NULL,
-        `key_mail` VARCHAR(32),
-	`creation_date` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)");
+        `creation_date` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)");
+        
+$connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.email (
+        `id_user` INT PRIMARY KEY,
+        `anonym_id` VARCHAR(32),
+        `key_mail` VARCHAR(32))");
 ?>

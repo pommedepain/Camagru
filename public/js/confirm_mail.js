@@ -8,24 +8,26 @@ function confirm_mail()
 	let win = window.location.href;
 	console.log(win);
 	let url = new URL(win);
-	let pseudo = url.searchParams.get("log");
-	console.log(pseudo);
+	let anonym_id = url.searchParams.get("log");
+	console.log(anonym_id);
 	let key = url.searchParams.get("key");
 	console.log(key);
 
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', '../../controller/Cactivation.php', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send(`pseudo=${pseudo}&key=${key}`);
+	xhr.send(`anonym_id=${anonym_id}&key=${key}`);
 	xhr.addEventListener('readystatechange', function() {
 		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			console.log(xhr.responseText);
 		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
     		alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
 		});
-	// if (xhr.responseText == "Pseudo OK\nPassword OK\n")
-	// {
-	// 	let succ = document.getElementById("success");
-	// 	succ.innerHTML = "You're currently signed-in !'";
-	// }
+	
+	let needle = xhr.responseText.indexOf("ERROR");
+	console.log("needle = " + needle);
+	if (needle < 0 && xhr.responseText == "It's a match !")
+	{
+		console.log("Account's now officially a member.")
+	}
 }

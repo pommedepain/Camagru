@@ -86,8 +86,12 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 		[WARNING] Don't change the order of the function that sends the datas to db and the one that sends email, otherwise it won't work ! */
 		if ($pseudo && $passwd && $email && isset($first_name) && isset($last_name))
 		{
+			$anonym_id = md5(rand(0, 100000));
 			$key = md5(rand(0, 100000));
-			$db->send_register($pdo, $pseudo, $first_name, $last_name, $email, $passwd, $key);
+			if (!($db->send_register($pdo, $pseudo, $first_name, $last_name, $email, $passwd)))
+				echo "ERROR with send_register\n";
+			$res = ($db->send_email_table($pdo, $pseudo, $anonym_id, $key));
+			echo "$res";
 			$subject = "[Camagru] Confirm your email";
 			$header = "From: psentilh@student.42.fr";
 			$message = "Welcome to Camagru !
@@ -95,7 +99,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 
 To activate your account, please click on the link below or copy/paste it in your browser :
 			
-http://localhost:8080/index.php?action=confirm_mail&log=" . urlencode($pseudo) . "&key=" . urlencode($key) . "
+http://localhost:8080/index.php?action=confirm_mail&log=" . urlencode($anonym_id) . "&key=" . urlencode($key) . "
 			
 			
 ---------------

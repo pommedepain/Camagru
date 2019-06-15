@@ -38,8 +38,7 @@ Class AccountManager
 	public function get_id($pdo)
 	{
 		$req = $pdo->query("SELECT `pseudo`,`id` FROM db_camagru.account");
-		if (!($ids = $req->fetchAll()))
-			return false;
+		$ids = $req->fetchAll();
 		return ($ids);
 	}
 
@@ -56,8 +55,7 @@ Class AccountManager
 
 	public function id_exists($pdo, $pseudo)
 	{
-		if (($ids = $this->get_id($pdo)) == false)
-			return "Pb with the get_id function\n";
+		$ids = $this->get_id($pdo);
 		foreach ($ids as $elem)
 		{
 			if ($elem['pseudo'] == $pseudo)
@@ -88,8 +86,8 @@ Class AccountManager
 
 	public function send_email_table($pdo, $pseudo, $anonym_id, $key_mail)
 	{
-		if (!is_numeric($id = $this->id_exists($pdo, $pseudo)))
-			return "send_email_table didn't found a match for id\n";
+		if (!($id = $this->id_exists($pdo, $pseudo)))
+			return "No match for id in send_email_table\n";
 		$req = $pdo->prepare("INSERT INTO db_camagru.email(id_user, anonym_id, key_mail) 
 							VALUES(:id, :anonym_id, :key_mail)");
 		if ($req->execute(array(
@@ -97,9 +95,9 @@ Class AccountManager
 				'anonym_id' => $anonym_id,
 				'key_mail' => $key_mail
 			)))
-			return true;
+			return "send_email_table worked\n";
 		else
-			return false;
+			return "send_email table ERROR\n";
 	}
 
 	// public function check_passwd($pdo, $pseudo, $passwd)
@@ -138,7 +136,23 @@ Class AccountManager
 		return ($ids);
 	}
 
-	public function change_status($pdo, $anonym_id, $key_mail)
+	public function change_status($pdo, $id)
+	{
+		$db = "db_camagru";
+		$db_account = "account";
+		$group = "member";
+		$sql = "UPDATE $db.`$db_account` SET `group`=:group
+				WHERE `id`=:id";
+		$req = $pdo->prepare($sql);
+		$req->bindParam('group', $group, PDO::PARAM_STR);
+		$req->bindParam('id', $id, PDO::PARAM_INT);
+		if ($req->execute())
+			return true;
+		else
+			return false;
+	}
+
+	public function conf_mail($pdo, $anonym_id, $key_mail)
 	{
 		$match = $this->match_id_user_between_tables($pdo);
 		foreach ($match as $elem)
@@ -148,18 +162,24 @@ Class AccountManager
 			else
 				$id = 0;
 		}
-
 		if ($id == 0)
 			return "id didn't match\n";
-		$db = "db_camagru";
-		$db_account = "account";
-		$group = "member";
-		$sql = "UPDATE $db.`$db_account` SET `group`=:group
-				WHERE `id`=:id";
-		$req = $pdo->prepare($sql);
-		$req->bindParam('group', $group, PDO::PARAM_STR);
-		$req->bindParam('id', $id, PDO::PARAM_INT);
-		$req->execute();
+		
+		if (!($status = $this->change_status($pdo, $id)))
+			return "Change status account didn't work\n";
+		// $db = "db_camagru";
+		// $db_account = "account";
+		// $group = "member";
+		// $sql = "UPDATE $db.`$db_account` SET `group`=:group
+		// 		WHERE `id`=:id";
+		// $req = $pdo->prepare($sql);
+		// $req->bindParam('group', $group, PDO::PARAM_STR);
+		// $req->bindParam('id', $id, PDO::PARAM_INT);
+		// $req->execute();
+		// if ($req->execute())
+		// 	return "Change status OK\n";
+		// else
+		// 	return "Change status account didn't work\n";
 
 		$db_email = "email";
 		$erase = NULL;
