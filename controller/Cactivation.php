@@ -11,6 +11,7 @@ if (isset($_POST['pseudo']) && isset($_POST['key']))
 
 		if ($db->pseudo_exists($pdo, $_POST['pseudo']))
 		{
+			echo "pseudo = /" . $_POST['pseudo'] . "/";
 			if ($db->match_key($pdo, $_POST['pseudo'], $_POST['key']))
 				echo "It's a match !\n";
 		}

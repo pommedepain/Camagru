@@ -48,6 +48,7 @@ function formControl()
 
 	/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
 	let needle = xhr.responseText.indexOf("ERROR");
+	console.log("needle = " + needle);
 	if (needle < 0 && (xhr.responseText !== "" || xhr.responseText))
 	{
 		let succ = document.getElementById("success");

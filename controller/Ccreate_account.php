@@ -27,34 +27,40 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 			
 		if (isset($_POST["first_name"]) && !empty($_POST["first_name"]))
 		{
-			if (preg_match_all(" #^[a-zA-Z-]{2,18}$# ", $_POST["first_name"]))
+			if (preg_match_all(" #^[a-zA-Z-àæéèêçàùûîïÀÆÉÈÊÇÀÛÙÜÎÏ]{2,18}$# ", $_POST["first_name"]))
 			{
 				echo "First name OK\n";
 				$first_name = $_POST["first_name"];
 			}
 			else
+			{
+				$first_name = NULL;
 				echo "First name ERROR\n";
+			}
 		}
 		else
 		{
 			echo "First name is NULL\n";
-			$first_name = NULL;
+			$first_name = "";
 		}
 
 		if (isset($_POST["last_name"]) && !empty($_POST["last_name"]))
 		{
-			if (preg_match_all(" #^[a-zA-Z-]{2,18}$# ", $_POST["last_name"]))
+			if (preg_match_all(" #^[a-zA-Z-àæéèêçàùûîïÀÆÉÈÊÇÀÛÙÜÎÏ]{2,18}$# ", $_POST["last_name"]))
 			{
 				echo "Last name OK\n";
 				$last_name =  $_POST["last_name"];
 			}
 			else
+			{
 				echo "Last name ERROR\n";
+				$last_name = NULL;
+			}
 		}
 		else
 		{
 			echo "Last name is NULL\n";
-			$last_name = NULL;
+			$last_name = "";
 		}
 
 		/* Check that the password is at least 6 characters long (without any upper limit), and that it contains at least
@@ -78,7 +84,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 		/* If everything is valid, creates a unique key (that'll be later used to confirm the email while being sure of 
 		the identity of the user), and send the confirmation email 
 		[WARNING] Don't change the order of the function that sends the datas to db and the one that sends email, otherwise it won't work ! */
-		if ($pseudo && $passwd && $email)
+		if ($pseudo && $passwd && $email && isset($first_name) && isset($last_name))
 		{
 			$key = md5(rand(0, 100000));
 			$db->send_register($pdo, $pseudo, $first_name, $last_name, $email, $passwd, $key);
