@@ -65,9 +65,8 @@ Class AccountManager
 				$id = $elem['id'];
 				return ($id);
 			}
-			else
-				return false;
 		}
+		return "Didn't found a match for $pseudo in id_exists\n";
 	}
 
 	public function send_register($pdo, $pseudo, $first_name, $last_name, $email, $passwd)
@@ -89,7 +88,7 @@ Class AccountManager
 	public function send_email_table($pdo, $pseudo, $anonym_id, $key_mail)
 	{
 		if (!is_numeric($id = $this->id_exists($pdo, $pseudo)))
-			return "send_email_table didn't found a match for id\n";
+			return "$id\n";
 		$req = $pdo->prepare("INSERT INTO db_camagru.email(id_user, anonym_id, key_mail) 
 							VALUES(:id, :anonym_id, :key_mail)");
 		if ($req->execute(array(
@@ -97,9 +96,9 @@ Class AccountManager
 				'anonym_id' => $anonym_id,
 				'key_mail' => $key_mail
 			)))
-			return true;
+			return "send_email_table worked\n";
 		else
-			return false;
+			return "send_email table ERROR\n";
 	}
 
 	// public function check_passwd($pdo, $pseudo, $passwd)
@@ -138,19 +137,8 @@ Class AccountManager
 		return ($ids);
 	}
 
-	public function change_status($pdo, $anonym_id, $key_mail)
+	public function change_status($pdo, $id)
 	{
-		$match = $this->match_id_user_between_tables($pdo);
-		foreach ($match as $elem)
-		{
-			if ($elem['anonym_id'] == $anonym_id && $elem['key_mail' == $key_mail])
-				$id = $elem['id'];
-			else
-				$id = 0;
-		}
-
-		if ($id == 0)
-			return "id didn't match\n";
 		$db = "db_camagru";
 		$db_account = "account";
 		$group = "member";
@@ -159,8 +147,27 @@ Class AccountManager
 		$req = $pdo->prepare($sql);
 		$req->bindParam('group', $group, PDO::PARAM_STR);
 		$req->bindParam('id', $id, PDO::PARAM_INT);
-		$req->execute();
+		if ($req->execute())
+			return true;
+		else
+			return false;
+	}
 
+	public function conf_mail($pdo, $anonym_id, $key_mail)
+	{
+		$match = $this->match_id_user_between_tables($pdo);
+		foreach ($match as $elem)
+		{
+			if ($elem['anonym_id'] == $anonym_id && $elem['key_mail' == $key_mail])
+				$id = $elem['id'];
+		}
+		if (!$id)
+			return "id didn't match\n";
+		
+		if (!($status = $this->change_status($pdo, $id)))
+			return "Change status account didn't work\n";
+		
+		$db = "db_camagru";
 		$db_email = "email";
 		$erase = NULL;
 		$sql2 = "UPDATE $db.`$db_email` SET `anonym_id`=:erase, `key_mail`=:erase

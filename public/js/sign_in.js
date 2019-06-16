@@ -1,6 +1,6 @@
 function sign_in()
 {
-	console.log('formControl triggered');
+	console.log('sign_in triggered');
 	let pseudo = document.getElementById("pseudo").value;
 	let passwd1 = document.getElementById("passwd1").value;
 	let submit = document.getElementById("submit").value;
