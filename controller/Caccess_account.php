@@ -97,6 +97,8 @@ if (isset($_POST["submit"]))
 					$group = "not_confirmed";
 					$anonym_id = md5(rand(0, 100000));
 					$key = md5(rand(0, 100000));
+					if (send_email_table($pdo, $_SESSION['user'], $anonym_id, $key) != "send_email_table worked")
+						echo "ERROR send_email_table\n";
 					$subject = "[Camagru] Confirm your email";
 					$header = "From: psentilh@student.42.fr";
 					$message = "Hello,

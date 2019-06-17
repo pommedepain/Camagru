@@ -155,9 +155,9 @@ Class AccountManager
 				'anonym_id' => $anonym_id,
 				'key_mail' => $key_mail
 			)))
-			return "send_email_table worked\n";
+			return "send_email_table worked";
 		else
-			return "send_email table ERROR\n";
+			return "send_email table ERROR";
 	}
 
 	public function check_passwd($pdo, $pseudo, $passwd)
