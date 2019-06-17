@@ -10,7 +10,7 @@ ob_start();
 		<div id="form">
 			<h1 class="text-center" id="f_h1">Thank you !</h1>
 			<div class="text-center">
-				<p>Your account has been verified and is now active.</p>
+				<p id="para">Your account has been verified and is now active.</p>
 			</div>
 			</div>
 			<div id="success"></div>

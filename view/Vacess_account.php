@@ -12,19 +12,19 @@ ob_start();
 			<div class="registration-form">
 				<label class="col-one-half">
 					<span class="label-text">First Name</span>
-					<input type="text" name="first_name" id="first_name">
+					<input type="text" name="first_name" id="first_name" value="<?php if (isset($_SESSION['first_name'])){ echo $_SESSION['first_name']; }?>">
 				</label>
 				<label class="col-one-half">
 					<span class="label-text">Last Name</span>
-					<input type="text" name="last_name" id="last_name">
+					<input type="text" name="last_name" id="last_name" value="<?php if (isset($_SESSION['last_name'])){ echo $_SESSION['last_name']; }?>">
 				</label>
 				<label>
 					<span class="label-text">Pseudo</span>
-					<input type="text" name="pseudo" id="pseudo" >
+					<input type="text" name="pseudo" id="pseudo" value="<?php if (isset($_SESSION['user'])){ echo $_SESSION['user']; }?>">
 				</label>
 				<label>
 					<span class="label-text">Email</span>
-					<input type="text" name="email" id="email">
+					<input type="text" name="email" id="email" value="<?php if (isset($_SESSION['email'])){ echo $_SESSION['email']; }?>">
 				</label>
 				<label class="password">
 					<span class="label-text">Current Password</span>
@@ -55,6 +55,7 @@ ob_start();
 				</div>
 			</div>
 		</div>
+		<div id="status">Status: <div id="group"><?php if (isset($_SESSION['group'])){ echo $_SESSION['group']; }?></div></div>
 		<div id="success"></div>
 	</div>
 </div>

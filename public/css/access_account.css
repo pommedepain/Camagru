@@ -16,7 +16,7 @@
 	transform: translate(-50%, -50%);
 	padding: 2em;
 	position: relative;
-		margin-top: 20%;
+		margin-top: 25%;
 		left: 50%;
 		z-index: 1;
 	width: 98%;
@@ -217,4 +217,12 @@
 #forgot > a:hover
 {
 	color: white;
+}
+#group
+{
+	display: none;
+}
+#status
+{
+	margin-top: 3%;
 }

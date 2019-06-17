@@ -108,6 +108,14 @@ This is an automatic message, please do not reply.";
 			$success = mail($email, $subject, $message, $header);
 			if (!$success)
 				echo error_get_last()['message'];
+			// else
+			// {
+			// 	$_SESSION['user'] = $pseudo;
+			// 	$_SESSION['email'] = $email;
+			// 	$_SESSION['first_name'] = $first_name;
+			// 	$_SESSION['last_name'] = $last_name;
+			// 	$_SESSION['group'] = "not_confirmed";
+			// }
 
 		}
 	}

@@ -40,7 +40,8 @@ Class AccountManager
 		$req = $pdo->query("SELECT `pseudo`,`id` FROM db_camagru.account");
 		if (!($ids = $req->fetchAll()))
 			return false;
-		return ($ids);
+		else
+			return ($ids);
 	}
 
 	public function get_passwd($pdo)
@@ -48,7 +49,28 @@ Class AccountManager
 		$req = $pdo->query("SELECT `pseudo`,`passwd` FROM db_camagru.account");
 		if (!$res = $req->fetchAll())
 			return false;
-		return ($res);
+		else
+			return ($res);
+	}
+
+	public function get_all_infos($pdo)
+	{
+		$req = $pdo->query("SELECT `pseudo`,`email`,`firstname`,`lastname`,`group` FROM db_camagru.account");
+		if (!$res = $req->fetchAll())
+			return false;
+		else
+			return ($res);
+	}
+
+	public function get_user_infos($pdo, $pseudo)
+	{
+		$infos = $this->get_all_infos($pdo);
+		foreach ($infos as $elem)
+		{
+			if ($elem['pseudo'] == $pseudo)
+				return ($elem);
+		}
+		return false;
 	}
 
 	public function pseudo_exists($pdo, $pseudo)
@@ -88,6 +110,35 @@ Class AccountManager
 				'email' => $email,
 				'passwd' => $passwd
 			)))
+			return true;
+		else
+			return false;
+	}
+
+	public function change_user_infos($pdo, $pseudo, $first_name, $last_name, $email, $passwd, $group, $id)
+	{
+		$db = "db_camagru";
+		$db_account = "account";
+		if (isset($passwd) && !empty($passwd))
+		{
+			$sql = "UPDATE $db.`$db_account` SET `group`=:group, `pseudo`=:pseudo, `firstname`=:first_name, `lastname`=:last_name, `email`=:email, `passwd`=:passwd
+					WHERE `id`=:id";
+			$req = $pdo->prepare($sql);
+			$req->bindParam('passwd', $passwd, PDO::PARAM_STR);
+		}
+		else
+		{
+			$sql = "UPDATE $db.`$db_account` SET `group`=:group, `pseudo`=:pseudo, `firstname`=:first_name, `lastname`=:last_name, `email`=:email
+					WHERE `id`=:id";
+			$req = $pdo->prepare($sql);
+		}
+		$req->bindParam('group', $group, PDO::PARAM_STR);
+		$req->bindParam('pseudo', $pseudo, PDO::PARAM_STR);
+		$req->bindParam('first_name', $first_name, PDO::PARAM_STR);
+		$req->bindParam('last_name', $last_name, PDO::PARAM_STR);
+		$req->bindParam('email', $email, PDO::PARAM_STR);
+		$req->bindParam('id', $id, PDO::PARAM_INT);
+		if ($req->execute())
 			return true;
 		else
 			return false;
