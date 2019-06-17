@@ -37,3 +37,5 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 			echo "Password ERROR\n";
 	}
 }
+else
+	echo "Combination ERROR\n";

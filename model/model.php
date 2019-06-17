@@ -43,6 +43,14 @@ Class AccountManager
 		return ($ids);
 	}
 
+	public function get_passwd($pdo)
+	{
+		$req = $pdo->query("SELECT `pseudo`,`passwd` FROM db_camagru.account");
+		if (!$res = $req->fetchAll())
+			return false;
+		return ($res);
+	}
+
 	public function pseudo_exists($pdo, $pseudo)
 	{
 		$pseudos = $this->get_pseudo($pdo);
@@ -101,17 +109,17 @@ Class AccountManager
 			return "send_email table ERROR\n";
 	}
 
-	// public function check_passwd($pdo, $pseudo, $passwd)
-	// {
-	// 	$req = $pdo->query("SELECT `pseudo`,`passwd` FROM db_camagru.account WHERE `pseudo` = $pseudo");
-	// 	$res= $req->fetchAll();
-	// 	foreach ($res as $elem)
-	// 	{
-	// 		if ($elem['pseudo'] == $pseudo && $elem["passwd"] == $passwd)
-	// 			return true;
-	// 	}
-	// 	return false;
-	// }
+	public function check_passwd($pdo, $pseudo, $passwd)
+	{
+		if (($passwds = $this->get_passwd($pdo, $pseudo)) == false)
+			return "Couldn't get passwd in get_passwd\n";
+		foreach ($passwds as $elem)
+		{
+			if ($elem['pseudo'] == $pseudo && $elem["passwd"] == $passwd)
+				return true;
+		}
+		return false;
+	}
 
 	public function match_key($pdo, $anonym_id, $key_mail)
 	{

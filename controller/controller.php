@@ -26,3 +26,14 @@ function confirm_mail()
 {
 	require_once('./view/Vactivation.php');
 }
+
+function logout()
+{
+	require_once('./controller/Clogout.php');
+}
+
+function access_account()
+{
+	require_once('./view/Vacess_account.php');
+}
+

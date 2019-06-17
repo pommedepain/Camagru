@@ -11,10 +11,14 @@ if (isset($_GET['action']))
 		create_account();
 	else if ($_GET['action'] == 'sign_in')
 		sign_in();
+	else if ($_GET['action'] == 'logout')
+		logout();
 	else if ($_GET['action'] == 'confirm_mail')
 		confirm_mail();
 	else if ($_GET['action'] == 'reset_passwd')
 		reset_passwd();
+	else if ($_GET['action'] == 'access_account')
+		access_account();
 }
 else
 	start();

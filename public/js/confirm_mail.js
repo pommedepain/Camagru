@@ -13,21 +13,32 @@ function confirm_mail()
 	let key = url.searchParams.get("key");
 	console.log(key);
 
-	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '../../controller/Cactivation.php', true);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.send(`anonym_id=${anonym_id}&key=${key}`);
-	xhr.addEventListener('readystatechange', function() {
-		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
-			console.log(xhr.responseText);
-		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
-    		alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
-		});
-	
-	let needle = xhr.responseText.indexOf("ERROR");
-	console.log("needle = " + needle);
-	if (needle < 0 && xhr.responseText == "It's a match !")
+	if (anonym_id && key)
 	{
-		console.log("Account's now officially a member.")
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', '../../controller/Cactivation.php', true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send(`anonym_id=${anonym_id}&key=${key}`);
+		xhr.addEventListener('readystatechange', function() {
+			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
+			{
+				console.log(xhr.responseText);
+				let needle = xhr.responseText.indexOf("ERROR");
+				console.log("needle = " + needle);
+				if (needle < 0)
+				{
+					console.log("Account's now officially a member.")
+				}
+				else
+				{
+					let pb = document.getElementById("f_h1");
+					pb.innerHTML = "Oops...";
+					let pb2 = document.getElementById("para");
+					pb2.innerHTML = "There seems to be a problem with this link.<br /> Maybe your account has already been verified !";
+				}
+			}
+			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
+    			alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
+			});
 	}
 }
