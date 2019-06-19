@@ -51,7 +51,7 @@ ob_start();
 					<span class="icon"></span>
 				</label>
 				<div class="text-center">
-					<button class="submit" id="submit" value="submit" onclick="access_account()">Submit changes</button>
+					<button class="submit" id="submit" value="submit" onclick="manage_account()">Submit changes</button>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@ ob_start();
 		<div id="success"></div>
 	</div>
 </div>
-<script src="./public/js/access_account.js"></script>
+<script src="./public/js/manage_account.js"></script>
 
 <?php 
 

@@ -1,25 +1,25 @@
-function sign_in()
+function reset_passwd()
 {
-	console.log('sign_in triggered');
+	console.log('reset_passwd triggered');
 	let pseudo = document.getElementById("pseudo").value;
-	let passwd1 = document.getElementById("passwd1").value;
+	let email = document.getElementById("email").value;
 	let submit = document.getElementById("submit").value;
 	
 	if (!pseudo)
 	{
 		document.getElementById("pseudo").placeholder = "Please enter your pseudo.";
 	}
-	if (!passwd1)
+	if (!email)
 	{
-		document.getElementById("passwd1").placeholder = "Please enter your password.";
+		document.getElementById("email").placeholder = "Please enter your email address.";
 	}
 
-	if (pseudo && passwd1)
+	if (pseudo && email)
 	{
 		let xhr = new XMLHttpRequest();
-		xhr.open('POST', '../../controller/Csign_in.php', true);
+		xhr.open('POST', '../../controller/Creset_passwd.php', true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send(`pseudo=${pseudo}&passwd1=${passwd1}&submit=${submit}`);
+		xhr.send(`pseudo=${pseudo}&email=${email}&submit=${submit}`);
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
@@ -29,14 +29,14 @@ function sign_in()
 				if (needle < 0)
 				{
 					let succ = document.getElementById("success");
-					succ.innerHTML = "You're currently signed-in !";
+					succ.innerHTML = "Check your mail, we've sent you a reset link !";
 					succ.style.color = "green";
-					setTimeout("document.location.href='./index.php'", 3000);
+					//setTimeout("document.location.href='./view/Vsign_in.php'", 3000);
 				}
 				else
 				{
 					let succ = document.getElementById("success");
-					succ.innerHTML = "Wrong combination Pseudo/Password.";
+					succ.innerHTML = "Wrong combination Pseudo/Email.";
 					succ.style.color = "red";
 				}
 			}

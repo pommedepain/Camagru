@@ -7,10 +7,19 @@ function status_info()
 
 	if (group == "not_confirmed")
 	{
-		document.getElementById("group").innerHTML = "Account not verified.";
+		document.getElementById("group").innerHTML = "Account not verified. ";
+		let linky = document.createElement("a");
+		let send_again = document.createTextNode("Send a new confirmation email");
+		linky.appendChild(send_again);
+		let group = document.getElementById("group");
+		group.parentNode.insertBefore(linky, group.nextSibling);
 		document.getElementById("group").style.color = "red";
 		document.getElementById("group").style.fontWeight = "bold";
 		document.getElementById("group").style.display = "inline";
+		linky.style.color = "blue";
+		linky.style.textDecoration = "underline";
+		linky.style.cursor = "pointer";
+		linky.setAttribute("onclick", "send_it()");
 	}
 	else if (group == "member")
 	{
@@ -21,9 +30,43 @@ function status_info()
 	}
 }
 
-function access_account()
+function send_it()
 {
-	console.log('access_account triggered');
+	let email_send = document.getElementById("email").value;
+	let pseudo = document.getElementById("pseudo").value;
+	console.log(pseudo);
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', '../../controller/Csend_again.php', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send(`email_send=${email_send}&pseudo=${pseudo}`);
+	xhr.addEventListener('readystatechange', function() {
+		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
+		{
+			console.log(xhr.responseText);
+			/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
+			let needle_ERR = xhr.responseText.indexOf("ERROR");
+			let needle_ret = xhr.responseText.indexOf("Csend_again.php done and successful");
+			console.log("needle_ERR = " + needle_ERR);
+			console.log("needle_ret = " + needle_ret);
+			if (needle_ERR < 0 && needle_ret >= 0)
+			{
+				document.getElementById("success").innerHTML = "A new confirmation email has been sent.";
+			}
+			else if (needle_ERR >= 0)
+			{
+				let succ = document.getElementById("success");
+				succ.style.color = "red";
+				succ.innerHTML = "ERROR<br />We couldn't send you a new confirmation email.";
+			}
+		}
+		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
+    		alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
+		});
+}
+
+function manage_account()
+{
+	console.log('manage_account triggered');
 	let pseudo = document.getElementById("pseudo").value;
 	console.log(pseudo);
 	let first_name = document.getElementById("first_name").value;
@@ -66,7 +109,7 @@ function access_account()
 			succ.innerHTML = "The entries for a new password don't match."
 		}
 		let xhr = new XMLHttpRequest();
-		xhr.open('POST', '../../controller/Caccess_account.php', true);
+		xhr.open('POST', '../../controller/Cmanage_account.php', true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send(`first_name=${first_name}&last_name=${last_name}&pseudo=${pseudo}&email=${email}&o_passwd=${o_passwd}&passwd1=${passwd1}&passwd2=${passwd2}&submit=${submit}&group=${group}`);
 		xhr.addEventListener('readystatechange', function() {

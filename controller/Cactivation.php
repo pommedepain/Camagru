@@ -13,6 +13,7 @@ if (isset($_POST['anonym_id']) && isset($_POST['key']))
 		{
 			$res = ($db->conf_mail($pdo, $_POST['anonym_id'], $_POST['key']));
 			echo $res;
+			$_SESSION['group'] = "member";
 		}
 		else
 			echo "ERROR\n";

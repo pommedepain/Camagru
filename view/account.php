@@ -5,14 +5,14 @@
 if (!isset($_SESSION['user']) || empty($_SESSION['user']))
 {
 	$button1 = "Register";
-	$action1 = "create_account";
+	$action1 = "register";
 	$button2 = "Sign In";
 	$action2 = "sign_in";
 }
 else
 {
 	$button1 = "Account";
-	$action1 = "access_account";
+	$action1 = "manage_account";
 	$button2 = "Logout";
 	$action2 = "logout";
 }

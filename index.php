@@ -7,8 +7,8 @@ if (isset($_GET['action']))
 {
 	if ($_GET['action'] == 'start')
 		start();
-	else if ($_GET['action'] == 'create_account')
-		create_account();
+	else if ($_GET['action'] == 'register')
+		register();
 	else if ($_GET['action'] == 'sign_in')
 		sign_in();
 	else if ($_GET['action'] == 'logout')
@@ -17,8 +17,10 @@ if (isset($_GET['action']))
 		confirm_mail();
 	else if ($_GET['action'] == 'reset_passwd')
 		reset_passwd();
-	else if ($_GET['action'] == 'access_account')
-		access_account();
+	else if ($_GET['action'] == 'reset_now')
+		reset_now();
+	else if ($_GET['action'] == 'manage_account')
+		manage_account();
 }
 else
 	start();

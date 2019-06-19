@@ -46,7 +46,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 					echo "ERROR with get_info_user\n";				
 			}
 			else
-				echo "Wrong password\n";
+				echo "Password wrong ERROR\n";
 		}
 		else
 			echo "Password ERROR\n";

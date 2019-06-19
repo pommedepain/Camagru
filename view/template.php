@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="./public/css/index.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/create.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/activation.css">
-		<link rel="stylesheet" type="text/css" href="./public/css/access_account.css">
+		<link rel="stylesheet" type="text/css" href="./public/css/manage_account.css">
 	</head>
 
 	<body id="special">

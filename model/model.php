@@ -160,6 +160,99 @@ Class AccountManager
 			return "send_email table ERROR";
 	}
 
+	public function update_email_table($pdo, $pseudo, $anonym_id, $key_mail)
+	{
+		$db = "db_camagru";
+		$db_email = "email";
+		if (!is_numeric($id = $this->id_exists($pdo, $pseudo)))
+			return "$id\n";
+		$req = $pdo->prepare("UPDATE $db.`$db_email` SET `anonym_id`=:anonym_id, `key_mail`=:key_mail 
+							WHERE `id_user`=:id");
+		$req->bindParam('anonym_id', $anonym_id, PDO::PARAM_STR);
+		$req->bindParam('key_mail', $key_mail, PDO::PARAM_STR);
+		$req->bindParam('id', $id, PDO::PARAM_INT);
+		if ($req->execute())
+			return "update_email_table() worked";
+		else
+			return "update_email_table() ERROR";
+	}
+
+	public function update_reset_passwd($pdo, $pseudo, $rand_str)
+	{
+		$db = "db_camagru";
+		$db_email = "email";
+		if (!is_numeric($id = $this->id_exists($pdo, $pseudo)))
+			return "$id\n";
+		$req = $pdo->prepare("UPDATE $db.`$db_email` SET `rand_str`=:rand_str 
+							WHERE `id_user`=:id");
+		$req->bindParam('rand_str', $rand_str, PDO::PARAM_STR);
+		$req->bindParam('id', $id, PDO::PARAM_INT);
+		if ($req->execute())
+			return "update_reset_passwd() worked";
+		else
+			return false;
+	}
+
+	public function get_rand_str($pdo, $rand_str)
+	{
+		$db = "db_camagru";
+		$db_email = "email";
+		$db_account = "account";
+		$sql = "SELECT $db.`$db_email`.id_user AS 'id', $db.`$db_email`.rand_str
+				FROM $db.`$db_email`
+				INNER JOIN $db.`$db_account` ON $db.`$db_email`.id_user = $db.`$db_account`.id";
+		$req = $pdo->query($sql);
+		if ($ids = $req->fetchAll())
+			return ($ids);
+		else
+			return false;
+	}
+
+	public function erase_rand_str($pdo, $id)
+	{
+		$db = "db_camagru";
+		$db_email = "email";
+		$erase = NULL;
+		$sql = "UPDATE $db.`$db_email` SET `rand_str`=:erase
+				WHERE `id_user`=:id";
+		$req = $pdo->prepare($sql);
+		$req->bindParam('erase', $erase, PDO::PARAM_STR);
+		$req->bindParam('id', $id, PDO::PARAM_INT);
+		if ($req->execute())
+			return "Erase email infos OK\n";
+		else
+			return false;
+	}
+
+	public function change_passwd_user($pdo, $passwd, $rand_str)
+	{
+		if (!$tab = $this->get_rand_str($pdo, $rand_str))
+			return "get_rand_str() ERROR";
+		foreach ($tab as $elem)
+		{
+			if ($elem['rand_str'] == $rand_str)
+				$id = $elem['id'];
+		}
+		if (!$id)
+			return "rand_str didn't match\n";
+		
+		$db = "db_camagru";
+		$db_account = "account";
+		$sql = "UPDATE $db.`$db_account` SET `passwd`=:passwd
+				WHERE `id`=:id";
+		$req = $pdo->prepare($sql);
+		$req->bindParam('passwd', $passwd, PDO::PARAM_STR);
+		$req->bindParam('id', $id, PDO::PARAM_INT);
+		$req->execute();
+		if ($req->rowcount() === 0)
+			return ("change_passwd_user() ERROR" );
+
+		if ($this->erase_rand_str($pdo, $id))
+			return "change_passwd_user() OK";
+		else
+			return "erase_rand_str() ERROR";
+	}
+
 	public function check_passwd($pdo, $pseudo, $passwd)
 	{
 		if (($passwds = $this->get_passwd($pdo, $pseudo)) == false)

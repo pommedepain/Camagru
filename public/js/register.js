@@ -34,7 +34,7 @@ function formControl()
 		if (!last_name)
 			last_name = "";
 		let xhr = new XMLHttpRequest();
-		xhr.open('POST', '../../controller/Ccreate_account.php', true);
+		xhr.open('POST', '../../controller/Cregister.php', true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send(`first_name=${first_name}&last_name=${last_name}&pseudo=${pseudo}&email=${email}&passwd1=${passwd1}&passwd2=${passwd2}&submit=${submit}`);
 		xhr.addEventListener('readystatechange', function() {
@@ -47,7 +47,7 @@ function formControl()
 				if (needle < 0)
 				{
 					document.getElementById("success").innerHTML = "Your account has been successfully created !";
-					setTimeout("document.location.href='./index.php'", 3000);
+					//setTimeout("document.location.href='./index.php'", 3000);
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)

@@ -14,8 +14,8 @@ $connect->exec("CREATE DATABASE IF NOT EXISTS db_camagru");
 $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.account (
         `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
 	`pseudo` VARCHAR(25) NOT NULL,
-        `firstname` VARCHAR(255),
-        `lastname` VARCHAR(255),
+        `firstname` VARCHAR(255) DEFAULT NULL,
+        `lastname` VARCHAR(255) DEFAULT NULL,
         `email` VARCHAR(255) NOT NULL,
         `passwd` VARCHAR(255) NOT NULL,
 	`group` ENUM('admin', 'member', 'not_confirmed') DEFAULT 'not_confirmed' NOT NULL,
@@ -24,5 +24,6 @@ $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.account (
 $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.email (
         `id_user` INT PRIMARY KEY,
         `anonym_id` VARCHAR(32),
-        `key_mail` VARCHAR(32))");
+        `key_mail` VARCHAR(32),
+        `rand_str` VARCHAR(32) DEFAULT NULL)");
 ?>

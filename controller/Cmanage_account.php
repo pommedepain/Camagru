@@ -6,7 +6,7 @@ if (isset($_POST["submit"]))
 {
 	if ($_POST["submit"] == "submit")
 	{
-		echo "Caccess_account triggered\n";
+		echo "Cmanage_account triggered\n";
 		$db = new AccountManager();
 		$pdo = $db->db_connect();
 
@@ -95,10 +95,11 @@ if (isset($_POST["submit"]))
 					echo "New Mail OK\n";
 					$email = $_POST['email'];
 					$group = "not_confirmed";
+					echo "group = " . $group . "\n";
 					$anonym_id = md5(rand(0, 100000));
 					$key = md5(rand(0, 100000));
-					if (send_email_table($pdo, $_SESSION['user'], $anonym_id, $key) != "send_email_table worked")
-						echo "ERROR send_email_table\n";
+					if ($db->update_email_table($pdo, $_SESSION['user'], $anonym_id, $key) != "update_email_table worked")
+						echo "ERROR update_email_table\n";
 					$subject = "[Camagru] Confirm your email";
 					$header = "From: psentilh@student.42.fr";
 					$message = "Hello,
@@ -128,7 +129,11 @@ This is an automatic message, please do not reply.";
 		[WARNING] Don't change the order of the function that sends the datas to db and the one that sends email, otherwise it won't work ! */
 		if ($pseudo && $email)
 		{
-			if (!($db->change_user_infos($pdo, $pseudo, $first_name, $last_name, $email, $passwd, $_POST['group'], $id)))
+			if ($group)
+				$group = $group;
+			else
+				$group = $_POST['group'];
+			if (!($db->change_user_infos($pdo, $pseudo, $first_name, $last_name, $email, $passwd, $group, $id)))
 				echo "ERROR with change_user_infos\n";
 			else
 			{
