@@ -10,6 +10,8 @@
 		<link rel="stylesheet" type="text/css" href="./public/css/create.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/activation.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/manage_account.css">
+		<link rel="stylesheet" type="text/css" href="./public/css/montage.css">
+		<script src="./public/js/montage.js"></script>
 	</head>
 
 	<body id="special">
@@ -27,10 +29,14 @@
     		<ul>
        			<li><a href="index.php?action=start">Home</a></li>
 	        	<li><a href="#">Gallery</a></li>
-    	    	<li><a href="#">Montage</a></li>
+    	    	<li><a href="index.php?action=montage">Montage</a></li>
     		</ul>
 		</nav>
 	
 		<?= $content ?>
 	</body>
+
+	<footer>
+		<h3 id="symbol">©</h3><h3 id="copyright"> Philippine Sentilhes (psentilh), 42 Paris, 2019</h3>
+	</footer>
 </html>

@@ -28,6 +28,7 @@ function confirm_mail()
 				if (needle < 0)
 				{
 					console.log("Account's now officially a member.")
+					setTimeout("window.location.href = './index.php'", 3000);
 				}
 				else
 				{

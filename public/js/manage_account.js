@@ -124,7 +124,7 @@ function manage_account()
 				if (needle_ERR < 0 && needle_ret >= 0)
 				{
 					document.getElementById("success").innerHTML = "The changes have been successfully saved !";
-					setTimeout("document.location.href='./index.php'", 3000);
+					setTimeout("window.location.href = './index.php?action=manage_account'", 3000);
 				}
 				else if (needle_ERR >= 0)
 				{

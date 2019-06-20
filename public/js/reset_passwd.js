@@ -31,7 +31,7 @@ function reset_passwd()
 					let succ = document.getElementById("success");
 					succ.innerHTML = "Check your mail, we've sent you a reset link !";
 					succ.style.color = "green";
-					//setTimeout("document.location.href='./view/Vsign_in.php'", 3000);
+					setTimeout("window.location.href = './index.php?action=sign_in'", 3000);
 				}
 				else
 				{

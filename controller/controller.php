@@ -42,3 +42,8 @@ function manage_account()
 	require_once('./view/Vmanage_account.php');
 }
 
+function montage()
+{
+	require_once('./view/Vmontage.php');
+}
+

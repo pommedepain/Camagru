@@ -47,7 +47,7 @@ function formControl()
 				if (needle < 0)
 				{
 					document.getElementById("success").innerHTML = "Your account has been successfully created !";
-					//setTimeout("document.location.href='./index.php'", 3000);
+					setTimeout("window.location.href = './index.php?action=sign_in'", 3000);
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)

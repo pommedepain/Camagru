@@ -118,3 +118,54 @@ h3
 	color : black;
 	font-size: 1vw;
 }
+#loggued_on
+{
+	/* border: 1px solid black; */
+	position: relative;
+	top:10%;
+}
+#welcome 
+{
+	display: inline-block;
+	color: black;
+	/* position: relative; */
+}  
+#welcome::before 
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: -webkit-linear-gradient(left, #f00, rgb(145, 255, 0));
+	background: linear-gradient(to right, #f00, rgb(145, 255, 0));
+	content: '';
+	display: block;
+	mix-blend-mode: screen;
+}
+footer
+{
+	display: flex;
+	justify-content: right;
+	position: relative;
+	margin-right: 1%;
+	margin-left: 1%;
+	bottom: 0;
+	margin-bottom: 1%;
+	width: 98%;
+}
+#copyright
+{
+	color: whitesmoke;
+	position: relative;
+	left: 84%;
+	font-size: 0.8vw;
+}
+#symbol
+{
+	color: whitesmoke;
+	position: relative;
+	left: 83.5%;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 0.6vw;
+}

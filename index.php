@@ -21,6 +21,8 @@ if (isset($_GET['action']))
 		reset_now();
 	else if ($_GET['action'] == 'manage_account')
 		manage_account();
+	else if ($_GET['action'] == 'montage')
+		montage();
 }
 else
 	start();
