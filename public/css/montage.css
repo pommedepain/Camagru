@@ -17,10 +17,12 @@
 	/* height: 110vh; */
 	border-radius: 0.5em;
 }
-h3
+h2
 {
-	margin-top: 1%;
+	margin-top: 2%;
 	margin-bottom: 1%;
+	font-family: 'Ruslan Display', cursive;
+	font-size: 2vw;
 	text-align: center;
 	color: black;
 }
@@ -31,34 +33,65 @@ h3
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	top: 3%;
+	top: 2%;
 	position: relative;
 	margin: 0 auto;
 	width: 95%;
 	/* height: 50vh; */
 	margin-bottom: 5%;
-	border: 3px solid green;
+	padding-bottom: 2%;
+	/* border: 3px solid green; */
+	overflow: hidden;
 }
 #position
 {
 	display: flex;
 	flex-direction: column;
 	order:2;
-	width: 70%;
-	/* position: absolute; */
-	/* margin-left: 40%; */
-	border: 1px solid red;
+	width: 60%;
+	height: 100%;
+	margin-left: 20%;
+	margin-top: 2%;
+	text-align: center;
+	/* border: 1px solid red; */
+}
+#overlay
+{
+	position: relative;
 }
 #webcam
 {
-	width: 80%;
+	position: relative;
+	width: 95%;
 	margin: 0 auto;
+	/* border: 1px solid black; */
 }
-#takepic
+#takepic 
 {
-	margin-left: 35%; 
-	width: 30%;
-	margin-top:3%;
+	margin-left: 45%; 
+	margin-top: 1.5%;
+    width: 10%;
+    height: 0;
+    padding-bottom: 10%;
+    border-radius: 50%;
+    border: 2px solid #f5f5f5;
+    overflow: hidden;
+	background: rgb(188, 218, 240);
+    box-shadow: 0 0 3px gray;
+}
+#takepic:hover 
+{
+	background:rgb(177, 199, 214);
+}
+#takepic img 
+{
+    display: block;
+    width: 76%;
+    padding: 12%;
+	height: auto;
+	margin: 0 auto;
+	margin-top: 25%;
+	margin-bottom: 40%;
 }
 /* #tv
 {
@@ -74,20 +107,68 @@ h3
 	display: flex;
 	flex-direction: column;
 	/* top: -80%; */
-	position: relative;
+	position:absolute;
 	order:1;
-	width: 30%;
-	border: 1px solid purple;
+	width: 20%;
+	/* border: 1px solid purple; */
+	top: 0;
+	bottom: 0;
+	overflow-y: scroll;
+}
+#options > h3
+{
+	font-size: 2vw;
+	margin-bottom: 5%;
+	margin-top: 2%;
+	text-align: center;
+}
+#options > a
+{
+	text-align: center;
+}
+#options > a > img
+{
+	max-width : 60%;
+	min-width: 10%;
+	height: auto;
+}
+#history
+{
+	display: flex;
+	flex-direction: column;
+	order: 3;
+	/* border: 1px solid purple; */
+	width: 20%;
+}
+#history > h3
+{
+	font-size: 2vw;
+	text-align: center;
 }
 
 
-#manip
+#conteneur
+{
+	display: flex;
+	width: 60%;
+	border: 1px solid red;
+	margin: 0 auto;
+}
+#transit
 {
 	position: relative;
 	width: 95%;
 	border: 1px solid violet;
 	margin: 0 auto;
-	display: none;
+	/* display: none; */
+}
+#add_stickers
+{
+	position: relative;
+	width: 95%;
+	border: 1px solid violet;
+	margin: 0 auto;
+	/* display: none; */
 }
 #output
 {
@@ -95,8 +176,9 @@ h3
 	flex-direction: column;
 	width: 95%;
 	position: relative;
-	border: 1px solid yellow;
+	/* border: 1px solid yellow; */
 	margin: 0 auto;
+	margin-bottom: 3%;
 	/* display: inline-block; */
 }
 #result

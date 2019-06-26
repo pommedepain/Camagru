@@ -5,18 +5,21 @@
 	let streaming = false;
 	let video = null;
 	let canvas = null;
+	let canvas_skrs = null;
 	let photo = null;
 	let button = null;
+	// let sticker = null;
 
 	function startup()
 	{
 		video = document.getElementById('webcam');
-   		canvas = document.getElementById('manip');
-    	photo = document.getElementById('result');
+   		canvas = document.getElementById('transit');
+		photo = document.getElementById('result');
 		button = document.getElementById('takepic');
+		canvas_skrs = document.getElementById('add_stickers');
 
 		width = video.offsetWidth;
-		document.getElementById('manip').offsetWidth = width;
+		document.getElementById('transit').offsetWidth = width;
 		document.getElementById('result').offsetWidth = width;
 		
 		navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -38,11 +41,13 @@
 				}
 
 				video.setAttribute('width', width);
-				console.log("video width = " + video.width);
+				//console.log("video width = " + video.width);
 				video.setAttribute('height', height);
-				console.log("video height = " + video.height);
+				//console.log("video height = " + video.height);
 				canvas.setAttribute('width', width);
 				canvas.setAttribute('height', height);
+				canvas_skrs.setAttribute('width', width);
+				canvas_skrs.setAttribute('height', height);
 				streaming = true;
 			}
 		}, false);
@@ -58,8 +63,11 @@
 	function clearphoto()
 	{
 		let context = canvas.getContext('2d');
+		let context_skrs = canvas_skrs.getContext('2d');
 		context.fillStyle = "#AAA";
+		context_skrs.fillStyle = "#AAA";
 		context.fillRect(0, 0, canvas.width, canvas.height);
+		context_skrs.fillRect(0, 0, canvas.width, canvas.height);
 
 		let data = canvas.toDataURL('image/png');
 		photo.setAttribute('src', data);
@@ -72,9 +80,9 @@
 		if (width && height)
 		{
 			canvas.height = height;
-			console.log("canvas height = " + canvas.height);
+			//console.log("canvas height = " + canvas.height);
 			canvas.width = width;
-			console.log("canvas width = " + canvas.width);
+			//console.log("canvas width = " + canvas.width);
 			context.drawImage(video, 0, 0, width, height);
 			let data = canvas.toDataURL('image/png');
 			photo.setAttribute('src', data);
