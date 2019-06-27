@@ -28,8 +28,44 @@ function getStickers(source, num)
 		image.style.left = left + "px";
 		image.style.width = img_width + "px";
 		image.style.height = img_height + "px";
+		image.style.cursor = "pointer";
 		div.appendChild(image);
+		image.addEventListener("click", moveStickers(image));
 	}
+}
+
+function moveStickers(image)
+{
+		let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		image.onmousedown = dragMouseDown;
+	
+		function dragMouseDown(e)
+		{
+			e = e || window.event;
+			e.preventDefault();
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+			document.onmouseup = closeDragElement;
+			document.onmousemove = elementDrag;
+		}
+
+		function elementDrag(e)
+		{
+			e = e || window.event;
+			e.preventDefault();
+			pos1 = pos3 - e.clientX;
+			pos2 = pos4 - e.clientY;
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+			image.style.top = (image.offsetTop - pos2) + "px";
+    		image.style.left = (image.offsetLeft - pos1) + "px";
+		}
+
+		function closeDragElement()
+		{
+			document.onmouseup = null;
+    		document.onmousemove = null;
+		}
 }
 
 function addStickers()

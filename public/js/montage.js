@@ -8,7 +8,6 @@
 	let canvas_skrs = null;
 	let photo = null;
 	let button = null;
-	// let sticker = null;
 
 	function startup()
 	{
@@ -19,10 +18,11 @@
 		canvas_skrs = document.getElementById('add_stickers');
 
 		width = video.offsetWidth;
-		document.getElementById('transit').offsetWidth = width;
-		document.getElementById('result').offsetWidth = width;
+		video.height = width;
+		document.getElementById('transit').width = width;
+		document.getElementById('result').width = width;
 		
-		navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+		navigator.mediaDevices.getUserMedia({ video: { width: width, height: width }, audio: false })
 			.then(function(stream) {
 				video.srcObject = stream;
 				video.play();
@@ -33,11 +33,11 @@
 
 		video.addEventListener('canplay', function(ev){
 			if (!streaming) {
-				height = video.videoHeight / (video.videoWidth/width);
+				height = width;
 				
 				if (isNaN(height))
 				{
-					height = width / (4/3);
+					height = width;
 				}
 
 				video.setAttribute('width', width);
