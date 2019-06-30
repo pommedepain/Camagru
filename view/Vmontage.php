@@ -11,7 +11,11 @@ ob_start();
 		<div id="camera-cont">
 			<div id="position">
 				<div id="overlay"><video id="webcam"></video></div>
-				<button id="takepic"><a href="#" id="take_pic" onclick='addStickers()'><img src="./public/img/cam_logo.png"/></a></button>
+				<div id="buttonHolder">
+					<a href="#" onclick='sizeMinus()' class='button minus'></a>
+					<a href="#" id="takepic" onclick='addStickers()' class='button takepic'></a>
+					<a href="#" onclick='sizePlus()'  class='button plus'></a>
+				</div>
 			</div>
 			<!-- <img id="tv" src="https://library.kissclipart.com/20180830/faw/kissclipart-old-tv-clipart-pearland-television-advertisement-05163ef983d9af99.png" /> -->
 			<div id="options">

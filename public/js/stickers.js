@@ -7,7 +7,6 @@ function getStickers(source, num)
 		console.log(num);
 		let img_width = document.getElementById('rand_sticker_' + num).offsetWidth;
 		let img_height = document.getElementById('rand_sticker_' + num).offsetHeight;
-		let canvas_skrs = null;
 		console.log("getStickers() triggered");
 		console.log(source);
 		addStickersToCam(source);
