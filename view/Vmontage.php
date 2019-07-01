@@ -12,9 +12,9 @@ ob_start();
 			<div id="position">
 				<div id="overlay"><video id="webcam"></video></div>
 				<div id="buttonHolder">
-					<a href="#" onclick='sizeMinus()' class='button minus'></a>
-					<a href="#" id="takepic" onclick='addStickers()' class='button takepic'></a>
-					<a href="#" onclick='sizePlus()'  class='button plus'></a>
+					<a onclick='sizeMinus()' class='button minus' id="minus" style="cursor:pointer;"></a>
+					<a onclick='addStickers()' id="takepic" class='button takepic' style="cursor:pointer;"></a>
+					<a onclick='sizePlus()'  class='button plus' style="cursor:pointer;"></a>
 				</div>
 			</div>
 			<!-- <img id="tv" src="https://library.kissclipart.com/20180830/faw/kissclipart-old-tv-clipart-pearland-television-advertisement-05163ef983d9af99.png" /> -->
@@ -25,7 +25,7 @@ ob_start();
 					for ($i = 0; $i < count($files); $i++)
 					{
 						$path = $files[$i]; ?>
-						<a href='#' id='random_sticker'><img src='<?= $path ?>' alt='random stickers' id='rand_sticker_<?= $i ?>' onclick='getStickers("<?= $path ?>", <?= $i ?>)'/></a><br /><br />
+						<a style="cursor:pointer;" id='random_sticker'><img src='<?= $path ?>' alt='random stickers' id='rand_sticker_<?= $i ?>' onclick='getStickers("<?= $path ?>", <?= $i ?>)'/></a><br /><br />
 				<?php }
 				?>
 			</div>

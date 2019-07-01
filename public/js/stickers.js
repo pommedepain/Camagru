@@ -17,12 +17,9 @@ function getStickers(source, num)
 		let div = document.getElementById('overlay');
 		let image = document.createElement("img");
 		image.src = source;
-		//console.log(source);
 		image.style.position = "absolute";
 		let top = 0.5 * (height - img_height);
-		//console.log(top);
 		let left = 0.5 * (width - img_width);
-		//console.log(left);
 		image.style.top = top + "px";
 		image.style.left = left + "px";
 		image.style.width = img_width + "px";
@@ -31,6 +28,12 @@ function getStickers(source, num)
 		div.appendChild(image);
 		image.addEventListener("click", moveStickers(image));
 	}
+
+	// let minus = document.getElementById('minus');
+	// minus.addEventListener('click', function (e){
+	// 	sizeMinus(source);
+	// }, false);
+
 }
 
 function moveStickers(image)
@@ -101,21 +104,65 @@ function addStickers()
 function sizeMinus()
 {
 	let div = document.getElementById('overlay').querySelectorAll("img");
+	//console.log("source: " + source);
 	
 	if (div[0])
 	{
 		console.log(div);
-		// let sticker = null;
+		// source = source.substr(1);
+		// source = "http://localhost:8080" + source;
+		let sticker = null;
 		for (let i = 0; i < div.length; i++)
 		{
-			let sticker = new Image();
-			sticker.src = div[i]['src'];
-			console.log(sticker.src);
-			sticker.style.width = div[i]['offsetWidth'];
-			sticker.style.width = sticker.offsetWidth-10+'px';
-			console.log(sticker.offsetWidth);
-			sticker.style.height = sticker.offsetHeight-1+'%';
-			console.log(sticker.offsetHeight);
+				sticker = new Image();
+				sticker.src = div[i]['src'];
+				sticker.width = (div[i]['offsetWidth'] - 30);
+				sticker.height = (div[i]['offsetHeight'] - 30);
+				sticker.style.position = "absolute";
+				let video = document.getElementById('webcam');
+				let width = video.offsetWidth;
+				let height = video.offsetHeight;
+				let top = 0.5 * (height - sticker.height);
+				let left = 0.5 * (width - sticker.width);
+				sticker.style.top = top + "px";
+				sticker.style.left = left + "px";
+				console.log(sticker);
+				sticker.style.cursor = "pointer";
+				sticker.addEventListener("click", moveStickers(sticker));
+				div[i].parentNode.replaceChild(sticker, div[i]);
+		}
+	}
+}
+
+function sizePlus()
+{
+	let div = document.getElementById('overlay').querySelectorAll("img");
+	//console.log("source: " + source);
+	
+	if (div[0])
+	{
+		console.log(div);
+		// source = source.substr(1);
+		// source = "http://localhost:8080" + source;
+		let sticker = null;
+		for (let i = 0; i < div.length; i++)
+		{
+				sticker = new Image();
+				sticker.src = div[i]['src'];
+				sticker.width = (div[i]['offsetWidth'] + 30);
+				sticker.height = (div[i]['offsetHeight'] + 30);
+				sticker.style.position = "absolute";
+				let video = document.getElementById('webcam');
+				let width = video.offsetWidth;
+				let height = video.offsetHeight;
+				let top = 0.5 * (height - sticker.height);
+				let left = 0.5 * (width - sticker.width);
+				sticker.style.top = top + "px";
+				sticker.style.left = left + "px";
+				console.log(sticker);
+				sticker.style.cursor = "pointer";
+				sticker.addEventListener("click", moveStickers(sticker));
+				div[i].parentNode.replaceChild(sticker, div[i]);
 		}
 	}
 }

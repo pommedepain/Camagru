@@ -17,8 +17,10 @@
 		button = document.getElementById('takepic');
 		canvas_skrs = document.getElementById('add_stickers');
 
-		width = video.offsetWidth;
-		video.height = width;
+		if (video.offsetWidth >= 720)
+			width = 720;
+		else
+			width = video.offsetWidth;
 		document.getElementById('transit').width = width;
 		document.getElementById('result').width = width;
 		
@@ -41,16 +43,15 @@
 				}
 
 				video.setAttribute('width', width);
-				console.log("video width = " + video.videoWidth);
-				console.log("width: " + width);
+				// console.log("video width = " + video.videoWidth);
 				video.setAttribute('height', height);
-				console.log("video height = " + video.videoHeight);
-				console.log("height: " + height);
+				// console.log("video height = " + video.videoHeight);
 				canvas.setAttribute('width', width);
 				canvas.setAttribute('height', height);
 				canvas_skrs.setAttribute('width', width);
 				canvas_skrs.setAttribute('height', height);
 				streaming = true;
+				ev.preventDefault();
 			}
 		}, false);
 
