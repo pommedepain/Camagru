@@ -41,9 +41,11 @@
 				}
 
 				video.setAttribute('width', width);
-				//console.log("video width = " + video.width);
+				console.log("video width = " + video.videoWidth);
+				console.log("width: " + width);
 				video.setAttribute('height', height);
-				//console.log("video height = " + video.height);
+				console.log("video height = " + video.videoHeight);
+				console.log("height: " + height);
 				canvas.setAttribute('width', width);
 				canvas.setAttribute('height', height);
 				canvas_skrs.setAttribute('width', width);

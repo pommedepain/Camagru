@@ -97,3 +97,25 @@ function addStickers()
 		let data_skrs = canvas_skrs.toDataURL('image/png');
 	}
 }
+
+function sizeMinus()
+{
+	let div = document.getElementById('overlay').querySelectorAll("img");
+	
+	if (div[0])
+	{
+		console.log(div);
+		// let sticker = null;
+		for (let i = 0; i < div.length; i++)
+		{
+			let sticker = new Image();
+			sticker.src = div[i]['src'];
+			console.log(sticker.src);
+			sticker.style.width = div[i]['offsetWidth'];
+			sticker.style.width = sticker.offsetWidth-10+'px';
+			console.log(sticker.offsetWidth);
+			sticker.style.height = sticker.offsetHeight-1+'%';
+			console.log(sticker.offsetHeight);
+		}
+	}
+}
