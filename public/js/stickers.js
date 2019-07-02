@@ -70,37 +70,6 @@ function moveStickers(image)
 		}
 }
 
-function addStickers()
-{
-	console.log("addStickers() triggered");
-	let video = document.getElementById('webcam');
-	let width = video.offsetWidth;
-	let height = video.offsetHeight;
-	let div = document.getElementById('overlay').querySelectorAll("img");
-	console.log(div);
-	canvas_skrs = document.getElementById('add_stickers');
-	let context_skrs = canvas_skrs.getContext('2d');
-	if (width && height)
-	{
-		canvas_skrs.height = height;
-		canvas_skrs.width = width;
-		for (let i = 0; i < div.length ; i++)
-		{
-			let image = new Image();
-			image.src = div[i]['src'];
-			image.addEventListener('load', function() {
-				let img_width = div[i]['width'];
-				let img_height = div[i]['height'];
-				let x = div[i]['offsetLeft'];
-				let y = div[i]['offsetTop'];
-				context_skrs.drawImage(image, x, y, img_width, img_height);
-			});
-		}
-		console.log("draw");
-		let data_skrs = canvas_skrs.toDataURL('image/png');
-	}
-}
-
 function sizeMinus()
 {
 	let div = document.getElementById('overlay').querySelectorAll("img");

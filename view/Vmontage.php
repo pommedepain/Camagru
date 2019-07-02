@@ -8,12 +8,16 @@ ob_start();
 <div id="content">
 	<div id="frame">
 		<h2>Who do you want to be ?</h2>
+		<div class="alert" id="alert">
+  			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  
+  			<strong>Oops!</strong> You need to addat least one sticker
+		</div>
 		<div id="camera-cont">
 			<div id="position">
 				<div id="overlay"><video id="webcam"></video></div>
 				<div id="buttonHolder">
 					<a onclick='sizeMinus()' class='button minus' id="minus" style="cursor:pointer;"></a>
-					<a onclick='addStickers()' id="takepic" class='button takepic' style="cursor:pointer;"></a>
+					<a id="takepic" class='button takepic' style="cursor:pointer;"></a>
 					<a onclick='sizePlus()'  class='button plus' style="cursor:pointer;"></a>
 				</div>
 			</div>
