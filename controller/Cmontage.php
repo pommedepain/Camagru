@@ -13,7 +13,6 @@ if (isset($_POST["photo"]) && isset($_POST["stickers"]) && isset($_POST['size'])
 		$data = str_replace(" ", "+", $data);
 		$data_skrs = str_replace("data:image/png;base64,", "", $_POST['stickers']);
 		$data_skrs = str_replace(" ", "+", $data_skrs);
-		echo $data_skrs;
 		$photo = base64_decode($data);
 		$stickers = base64_decode($data_skrs);
 		$photo = imagecreatefromstring($photo);
@@ -21,20 +20,17 @@ if (isset($_POST["photo"]) && isset($_POST["stickers"]) && isset($_POST['size'])
 
 		if ($photo !== false && $stickers !== false)
 		{
-			if (!imagepng($stickers) || !imagepng($photo))
-				echo "imagepng() 1 ERROR\n";
-			if (!imagealphablending($stickers, false))
-				echo "alphablending() ERROR\n";
-			if (!imagealphasave($stickers, true))
-				echo "alphasave() ERROR\n";
-			if (imagecopymerge($photo, $stickers, 0, 0, 0, 0, $_POST['size'], $_POST['size'], 100) === true)
+			if (imagecopy($photo, $stickers, 0, 0, 0, 0, $_POST['size'], $_POST['size']) === true)
 			{
-				//header('Content-Type: img/png');
-				if (!imagepng($photo))
-					echo "imagepng() 2 ERROR\n";
-				//else
-					//echo $photo;
+				$name = rand(0, 1000000);
+				header('Content-Type: img/png');
+				if (!imagepng($photo, '../public/img/photos_user/' . $name . '.png'))
+				 	echo "imagepng() 2 ERROR\n";
+				else
+					echo "imagepng() success ! Name = $name\n";
 			}
+			else
+				echo "copymerge() ERROR\n";
 		}
 		else
 			echo "Decode or createfromstring ERROR\n";
