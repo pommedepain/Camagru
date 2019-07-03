@@ -16,13 +16,18 @@
 		photo = document.getElementById('result');
 		button = document.getElementById('takepic');
 		canvas_skrs = document.getElementById('add_stickers');
-
+		
 		if (video.offsetWidth >= 720)
 			width = 720;
 		else
 			width = video.offsetWidth;
-		document.getElementById('transit').width = width;
-		document.getElementById('result').width = width;
+		
+		video.setAttribute('width', width);
+		video.setAttribute('height', width);
+		canvas.setAttribute('width', width);
+		canvas.setAttribute('height', width);
+		canvas_skrs.setAttribute('width', width);
+		canvas_skrs.setAttribute('height', width);
 		
 		navigator.mediaDevices.getUserMedia({ video: { width: width, height: width }, audio: false })
 			.then(function(stream) {
@@ -42,14 +47,6 @@
 					height = width;
 				}
 
-				video.setAttribute('width', width);
-				// console.log("video width = " + video.videoWidth);
-				video.setAttribute('height', height);
-				// console.log("video height = " + video.videoHeight);
-				canvas.setAttribute('width', width);
-				canvas.setAttribute('height', height);
-				canvas_skrs.setAttribute('width', width);
-				canvas_skrs.setAttribute('height', height);
 				streaming = true;
 				ev.preventDefault();
 			}
@@ -61,6 +58,7 @@
 		}, false);
 
 		clearphoto();
+		display_history();
 	}
 
 	function clearphoto()
@@ -150,9 +148,10 @@
 							if (needle < 0)
 							{
 								console.log("SUCCESS");
-								window.name = xhr.responseText.match(/\d+/)[0];
-								console.log(window.name);
-								//photo.setAttribute('src', xhr.responseText);
+								name = xhr.responseText.match(/\d+/)[0];
+								console.log(name);
+								photo.setAttribute('src', '../public/img/photos_user/' + name + '.png');
+								photo.style.display = "inline";
 							}
 						}
 						else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -167,6 +166,43 @@
 			nope.style.display = "inline";
 			clearphoto();
 		}
+	}
+
+	function display_history()
+	{
+		let div = document.getElementById('previous');
+
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', '../../controller/Chistory.php', true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send(`div=${div}`);
+		xhr.addEventListener('readystatechange', function() {
+			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
+			{
+				console.log(xhr.responseText);
+				/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
+				let needle = xhr.responseText.indexOf("ERROR");
+				console.log("needle = " + needle);
+				if (needle < 0)
+				{
+					console.log("SUCCESS");
+					let tab = JSON.parse(xhr.responseText);
+					let size = div.offsetWidth;
+					console.log(tab);
+					for (let i = 0; i < tab['photo'].length; i++) 
+					{
+						let img = document.createElement("img");
+						img.src = tab['photo'][i];
+						img.width = size;
+						img.height = size;
+						img.style.marginTop = "5%";
+						div.appendChild(img);
+					}
+				}
+			}
+			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
+    			alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
+		});
 	}
 
 	window.addEventListener('load', startup, false);

@@ -26,4 +26,9 @@ $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.email (
         `anonym_id` VARCHAR(32),
         `key_mail` VARCHAR(32),
         `rand_str` VARCHAR(32) DEFAULT NULL)");
+
+$connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.photos (
+        `id_user` INT NOT NULL,
+        `path_save` VARCHAR(255) NOT NULL,
+        `creation_date` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)");
 ?>

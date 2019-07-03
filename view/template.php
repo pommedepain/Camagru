@@ -11,8 +11,6 @@
 		<link rel="stylesheet" type="text/css" href="./public/css/activation.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/manage_account.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/montage.css">
-		<script src="./public/js/montage.js"></script>
-		<script src="./public/js/stickers.js"></script>
 	</head>
 
 	<body id="special">

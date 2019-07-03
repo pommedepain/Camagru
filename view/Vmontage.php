@@ -24,17 +24,20 @@ ob_start();
 			<!-- <img id="tv" src="https://library.kissclipart.com/20180830/faw/kissclipart-old-tv-clipart-pearland-television-advertisement-05163ef983d9af99.png" /> -->
 			<div id="options">
 				<h3>Stickers</h3>
-				<?php
-					$files = glob("./public/img/stickers/*.*");
-					for ($i = 0; $i < count($files); $i++)
-					{
-						$path = $files[$i]; ?>
-						<a style="cursor:pointer;" id='random_sticker'><img src='<?= $path ?>' alt='random stickers' id='rand_sticker_<?= $i ?>' onclick='getStickers("<?= $path ?>", <?= $i ?>)'/></a><br /><br />
-				<?php }
-				?>
+				<div id="optionss">
+					<?php
+						$files = glob("./public/img/stickers/*.*");
+						for ($i = 0; $i < count($files); $i++)
+						{
+							$path = $files[$i]; ?>
+							<a style="cursor:pointer;" id='random_sticker'><img src='<?= $path ?>' alt='random stickers' id='rand_sticker_<?= $i ?>' onclick='getStickers("<?= $path ?>", <?= $i ?>)'/></a><br /><br />
+					<?php }
+					?>
+				</div>
 			</div>
 			<div id="history">
 				<h3>Previously on Camagru...</h3>
+				<div id="previous"></div>
 			</div>
 		</div>
 		<div id="conteneur"><canvas id="transit"></canvas></div>
@@ -42,6 +45,8 @@ ob_start();
 		<div id="output"><img id="result" /></div>
 	</div>
 </div>
+<script src="./public/js/montage.js"></script>
+<script src="./public/js/stickers.js"></script>
 
 <?php
 $content = ob_get_clean();
