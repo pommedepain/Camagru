@@ -9,17 +9,22 @@ if (isset($_POST["div"]))
 		$db = new MontageManager();
 		$pdo = $db->db_connect();
 
-		if ($res = $db->get_all_photos_user($pdo, $_SESSION['user']))
+		if (isset($_SESSION['user']) && !empty($_SESSION['user']))
 		{
-			$tab = array();
-			$tab['id'] = $res[0]['id_user'];
-			foreach ($res as $elem)
+			if ($res = $db->get_all_photos_user($pdo, $_SESSION['user']))
 			{
-				$tab['photo'][] = $elem['path_save'];
-				$tab['creation'][] = $elem['creation_date'];
+				$tab = array();
+				$tab['id'] = $res[0]['id_user'];
+				foreach ($res as $elem)
+				{
+					$tab['photo'][] = $elem['path_save'];
+					$tab['creation'][] = $elem['creation_date'];
+				}
+				echo json_encode($tab);
 			}
-			echo json_encode($tab);
 		}
+		else if (!isset($_SESSION['user']) || empty($_SESSION['user']))
+			echo "user not loggued ERROR\n";
 		else
 			echo "get_all_photos_user() ERROR\n";
 	}

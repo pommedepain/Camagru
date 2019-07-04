@@ -29,11 +29,6 @@ function getStickers(source, num)
 		image.addEventListener("click", moveStickers(image));
 	}
 
-	// let minus = document.getElementById('minus');
-	// minus.addEventListener('click', function (e){
-	// 	sizeMinus(source);
-	// }, false);
-
 }
 
 function moveStickers(image)
@@ -73,20 +68,22 @@ function moveStickers(image)
 function sizeMinus()
 {
 	let div = document.getElementById('overlay').querySelectorAll("img");
-	//console.log("source: " + source);
 	
 	if (div[0])
 	{
-		console.log(div);
-		// source = source.substr(1);
-		// source = "http://localhost:8080" + source;
+		// console.log(div);
 		let sticker = null;
 		for (let i = 0; i < div.length; i++)
 		{
+			if (i + 1 >= div.length)
+			{
 				sticker = new Image();
 				sticker.src = div[i]['src'];
-				sticker.width = (div[i]['offsetWidth'] - 30);
-				sticker.height = (div[i]['offsetHeight'] - 30);
+				sticker.width = div[i]['offsetWidth'];
+				sticker.height = div[i]['offsetHeight'];
+				let ratio = sticker.height/sticker.width;
+				sticker.width -= 30;
+				sticker.height = sticker.width * ratio;
 				sticker.style.position = "absolute";
 				let video = document.getElementById('webcam');
 				let width = video.offsetWidth;
@@ -95,10 +92,11 @@ function sizeMinus()
 				let left = 0.5 * (width - sticker.width);
 				sticker.style.top = top + "px";
 				sticker.style.left = left + "px";
-				console.log(sticker);
+				// console.log(sticker);
 				sticker.style.cursor = "pointer";
 				sticker.addEventListener("click", moveStickers(sticker));
 				div[i].parentNode.replaceChild(sticker, div[i]);
+			}
 		}
 	}
 }
@@ -106,20 +104,22 @@ function sizeMinus()
 function sizePlus()
 {
 	let div = document.getElementById('overlay').querySelectorAll("img");
-	//console.log("source: " + source);
 	
 	if (div[0])
 	{
-		console.log(div);
-		// source = source.substr(1);
-		// source = "http://localhost:8080" + source;
+		//console.log(div);
 		let sticker = null;
 		for (let i = 0; i < div.length; i++)
 		{
+			if (i + 1 >= div.length)
+			{
 				sticker = new Image();
 				sticker.src = div[i]['src'];
-				sticker.width = (div[i]['offsetWidth'] + 30);
-				sticker.height = (div[i]['offsetHeight'] + 30);
+				sticker.width = div[i]['offsetWidth'];
+				sticker.height = div[i]['offsetHeight'];
+				let ratio = sticker.height/sticker.width;
+				sticker.width += 30;
+				sticker.height = sticker.width * ratio;
 				sticker.style.position = "absolute";
 				let video = document.getElementById('webcam');
 				let width = video.offsetWidth;
@@ -128,10 +128,20 @@ function sizePlus()
 				let left = 0.5 * (width - sticker.width);
 				sticker.style.top = top + "px";
 				sticker.style.left = left + "px";
-				console.log(sticker);
+				//console.log(sticker);
 				sticker.style.cursor = "pointer";
 				sticker.addEventListener("click", moveStickers(sticker));
 				div[i].parentNode.replaceChild(sticker, div[i]);
+			}
 		}
 	}
+}
+
+function LoadImage()
+{
+	// let file = document.getElementById('img_to_upload').files[0].name;
+	let file = document.getElementById('img_to_upload').files[0].mozFullPath;
+	let files = document.getElementById('img_to_upload').files;
+	console.log(files);
+	console.log(file);
 }

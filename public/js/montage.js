@@ -152,6 +152,29 @@
 								console.log(name);
 								photo.setAttribute('src', '../public/img/photos_user/' + name + '.png');
 								photo.style.display = "inline";
+								document.getElementById("cadre").style.display = "inline";
+								
+								let div = document.getElementById('previous');
+								let sub_div = document.createElement("div");
+								let img = document.createElement("img");
+								img.src = '../public/img/photos_user/' + name + '.png';
+								let size = div.offsetWidth;
+								img.width = size;
+								img.height = size;
+								img.style.marginTop = "5%";
+								sub_div.style.marginBottom = "8%";
+								let linky = document.createElement("a");
+								linky.classList.add("buttony");
+								linky.classList.add("cross");
+								linky.style.cursor= "pointer";
+								linky.style.position = "absolute";
+								linky.addEventListener("click", function () {
+									del(document.getElementById("img_div" + i));
+								}, false);
+								sub_div.appendChild(img);
+								sub_div.appendChild(linky);
+								sub_div.setAttribute("id", "img_div" + "00");
+								div.insertBefore(sub_div, div.childNodes[0]);
 							}
 						}
 						else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -191,18 +214,73 @@
 					console.log(tab);
 					for (let i = 0; i < tab['photo'].length; i++) 
 					{
+						let sub_div = document.createElement("div");
 						let img = document.createElement("img");
 						img.src = tab['photo'][i];
 						img.width = size;
 						img.height = size;
 						img.style.marginTop = "5%";
-						div.appendChild(img);
+						sub_div.style.marginBottom = "8%";
+						let linky = document.createElement("a");
+						linky.classList.add("buttony");
+						linky.classList.add("cross");
+						linky.style.cursor= "pointer";
+						linky.style.position = "absolute";
+						linky.addEventListener("click", function () {
+							del(document.getElementById("img_div" + i));
+						}, false);
+						sub_div.appendChild(img);
+						sub_div.appendChild(linky);
+						sub_div.setAttribute("id", "img_div" + i);
+						div.appendChild(sub_div);
 					}
+				}
+				else
+				{
+					console.log("FAIL");
+					document.getElementById('camera-cont').style.display = "none";
+					let message = document.getElementById('subtitle');
+					message.style.fontFamily = "VT323, monospace";
+					message.style.paddingTop = "2%";
+					message.innerHTML = message.innerHTML.replace("Who do you want to be ?", "You need to be loggued in to have access to this page !");
+					document.getElementById('link_no_log').style.display = "flex";
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
     			alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
 		});
+	}
+
+	function del(id)
+	{
+		console.log(id);
+		let src = id.querySelectorAll("img");
+		src = src[0]['src'];
+		let name = src.replace("http://localhost:8080/public/img/photos_user/", "");
+		console.log(name);
+
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', '../../controller/Cdel.php', true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send(`photo=${name}`);
+		xhr.addEventListener('readystatechange', function() {
+			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
+			{
+				console.log(xhr.responseText);
+				/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
+				let needle = xhr.responseText.indexOf("ERROR");
+				console.log("needle = " + needle);
+				if (needle < 0)
+				{
+					console.log("photo del");
+					window.location.href = './index.php?action=montage';
+				}
+				else
+					console.log("Pb with del photo");
+			}
+			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
+				alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
+			});
 	}
 
 	window.addEventListener('load', startup, false);

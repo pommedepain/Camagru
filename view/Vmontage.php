@@ -7,7 +7,8 @@ ob_start();
 
 <div id="content">
 	<div id="frame">
-		<h2>Who do you want to be ?</h2>
+		<h2 id="subtitle">Who do you want to be ?</h2>
+		<div id="link_no_log"><a id="not_loggued">You can <a id="register" href="index.php?action=register"> Register </a> or <a id="signin" href="index.php?action=sign_in"> Sign-in</a></a></div>
 		<div class="alert" id="alert">
   			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  
   			<strong>Oops!</strong> You need to addat least one sticker
@@ -20,8 +21,15 @@ ob_start();
 					<a id="takepic" class='button takepic' style="cursor:pointer;"></a>
 					<a onclick='sizePlus()'  class='button plus' style="cursor:pointer;"></a>
 				</div>
+				<div id="upload">
+					<div>
+						Select image to upload:
+						<input type="file" id="img_to_upload">
+						<label for="img_to_upload" id="to_upload">Search</label>
+						<input type="submit" value="Submit" id="submit" onclick="LoadImage()">
+					</div>
+				</div>
 			</div>
-			<!-- <img id="tv" src="https://library.kissclipart.com/20180830/faw/kissclipart-old-tv-clipart-pearland-television-advertisement-05163ef983d9af99.png" /> -->
 			<div id="options">
 				<h3>Stickers</h3>
 				<div id="optionss">
@@ -42,7 +50,7 @@ ob_start();
 		</div>
 		<div id="conteneur"><canvas id="transit"></canvas></div>
 		<div id="conteneur"><canvas id="add_stickers"></canvas></div>
-		<div id="output"><img id="result" /></div>
+		<div id="output"><img id="cadre" src="../public/img/frame.png"/><img id="result" /></div>
 	</div>
 </div>
 <script src="./public/js/montage.js"></script>

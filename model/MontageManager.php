@@ -67,10 +67,34 @@ Class MontageManager
 			return "Pb with id_exists:\n$id";
 		$req = $pdo->query("SELECT `id_user`,`path_save`,`creation_date`
 						FROM db_camagru.photos
-						WHERE `id_user` = $id");
+						WHERE `id_user` = $id
+						ORDER BY `creation_date` DESC");
 		if (!$res = $req->fetchAll())
 			return false;
 		else
 			return ($res);
+	}
+
+	public function del_photo_usr($pdo, $pseudo, $photo)
+	{
+		if (!$photos = $this->get_all_photos_user($pdo, $pseudo))
+			return "Pb with get_all_photos_user";
+
+		foreach ($photos as $elem)
+		{
+			if ($elem['path_save'] == $photo)
+				$to_del = $photo;
+		}
+		if (!$to_del)
+			return "No match found for this $photo";
+
+		$req = $pdo->prepare("DELETE FROM db_camagru.photos
+						WHERE `path_save`=:photo");
+		if ($req->execute(array(
+			'photo' => $photo
+		)))
+			return true;
+		else
+			return false;
 	}
 }
