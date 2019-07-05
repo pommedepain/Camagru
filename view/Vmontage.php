@@ -16,7 +16,7 @@ ob_start();
 		</div>
 		<div id="camera-cont">
 			<div id="position">
-				<div id="overlay"><img src="#" id="downloaded"><video id="webcam"></video></div>
+				<div id="overlay"><video id="webcam"></video></div>
 				<div id="buttonHolder">
 					<a onclick='sizeMinus()' class='button minus' id="minus" style="cursor:pointer;"></a>
 					<a id="takepic" class='button takepic' style="cursor:pointer;"></a>

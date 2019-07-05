@@ -186,20 +186,20 @@ function ShowImage(input)
 // 			// console.log("ratio: " + ratio);
 // 			// img.left = ratio + "%";
 // 			// img.style.marginLeft = webcam.offsetLeft;
-// 			console.log("video WIDTH: " + webcam.width);
-// 			console.log("webcam left: " + webcam.offsetLeft);
-// 			console.log("img left: " + img.offsetLeft);
+// 			// console.log("video WIDTH: " + webcam.width);
+// 			// console.log("webcam left: " + webcam.offsetLeft);
+// 			// console.log("img left: " + img.offsetLeft);
 // 			img.setAttribute('src', e.target.result);
 // 			if (webcam.width >= 720)
 // 			{
 // 				img.setAttribute('width', 720);
-// 				// img.left =  "9.1%";
+// 				// img.left = "9.1%";
 // 				// console.log(img.left);
 // 			}
 // 			else
 // 			{
 // 				img.setAttribute('width', webcam.offsetWidth);
-// 				// img.setAttribute('margin', "0");
+// 				// img.style.margin = "0 auto";
 // 			}
 // 			console.log( webcam.width);
 // 			img.style.height = "auto";
@@ -208,3 +208,29 @@ function ShowImage(input)
 // 		reader.readAsDataURL(input.files[0]);
 // 	}
 // }
+
+function LoadImage()
+{
+	let input = document.getElementById('img_to_upload');
+	
+	if (input.files && input.files[0])
+	{
+		let reader = new FileReader();
+
+		reader.onload = function (e) {
+			let webcam = document.getElementById('webcam');
+			let width = webcam.offsetWidth;
+			let img = document.createElement("img");
+			img.setAttribute("id", "webcam");
+			img.width = width;
+			img.height = width;
+			img.setAttribute('src', e.target.result);
+
+			let div = document.getElementById('overlay');
+			div.innerHTML = "";
+			div.appendChild(img);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
+}
