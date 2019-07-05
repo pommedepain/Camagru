@@ -8,6 +8,7 @@
 	let canvas_skrs = null;
 	let photo = null;
 	let button = null;
+	// let downloaded = null;
 
 	function startup()
 	{
@@ -16,6 +17,7 @@
 		photo = document.getElementById('result');
 		button = document.getElementById('takepic');
 		canvas_skrs = document.getElementById('add_stickers');
+		// downloaded = document.getElementById('downloaded');
 		
 		if (video.offsetWidth >= 720)
 			width = 720;
@@ -27,7 +29,9 @@
 		canvas.setAttribute('width', width);
 		canvas.setAttribute('height', width);
 		canvas_skrs.setAttribute('width', width);
-		canvas_skrs.setAttribute('height', width);
+		// canvas_skrs.setAttribute('height', width);
+		// downloaded.setAttribute('width', width);
+		// downloaded.setAttribute('height', width);
 		
 		navigator.mediaDevices.getUserMedia({ video: { width: width, height: width }, audio: false })
 			.then(function(stream) {
@@ -78,9 +82,14 @@
 	{
 		console.log("addStickers() triggered");
 		let video = document.getElementById('webcam');
-		let width = video.width;
+		// if (video.offsetWidth >= 720 && video.style.display !== "none")
+		// 	width = 720;
+		// else if (video.offsetWidth < 720 && video.style.display !== "none")
+		// 	width = video.offsetWidth;
+		// else if (video.style.display === "none")
+		// 	width = downloaded.offsetWidth;
 		console.log("width: " + width);
-		let height = video.offsetHeight;
+		// let height = width;
 		console.log("height: " + height);
 		let div = document.getElementById('overlay').querySelectorAll("img");
 		console.log(div);
@@ -109,6 +118,31 @@
 				return (window.data_skrs);
 			}, 5);
 		}
+		// else if (width && height && div[1] && video.style.display === "none")
+		// {
+		// 	canvas_skrs.height = height;
+		// 	canvas_skrs.width = width;
+		// 	for (let i = 1; i < div.length ; i++)
+		// 	{
+		// 		let image = new Image();
+		// 		image.addEventListener('load', function() {
+		// 			let img_width = div[i]['width'];
+		// 			let img_height = div[i]['height'];
+		// 			let x = (div[i]['offsetLeft'] - 155);
+		// 			console.log("x: " + x);
+		// 			let y = div[i]['offsetTop'];
+		// 			console.log("y: " + y);
+		// 			context_skrs.drawImage(image, x, y, img_width, img_height);
+		// 		});
+		// 		image.src = div[i]['src'];
+		// 		console.log("image source: " + image.src);
+		// 	}
+		// 	setTimeout(function() {
+		// 		window.data_skrs = canvas_skrs.toDataURL('image/png');
+		// 		console.log("draw");
+		// 		return (window.data_skrs);
+		// 	}, 5);
+		// }
 		else
 		{
 			let nope = document.getElementById('alert');
@@ -128,9 +162,11 @@
 			console.log("canvas height = " + canvas.height);
 			canvas.width = width;
 			console.log("canvas width = " + canvas.width);
-			context.drawImage(video, 0, 0, width, height);
+			// if (video.style.display !== "none")
+				context.drawImage(video, 0, 0, width, height);
+			// else
+				// context.drawImage(downloaded, 0, 0, width, height);
 			let data = canvas.toDataURL('image/png');
-			//let response = await ret_SendPic(data);
 			setTimeout(function () {
 				if (data && window.data_skrs)
 				{
@@ -153,6 +189,7 @@
 								photo.setAttribute('src', '../public/img/photos_user/' + name + '.png');
 								photo.style.display = "inline";
 								document.getElementById("cadre").style.display = "inline";
+								document.getElementById('blah').style.display = "none";
 								
 								let div = document.getElementById('previous');
 								let sub_div = document.createElement("div");

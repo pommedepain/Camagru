@@ -7,10 +7,10 @@
 		<title><?= $title ?></title>
 		<link rel="shortcut icon" href="myfavicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="./public/css/index.css">
+		<?= $stylesheet ?>
 		<link rel="stylesheet" type="text/css" href="./public/css/create.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/activation.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/manage_account.css">
-		<link rel="stylesheet" type="text/css" href="./public/css/montage.css">
 	</head>
 
 	<body id="special">

@@ -1,6 +1,7 @@
 <?php 
 
-$title = "Montage"; 
+$title = "Montage";
+$stylesheet = '<link rel="stylesheet" type="text/css" href="./public/css/montage.css">';
 
 ob_start();
 ?>
@@ -15,16 +16,16 @@ ob_start();
 		</div>
 		<div id="camera-cont">
 			<div id="position">
-				<div id="overlay"><video id="webcam"></video></div>
+				<div id="overlay"><img src="#" id="downloaded"><video id="webcam"></video></div>
 				<div id="buttonHolder">
 					<a onclick='sizeMinus()' class='button minus' id="minus" style="cursor:pointer;"></a>
 					<a id="takepic" class='button takepic' style="cursor:pointer;"></a>
 					<a onclick='sizePlus()'  class='button plus' style="cursor:pointer;"></a>
 				</div>
 				<div id="upload">
-					<div>
+					<div id="select_submit">
 						Select image to upload:
-						<input type="file" id="img_to_upload">
+						<input type="file" id="img_to_upload" onchange="ShowImage(this)">
 						<label for="img_to_upload" id="to_upload">Search</label>
 						<input type="submit" value="Submit" id="submit" onclick="LoadImage()">
 					</div>
@@ -48,6 +49,7 @@ ob_start();
 				<div id="previous"></div>
 			</div>
 		</div>
+		<img id="blah" src="#"/>
 		<div id="conteneur"><canvas id="transit"></canvas></div>
 		<div id="conteneur"><canvas id="add_stickers"></canvas></div>
 		<div id="output"><img id="cadre" src="../public/img/frame.png"/><img id="result" /></div>

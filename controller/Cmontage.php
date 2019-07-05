@@ -17,7 +17,6 @@ if (isset($_POST["photo"]) && isset($_POST["stickers"]) && isset($_POST['size'])
 		$stickers = base64_decode($data_skrs);
 		$photo = imagecreatefromstring($photo);
 		$stickers = imagecreatefromstring($stickers);
-
 		if ($photo !== false && $stickers !== false)
 		{
 			if (imagecopy($photo, $stickers, 0, 0, 0, 0, $_POST['size'], $_POST['size']) === true)

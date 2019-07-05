@@ -92,6 +92,7 @@ h2
 #overlay
 {
 	position: relative;
+	z-index: 1000;
 }
 #webcam
 {
@@ -203,7 +204,7 @@ h2
 }
 
 
-#upload
+#select_submit
 {
 	display: flex;
 	flex-direction: row;
@@ -238,6 +239,17 @@ h2
 	border-right: 1px solid #333333;
 	border-bottom: 1px solid #333333;
 	border-left: 1px solid #CCCCCC;
+}
+#blah
+{
+	margin: 0 auto;
+	display: none;
+}
+#downloaded
+{
+	display:none;
+	/* left: 14%; */
+	/* margin-left: 9.1%; */
 }
 
 #options
