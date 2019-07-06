@@ -142,6 +142,7 @@
 							console.log("needle = " + needle);
 							if (needle < 0)
 							{
+								/* Displays the newly taken picture in the frame below the camera */
 								console.log("SUCCESS");
 								name = xhr.responseText.match(/\d+/)[0];
 								console.log(name);
@@ -150,6 +151,7 @@
 								document.getElementById("cadre").style.display = "inline";
 								document.getElementById('blah').style.display = "none";
 								
+								/* Appends the newly taken picture in top of the history display */
 								let div = document.getElementById('previous');
 								let sub_div = document.createElement("div");
 								let img = document.createElement("img");
@@ -171,6 +173,15 @@
 								sub_div.appendChild(linky);
 								sub_div.setAttribute("id", "img_div" + "00");
 								div.insertBefore(sub_div, div.childNodes[0]);
+
+								/* Remove all stickers previously selected from the camera */
+								let stickers = document.getElementById('overlay').querySelectorAll("img");
+								console.log(stickers);
+								for (let i = 0; i < stickers.length; i++) 
+								{
+									if (stickers[i]['id'] !== 'webcam')
+										stickers[i].parentNode.removeChild(stickers[i]);
+								}
 							}
 						}
 						else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)

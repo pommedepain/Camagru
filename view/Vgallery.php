@@ -6,7 +6,9 @@ $stylesheet = '<link rel="stylesheet" type="text/css" href="./public/css/gallery
 ob_start();
 ?>
 
-<div>
+<div id="content">
+	<div id="stylish">
+	</div>
 </div>
 <script src="./public/js/gallery.js"></script>
 

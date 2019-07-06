@@ -1,0 +1,50 @@
+#content
+{
+	/* border: 1px solid red; */
+	display: flex;
+	justify-content: center;
+}
+#stylish
+{
+	display: flex;
+	flex-direction: column;
+	/* border: 1px solid whitesmoke; */
+	width: 98%;
+	border-radius: 0.5em;
+}
+#heart {
+	width: 100px;
+	height: 100px;
+	/* position: absolute; */
+	left: 5%;
+	transform: translate(-50%, -50%);
+	background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
+	background-position: 0 0;
+	cursor: pointer;
+	animation: fave-heart 1s steps(28);
+  }
+  #heart:active {
+	background-position: -2800px 0;
+	transition: background 1s steps(28);
+  }
+  @keyframes fave-heart {
+	0% {
+	  background-position: 0 0;
+	}
+	100% {
+	  background-position: -2800px 0;
+	}
+  }
+
+#btnControl
+{
+	/* display: none; */
+}
+#btnControl:checked + label
+{
+	width: 10%;
+	height: 10%;
+	color: #e2264d;
+	will-change: font-size;
+	animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+}

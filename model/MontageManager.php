@@ -75,6 +75,17 @@ Class MontageManager
 			return ($res);
 	}
 
+	public function get_all_photos($pdo)
+	{
+		$req = $pdo->query("SELECT `id_user`,`path_save`,`creation_date`, `likes`, `comments`
+						FROM db_camagru.photos
+						ORDER BY `creation_date` DESC");
+		if (!$res = $req->fetchAll())
+			return false;
+		else
+			return ($res);
+	}
+
 	public function del_photo_usr($pdo, $pseudo, $photo)
 	{
 		if (!$photos = $this->get_all_photos_user($pdo, $pseudo))
