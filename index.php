@@ -23,6 +23,8 @@ if (isset($_GET['action']))
 		manage_account();
 	else if ($_GET['action'] == 'montage')
 		montage();
+	else if ($_GET['action'] == 'gallery')
+		gallery();
 }
 else
 	start();

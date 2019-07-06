@@ -4,17 +4,11 @@ function getStickers(source, num)
 		let width = 0;
 		let height = 0;
 		let video = document.getElementById('webcam');
-		if (video.style.display === "none")
-			width = document.getElementById('downloaded').offsetWidth;
-		else
-			width = video.offsetWidth;
+		
+		width = video.width;
 		console.log("width canvas: " + width);
-		if (video.style.display === "none")
-			height = document.getElementById('downloaded').offsetHeight;
-		else
-			height = video.offsetHeight;
+		height = video.height;
 		console.log("height canvas: " + height);
-		console.log("cam display: " + video.style.display);
 		console.log(num);
 		let img_width = document.getElementById('rand_sticker_' + num).offsetWidth;
 		let img_height = document.getElementById('rand_sticker_' + num).offsetHeight;
@@ -167,48 +161,6 @@ function ShowImage(input)
 	}
 }
 
-// function LoadImage()
-// {
-// 	let input = document.getElementById('img_to_upload');
-	
-// 	if (input.files && input.files[0])
-// 	{
-// 		let reader = new FileReader();
-
-// 		reader.onload = function (e) {
-// 			let img = document.getElementById('downloaded');
-// 			let webcam = document.getElementById('webcam');
-// 			// webcam.style.display = "none";
-// 			img.style.display = "inline";
-// 			img.style.zIndex = "100";
-// 			img.style.position = "relative";
-// 			// let ratio = (webcam.videoWidth / webcam.offsetLeft) * 100;
-// 			// console.log("ratio: " + ratio);
-// 			// img.left = ratio + "%";
-// 			// img.style.marginLeft = webcam.offsetLeft;
-// 			// console.log("video WIDTH: " + webcam.width);
-// 			// console.log("webcam left: " + webcam.offsetLeft);
-// 			// console.log("img left: " + img.offsetLeft);
-// 			img.setAttribute('src', e.target.result);
-// 			if (webcam.width >= 720)
-// 			{
-// 				img.setAttribute('width', 720);
-// 				// img.left = "9.1%";
-// 				// console.log(img.left);
-// 			}
-// 			else
-// 			{
-// 				img.setAttribute('width', webcam.offsetWidth);
-// 				// img.style.margin = "0 auto";
-// 			}
-// 			console.log( webcam.width);
-// 			img.style.height = "auto";
-// 		};
-
-// 		reader.readAsDataURL(input.files[0]);
-// 	}
-// }
-
 function LoadImage()
 {
 	let input = document.getElementById('img_to_upload');
@@ -219,15 +171,16 @@ function LoadImage()
 
 		reader.onload = function (e) {
 			let webcam = document.getElementById('webcam');
-			let width = webcam.offsetWidth;
+			width = webcam.width;
 			let img = document.createElement("img");
-			img.setAttribute("id", "webcam");
 			img.width = width;
 			img.height = width;
+			console.log("img.width: " + img.width + " & height: " + img.height);
 			img.setAttribute('src', e.target.result);
 
 			let div = document.getElementById('overlay');
 			div.innerHTML = "";
+			img.setAttribute("id", 'webcam');
 			div.appendChild(img);
 		};
 

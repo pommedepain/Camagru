@@ -47,3 +47,7 @@ function montage()
 	require_once('./view/Vmontage.php');
 }
 
+function gallery()
+{
+	require_once('./view/Vgallery.php');
+}

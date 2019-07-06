@@ -27,7 +27,7 @@
 		<nav class="bar">
     		<ul>
        			<li><a href="index.php?action=start">Home</a></li>
-	        	<li><a href="#">Gallery</a></li>
+	        	<li><a href="index.php?action=gallery">Gallery</a></li>
     	    	<li><a href="index.php?action=montage">Montage</a></li>
     		</ul>
 		</nav>
