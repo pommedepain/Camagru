@@ -12,39 +12,95 @@
 	width: 98%;
 	border-radius: 0.5em;
 }
-#heart {
-	width: 100px;
-	height: 100px;
-	/* position: absolute; */
-	left: 5%;
-	transform: translate(-50%, -50%);
-	background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
-	background-position: 0 0;
-	cursor: pointer;
-	animation: fave-heart 1s steps(28);
-  }
-  #heart:active {
-	background-position: -2800px 0;
-	transition: background 1s steps(28);
-  }
-  @keyframes fave-heart {
-	0% {
-	  background-position: 0 0;
-	}
-	100% {
-	  background-position: -2800px 0;
-	}
-  }
 
-#btnControl
+
+#left_d
 {
-	/* display: none; */
+	display: flex;
+	flex-direction: column;
+	/* width: 50%; */
 }
-#btnControl:checked + label
+.display
 {
-	width: 10%;
-	height: 10%;
-	color: #e2264d;
-	will-change: font-size;
-	animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+	display: flex;
+	flex-direction: row;
+	background-color: whitesmoke;
 }
+.heart
+{
+	position: relative;
+	margin-bottom: 2%;
+	margin-left: 2.5%;
+}
+.fa-heart-o 
+{
+	color: red;
+	cursor: pointer;
+}
+  
+.fa-heart 
+{
+	color: red;
+	cursor: pointer;
+}
+
+#actions
+{
+	display: flex;
+	flex-direction: row;
+}
+.com_div
+{
+	width: 43%;
+	margin-left: 2%;
+}
+.comment 
+{
+	background: 0;
+	border: 4px dotted red;
+	border-image-source: url('https://cl.ly/3c2J3c0l3r0P/dots.svg');
+	border-image-slice: 33% 33%;
+	border-image-repeat: round;
+	border-radius: 0.5em;
+	outline: none;
+	width: 43%;
+	font-size: 1em;
+	transition: padding 0.3s 0.2s ease;
+}
+.comment:focus 
+{
+	padding-bottom: 5px;
+}
+
+#right_d
+{
+	display: flex;
+	flex-direction: column;
+	margin-left: -53%;
+	margin-top: 2%;
+}
+#bubble
+{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	background: #00bfb6;
+	padding: 20px;
+	text-align: center;
+	font-weight: 900;
+	color: #fff;
+	font-family: arial;
+	position: relative;
+}
+#bubble:before {
+	content: "";
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	border-left: 10px solid transparent;
+	border-right: 10px solid #00bfb6;
+	border-top: 10px solid #00bfb6;
+	border-bottom: 10px solid transparent;
+	left: -19px;
+	top: 6px;
+  }

@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="./public/css/create.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/activation.css">
 		<link rel="stylesheet" type="text/css" href="./public/css/manage_account.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 
 	<body id="special">

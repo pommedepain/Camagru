@@ -93,6 +93,10 @@ h2
 {
 	position: relative;
 	z-index: 1000;
+	/* width: 95%;
+	padding: 0;
+	margin: 0 auto; */
+	/* border: 1px solid red; */
 }
 #webcam
 {

@@ -8,11 +8,13 @@
 	let canvas_skrs = null;
 	let photo = null;
 	let button = null;
+	let overlay = null;
 
 	function startup()
 	{
 		video = document.getElementById('webcam');
-   		canvas = document.getElementById('transit');
+		canvas = document.getElementById('transit');
+		overlay = document.getElementById('overlay');
 		photo = document.getElementById('result');
 		button = document.getElementById('takepic');
 		canvas_skrs = document.getElementById('add_stickers');
@@ -28,6 +30,9 @@
 		canvas.setAttribute('width', width);
 		canvas.setAttribute('height', width);
 		canvas_skrs.setAttribute('width', width);
+		canvas_skrs.setAttribute('height', width);
+		overlay.setAttribute('width', width);
+		overlay.setAttribute('height', width);
 		
 		navigator.mediaDevices.getUserMedia({ video: { width: width, height: width }, audio: false })
 			.then(function(stream) {
@@ -92,7 +97,8 @@
 				image.addEventListener('load', function() {
 					let img_width = div[i]['width'];
 					let img_height = div[i]['height'];
-					let x = (div[i]['offsetLeft'] - 100);
+					/* Needs to be -100 at school and -17 on personnal computer */
+					let x = (div[i]['offsetLeft'] - 17);
 					console.log("x: " + x);
 					let y = div[i]['offsetTop'];
 					console.log("y: " + y);
