@@ -12,7 +12,7 @@ ob_start();
 		<div id="link_no_log"><a id="not_loggued">You can <a id="register" href="index.php?action=register"> Register </a> or <a id="signin" href="index.php?action=sign_in"> Sign-in</a></a></div>
 		<div class="alert" id="alert">
   			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  
-  			<strong>Oops!</strong> You need to addat least one sticker
+  			<strong>Oops!</strong> You need to add at least one sticker
 		</div>
 		<div id="camera-cont">
 			<div id="position">

@@ -18,13 +18,15 @@
 {
 	display: flex;
 	flex-direction: column;
-	/* width: 50%; */
+	width: 50%;
+	order: 1;
 }
 .display
 {
 	display: flex;
 	flex-direction: row;
 	background-color: whitesmoke;
+	margin-right: 1%;
 }
 .heart
 {
@@ -51,8 +53,8 @@
 }
 .com_div
 {
-	width: 43%;
-	margin-left: 2%;
+	width: 77%;
+	margin-left: 2.5%;
 }
 .comment 
 {
@@ -71,13 +73,18 @@
 {
 	padding-bottom: 5px;
 }
+.counter
+{
+	padding-left: 2%;
+}
 
 #right_d
 {
 	display: flex;
 	flex-direction: column;
-	margin-left: -53%;
+	width: 50%;
 	margin-top: 2%;
+	order: 2;
 }
 #bubble
 {
@@ -86,10 +93,9 @@
 	width: 100%;
 	background: #00bfb6;
 	padding: 20px;
-	text-align: center;
+	text-align: left;
 	font-weight: 900;
 	color: #fff;
-	font-family: arial;
 	position: relative;
 }
 #bubble:before {
@@ -103,4 +109,40 @@
 	border-bottom: 10px solid transparent;
 	left: -19px;
 	top: 6px;
+  }
+  #capsule
+  {
+	  display: flex;
+	  flex-direction: row;
+	  margin-left: 1%;
+  }
+  .alert 
+  {
+	  padding: 1%;
+	  width: 99%;
+	  background-color: #f44336;
+	  color: white;
+	  opacity: 1;
+	  transition: opacity 0.6s;
+	  margin-bottom: 15px;
+	  display: none;
+  }
+  .closebtn 
+  {
+	  margin-left: 15px;
+	  color: white;
+	  font-weight: bold;
+	  float: right;
+	  font-size: 22px;
+	  line-height: 20px;
+	  cursor: pointer;
+	  transition: 0.3s;
+  }
+  .closebtn:hover 
+  {
+	  color: black;
+  }
+  .alert > strong
+  {
+	  font-size: 2vw;
   }

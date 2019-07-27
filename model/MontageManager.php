@@ -77,8 +77,33 @@ Class MontageManager
 
 	public function get_all_photos($pdo)
 	{
-		$req = $pdo->query("SELECT `id_user`,`path_save`,`creation_date`, `likes`, `comments`
-						FROM db_camagru.photos
+		$db = "db_camagru";
+		$db_photo = "photos";
+		$db_account = "account";
+		$req = $pdo->query("SELECT `$db_photo`.id_user, `$db_account`.pseudo, `$db_photo`.path_save, `$db_photo`.creation_date, 
+						`$db_photo`.likes, `$db_photo`.comments
+						FROM $db.`$db_photo`
+						INNER JOIN $db.`$db_account` ON $db.`$db_photo`.id_user = $db.`$db_account`.id
+						ORDER BY `creation_date` DESC");
+		if (!$res = $req->fetchAll())
+			return false;
+		else
+			return ($res);
+	}
+
+	public function get_all_activity($pdo)
+	{
+		$db = "db_camagru";
+		$db_photo = "photos";
+		$db_account = "account";
+		$db_activity = "gallery_activity";
+		$comments = "comments";
+		$req = $pdo->query("SELECT `$db_photo`.id_user, `$db_account`.pseudo, `$db_photo`.path_save, `$db_photo`.creation_date, 
+						`$db_activity`.id_user AS 'From', `$db_activity`.liked, `$comments`.comment
+						FROM $db.`$db_photo`
+						INNER JOIN $db.`$db_account` ON $db.`$db_photo`.id_user = $db.`$db_account`.id
+						INNER JOIN $db.`$db_activity` ON $db.`$db_photo`.path_save = $db.`$db_activity`.photo
+						LEFT JOIN $db.`$comments` ON $db.`$db_activity`.photo = $db.`$comments`.photo
 						ORDER BY `creation_date` DESC");
 		if (!$res = $req->fetchAll())
 			return false;
@@ -103,6 +128,110 @@ Class MontageManager
 						WHERE `path_save`=:photo");
 		if ($req->execute(array(
 			'photo' => $photo
+		)))
+			return true;
+		else
+			return false;
+	}
+
+	public function alter_like($pdo, $photo, $like)
+	{
+		$db = "db_camagru";
+		$db_photo = "photos";
+		if ($like === "liked")
+			$req = $pdo->prepare("UPDATE $db.`$db_photo` SET `likes`= `likes`+ 1
+								WHERE `path_save`=:photo");
+		else if ($like === "unliked")
+			$req = $pdo->prepare("UPDATE $db.`$db_photo` SET `likes`= `likes`- 1
+								WHERE `path_save`=:photo");
+		$req->bindParam('photo', $photo, PDO::PARAM_STR);
+		if ($req->execute())
+			return true;
+		else
+			return false;
+	}
+
+	public function alter_comments($pdo, $photo)
+	{
+		$db = "db_camagru";
+		$db_photo = "photos";
+		$req = $pdo->prepare("UPDATE $db.`$db_photo` SET `comments`= `comments`+ 1
+							WHERE `path_save`=:photo");
+		$req->bindParam('photo', $photo, PDO::PARAM_STR);
+		if ($req->execute())
+			return true;
+		else
+			return false;
+	}
+
+	public function check_like($pdo)
+	{
+		$req = $pdo->query("SELECT `id_user`,`photo`,`liked` FROM db_camagru.gallery_activity");
+		if (($ret = $req->fetchAll()) === false)
+			return false;
+		else
+			return ($ret);
+	} 
+
+	public function user_activity_like($pdo, $photo, $like, $user)
+	{
+		if (!is_numeric($id = $this->id_exists($pdo, $user)))
+			return "Pb with is_numeric()";
+	
+		if (($ret = $this->check_like($pdo)) === false)
+			return false;
+
+		if ($like === "liked")
+			$liked = 1;
+		else if ($like === "unliked")
+			$liked = 0;
+		
+		foreach ($ret as $elem)
+		{
+			//$ret2 = $elem['id_user'] . " = " . $id . "; " . $elem['photo'] . " = " . $photo . "; "  . $elem['liked'] . " = " . $liked;
+			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == $liked)
+				return "Photo already $like by $user";
+		}
+		$req = $pdo->prepare("INSERT INTO db_camagru.gallery_activity(id_user, photo, liked)
+							VALUES(:id, :photo, :liked)");
+		if ($req->execute(array(
+			'id' => $id,
+			'photo' => $photo,
+			'liked' => $liked
+		)))
+			return true;
+		else
+			return false;
+	}
+
+	public function user_activity_comments($pdo, $photo, $user)
+	{
+		if (!is_numeric($id = $this->id_exists($pdo, $user)))
+			return false;
+		$req = $pdo->prepare("INSERT INTO db_camagru.gallery_activity(id_user, photo, comments)
+							VALUES(:id, :photo, :comments)");
+		if ($req->execute(array(
+			'id' => $id,
+			'photo' => $photo,
+			'comments' => `comments` + 1
+		)))
+			return true;
+		else
+			return false;
+	}
+
+	public function register_comment($pdo, $user, $photo, $comment)
+	{
+		if (!is_numeric($id = $this->id_exists($pdo, $user)))
+			return false;
+		$db = "db_camagru";
+		$db_comments = "comments";
+		$req = $pdo->prepare("INSERT INTO $db.`$db_comments`(id_user, photo, comment)
+							VALUES(:id_user, :photo, :comment)");
+		if ($req->execute(array(
+			'id_user' => $id,
+			'photo' => $photo,
+			'comment' => $comment
 		)))
 			return true;
 		else

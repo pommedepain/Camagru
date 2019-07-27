@@ -6,6 +6,12 @@ $stylesheet = '<link rel="stylesheet" type="text/css" href="./public/css/gallery
 ob_start();
 ?>
 
+<div id="capsule">
+	<div class="alert" id="alert">
+  		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  
+  		<strong>Oops!</strong> You need to be logged in to like or comment a photo
+	</div>
+</div>
 <div id="content">
 	<div id="stylish">
 	</div>
