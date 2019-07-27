@@ -2,9 +2,9 @@
 
 require_once('../require.php');
 
-if (isset($_POST["photo"]) && isset($_POST["stickers"]) && isset($_POST['size']))
+if (isset($_POST['photo']) && isset($_POST['stickers']) && isset($_POST['size']))
 {
-	if (!empty($_POST["photo"]) && !empty($_POST["stickers"]) && !empty($_POST['size']))
+	if (!empty($_POST['photo']) && !empty($_POST['stickers']) && !empty($_POST['size']))
 	{
 		$db = new MontageManager();
 		$pdo = $db->db_connect();

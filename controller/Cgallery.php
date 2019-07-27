@@ -32,7 +32,7 @@ else if (isset($_POST['activity']))
 		$db = new MontageManager();
 		$pdo = $db->db_connect();
 
-		if ($ret = $db->get_all_activity($pdo))
+		if (!empty($ret = $db->get_all_activity($pdo)))
 		{
 			$tab2 = array();
 			foreach ($ret as $element)
@@ -46,8 +46,10 @@ else if (isset($_POST['activity']))
 			}
 			echo json_encode($tab2);
 		}
+		else if (empty($ret))
+			echo "No activity to display\n";
 		else
-		echo "get_all_activity() went wrong ERROR\n";
+			echo "get_all_activity() went wrong ERROR\n";
 	}
 }
 else

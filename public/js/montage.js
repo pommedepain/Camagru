@@ -9,6 +9,7 @@
 	let photo = null;
 	let button = null;
 	let overlay = null;
+	let increment = 0;
 
 	function startup()
 	{
@@ -98,7 +99,7 @@
 					let img_width = div[i]['width'];
 					let img_height = div[i]['height'];
 					/* Needs to be -100 at school and -17 on personnal computer */
-					let x = (div[i]['offsetLeft'] - 17);
+					let x = (div[i]['offsetLeft'] - 140);
 					console.log("x: " + x);
 					let y = div[i]['offsetTop'];
 					console.log("y: " + y);
@@ -172,12 +173,13 @@
 								linky.classList.add("cross");
 								linky.style.cursor= "pointer";
 								linky.style.position = "absolute";
+								sub_div.setAttribute("id", "image_div" + increment);
+								console.log(document.getElementById("image_div" + increment));
 								linky.addEventListener("click", function () {
-									del(document.getElementById("img_div" + i));
+									del(sub_div);
 								}, false);
 								sub_div.appendChild(img);
 								sub_div.appendChild(linky);
-								sub_div.setAttribute("id", "img_div" + "00");
 								div.insertBefore(sub_div, div.childNodes[0]);
 
 								/* Remove all stickers previously selected from the camera */
@@ -195,6 +197,7 @@
 					});
 				}
 			}, 20);
+			increment++;
 		}
 		else
 		{

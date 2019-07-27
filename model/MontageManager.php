@@ -166,7 +166,7 @@ Class MontageManager
 
 	public function check_like($pdo)
 	{
-		$req = $pdo->query("SELECT `id_user`,`photo`,`liked` FROM db_camagru.gallery_activity");
+		$req = $pdo->query("SELECT * FROM db_camagru.gallery_activity");
 		if (($ret = $req->fetchAll()) === false)
 			return false;
 		else
@@ -185,13 +185,55 @@ Class MontageManager
 			$liked = 1;
 		else if ($like === "unliked")
 			$liked = 0;
-		
+
 		foreach ($ret as $elem)
 		{
-			//$ret2 = $elem['id_user'] . " = " . $id . "; " . $elem['photo'] . " = " . $photo . "; "  . $elem['liked'] . " = " . $liked;
+			// if ($elem['id_user'] === $id && $elem['photo'] === $photo)
+			// 	return "elem id_user === " . $elem['id_user'] . " et id === " . $id . " && elem photo: " . $elem['photo'] . " et photo: " . $photo . " && elem liked: " . $elem['liked'] . " et liked: " . $liked . " et like: " . $like . " && elem comments: " . $elem['comments'];
 			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == $liked)
 				return "Photo already $like by $user";
+			/* Deletes row of activity if user unlike the photo and didn't comment it */
+			else if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 1 && $like === "unliked" && $elem['comments'] === 0)
+			{
+				$req = $pdo->prepare("DELETE FROM db_camagru.gallery_activity
+									WHERE `photo`=:photo AND `id_user`=:id");
+				if ($req->execute(array(
+					'photo' => $photo,
+					'id' => $id
+				)))
+					return true /*$elem['id_user'] . " === " . $id . " && " . $elem['photo'] . " === " . $photo . " && " . $elem['liked'] . " === 1 && " . $like . " == unliked && " . $elem['comments'] . " === 0"*/;
+				else
+					return false;
+			}
+			/* Updates row of activity and sets `liked` to 0 if the user commented the photo but unliked it*/
+			else if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 1 && $like === "unliked" && $elem['comments'] > 0)
+			{
+				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `liked`= `liked` - 1
+									WHERE `photo`=:photo AND `id_user`=:id");
+				if ($req->execute(array(
+					'photo' => $photo,
+					'id' => $id
+				)))
+					return true /*$elem['id_user'] . " === " . $id . " && " . $elem['photo'] . " === " . $photo . " && " . $elem['liked'] . " === 1 && " . $like . " == unliked && " . $elem['comments'] . " > 0"*/;
+				else
+					return false;
+			}
+			/* Updates row of activity and sets `liked` to 1 if the user commented the photo */
+			else if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 0 && $like === "liked" && $elem['comments'] > 0)
+			{
+				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `liked`= `liked` + 1
+									WHERE `photo`=:photo AND `id_user`=:id");
+				if ($req->execute(array(
+					'photo' => $photo,
+					'id' => $id
+				)))
+					return true /*$elem['id_user'] . " === " . $id . " && " . $elem['photo'] . " === " . $photo . " && " . $elem['liked'] . " === 0 && " . $like . " == liked && " . $elem['comments'] . " > 0"*/;
+				else
+					return false;
+			}
 		}
+		
+		/* Creates a row of activity if the user never liked nor commented this photo before */
 		$req = $pdo->prepare("INSERT INTO db_camagru.gallery_activity(id_user, photo, liked)
 							VALUES(:id, :photo, :liked)");
 		if ($req->execute(array(
@@ -199,7 +241,7 @@ Class MontageManager
 			'photo' => $photo,
 			'liked' => $liked
 		)))
-			return true;
+			return true /*"id: " . $id . " && photo: " . $photo . " && liked: " . $like*/;
 		else
 			return false;
 	}
@@ -208,6 +250,26 @@ Class MontageManager
 	{
 		if (!is_numeric($id = $this->id_exists($pdo, $user)))
 			return false;
+		if (($ret = $this->check_like($pdo)) === false)
+			return false;
+
+		foreach ($ret as $elem)
+		{
+			/* Updates row of activity with the right number of comments if the user already liked the photo */
+			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 1)
+			{
+				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `comments`= `comments` + 1
+									WHERE `photo`=:photo AND `id_user`=:id");
+				if ($req->execute(array(
+					'photo' => $photo,
+					'id' => $id
+				)))
+					return true;
+				else
+					return false;
+			}
+		}
+
 		$req = $pdo->prepare("INSERT INTO db_camagru.gallery_activity(id_user, photo, comments)
 							VALUES(:id, :photo, :comments)");
 		if ($req->execute(array(

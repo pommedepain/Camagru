@@ -15,8 +15,13 @@ if (isset($_POST["photo"]))
 
 			if ($res = $db->del_photo_usr($pdo, $_SESSION['user'], $path))
 			{
-				echo "OK\n";
+				if (unlink($path))
+					echo "OK\n";
+				else
+					echo "delete photo in php ERROR\n";
 			}
+			else
+				echo "Pb with del_photo_user() ERROR\n";
 		}
 		else if (!isset($_SESSION['user']) || empty($_SESSION['user']))
 			echo "user not loggued ERROR\n";

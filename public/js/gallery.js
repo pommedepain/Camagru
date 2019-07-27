@@ -3,7 +3,6 @@
 	function display_history()
 	{
 		let div = document.getElementById('stylish');
-
 		let xhr = new XMLHttpRequest();
 		xhr.open('POST', '../../controller/Cgallery.php', true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -140,7 +139,9 @@
 				console.log(xhr2.responseText)
 				let needle = xhr2.responseText.indexOf("ERROR");
 				console.log("needle = " + needle);
-				if (xhr2.responseText)
+				let needle_EMPTY = xhr2.responseText.indexOf("No activity to display");
+				console.log("needle_EMPTY = " + needle_EMPTY);
+				if (needle < 0 && needle_EMPTY < 0)
 				{
 					console.log("SUCCESS ACTIVITY");
 					let tab = JSON.parse(xhr2.responseText);
@@ -154,6 +155,10 @@
 							console.log(img[j]);
 						}
 					}
+				}
+				else if (needle_EMPTY >= 0)
+				{
+					console.log("No activity to display !");
 				}
 				else
 				{
