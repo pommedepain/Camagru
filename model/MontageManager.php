@@ -188,8 +188,6 @@ Class MontageManager
 
 		foreach ($ret as $elem)
 		{
-			// if ($elem['id_user'] === $id && $elem['photo'] === $photo)
-			// 	return "elem id_user === " . $elem['id_user'] . " et id === " . $id . " && elem photo: " . $elem['photo'] . " et photo: " . $photo . " && elem liked: " . $elem['liked'] . " et liked: " . $liked . " et like: " . $like . " && elem comments: " . $elem['comments'];
 			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == $liked)
 				return "Photo already $like by $user";
 			/* Deletes row of activity if user unlike the photo and didn't comment it */

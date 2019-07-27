@@ -128,50 +128,87 @@
     			alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
 		});
 
-		let activity = "get";
-		let xhr2 = new XMLHttpRequest();
-		xhr2.open('POST', '../../controller/Cgallery.php', true);
-		xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr2.send(`activity=${activity}`);
-		xhr2.addEventListener('readystatechange', function() {
-			if (xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200)
-			{	
-				console.log(xhr2.responseText)
-				let needle = xhr2.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
-				let needle_EMPTY = xhr2.responseText.indexOf("No activity to display");
-				console.log("needle_EMPTY = " + needle_EMPTY);
-				if (needle < 0 && needle_EMPTY < 0)
-				{
-					console.log("SUCCESS ACTIVITY");
-					let tab = JSON.parse(xhr2.responseText);
-					console.log(tab);
-					for (let i = 0; i < tab['photo'].length; i++) 
+		setTimeout(function () {
+			let activity = "get";
+			let xhr2 = new XMLHttpRequest();
+			xhr2.open('POST', '../../controller/Cgallery.php', true);
+			xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr2.send(`activity=${activity}`);
+			xhr2.addEventListener('readystatechange', function() {
+				if (xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200)
+				{	
+					console.log(xhr2.responseText)
+					let needle = xhr2.responseText.indexOf("ERROR");
+					console.log("needle = " + needle);
+					let needle_EMPTY = xhr2.responseText.indexOf("No activity to display");
+					console.log("needle_EMPTY = " + needle_EMPTY);
+					if (needle < 0 && needle_EMPTY < 0)
 					{
+						console.log("SUCCESS ACTIVITY");
+						let tab2 = JSON.parse(xhr2.responseText);
+						console.log(tab2);
 						console.log("coucou");
 						let img = document.getElementById('stylish').querySelectorAll("img");
 						for (let j = 0; j < img.length; j++) 
 						{
-							console.log(img[j]);
+							let image = img[j].src;
+							let src = image.replace("http://localhost:8080", "..");
+							for (let i = 0; i < tab2['photo'].length; i++) 
+							{
+								if (tab2['photo'][i] === src)
+								{
+									console.log(img[j]);
+									let heart = img[j].parentElement.childNodes[2].childNodes[0];
+									if (tab2['liked'][i] == 1)
+									{
+										heart.innerHTML = '<i class="fa fa-heart" aria-hidden="true"></i>';
+										heart.classList.add("liked");
+										heart.style.fontSize = "2.5vw";
+										heart.style.width = "2.5vw";
+									}
+									if (tab2['comment'][i] !== null)
+									{
+										let right_d = img[j].parentElement.parentElement.childNodes[1];
+										console.log(right_d);
+										if (right_d.childNodes.length !== 0)
+										{
+											let bubble = right_d.childNodes[0];
+											let mini_div = document.createElement('div');
+											mini_div.innerHTML = "@" + tab2['from'][i] + ": " + tab2['comment'][i];
+											bubble.appendChild(mini_div);
+										}
+										else
+										{
+											let bubble = document.createElement('div');
+											bubble.setAttribute('id', "bubble");
+											let mini_div = document.createElement('div');
+											mini_div.innerHTML = "@" + tab2['from'][i] + ": " + tab2['comment'][i];
+											bubble.appendChild(mini_div);
+											right_d.appendChild(bubble);
+										}
+									}
+								}
+							}
 						}
 					}
+					else if (needle_EMPTY >= 0)
+					{
+						console.log("No activity to display !");
+					}
+					else
+					{
+						console.log("FAIL");
+					}
 				}
-				else if (needle_EMPTY >= 0)
-				{
-					console.log("No activity to display !");
-				}
-				else
-				{
-					console.log("FAIL");
-				}
-			}
-			else if (xhr2.readyState === XMLHttpRequest.DONE && xhr2.status != 200)
-    			alert('Une erreur est survenue !\n\nCode :' + xhr2.status + '\nTexte : ' + xhr2.statusText);
-		});
+				else if (xhr2.readyState === XMLHttpRequest.DONE && xhr2.status != 200)
+    				alert('Une erreur est survenue !\n\nCode :' + xhr2.status + '\nTexte : ' + xhr2.statusText);
+			});
+		}, 20);
 	}
 
 	function heart(element)
 	{
+		console.log(element);
 		let photo = element.parentElement.parentElement.childNodes[1].src;
 		let pseudo = element.parentElement.parentElement.childNodes[0]['innerText'];
 		let counter = element.parentElement.parentElement.childNodes[3]['innerText'];
@@ -335,7 +372,7 @@
 					let bubble = document.createElement('div');
 					bubble.setAttribute('id', "bubble");
 					let mini_div = document.createElement('div');
-					mini_div.innerHTML = comment;
+					mini_div.innerHTML = "@" + pseudo + ": " + comment;
 					bubble.appendChild(mini_div);
 					right_d.appendChild(bubble);
 					let new_count = counter.replace(/Comments: (\d+)/g, function(match, number) {
