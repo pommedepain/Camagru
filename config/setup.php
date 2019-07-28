@@ -19,6 +19,7 @@ $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.account (
         `email` VARCHAR(255) NOT NULL,
         `passwd` VARCHAR(255) NOT NULL,
 	`group` ENUM('admin', 'member', 'not_confirmed') DEFAULT 'not_confirmed' NOT NULL,
+        `notifications` BOOLEAN DEFAULT true,
         `creation_date` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)");
         
 $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.email (

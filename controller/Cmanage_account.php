@@ -124,6 +124,14 @@ This is an automatic message, please do not reply.";
 				echo "Mail syntax ERROR\n";
 		}
 
+		if (isset($_POST['state']) && !empty($_POST['state']))
+		{
+			if (!($return = $db->notif_email($pdo, $_POST['state'], $_SESSION['user'])))
+				echo "notif_email() ERROR\n";
+			else
+				echo "notif_email() SUCCESS\n";
+		}
+
 		/* If everything is valid, creates a unique key (that'll be later used to confirm the email while being sure of 
 		the identity of the user), and send the confirmation email 
 		[WARNING] Don't change the order of the function that sends the datas to db and the one that sends email, otherwise it won't work ! */

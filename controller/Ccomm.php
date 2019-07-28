@@ -23,12 +23,36 @@ if (isset($_POST["pseudo"]) && isset($_POST["photo"]) && isset($_POST['comment']
 				if (!$db->user_activity_comments($pdo, $photo, $_SESSION['user']))
 					echo "user_activity_comments() ERROR|\n";
 				else
-					echo "user_activity_comments() SUCCESS\n" .  $_SESSION['user'];
+					echo "user_activity_comments() SUCCESS\nUser: " .  $_SESSION['user'] . "\n";
 
 				if (!$db->register_comment($pdo, $_SESSION['user'], $photo, $_POST['comment']))
 					echo "register_comment() ERROR\n";
 				else
 					echo "register_comment() SUCCESS\n";
+
+				$db2 = new AccountManager();
+				$pdo2 = $db2->db_connect();
+				if (!($return = $db2->get_user_infos($pdo2, $pseudo)))
+					echo "get_user_infos() ERROR\n";
+				else if ($return['notifications'] === 1)
+				{
+					$email = $return['email'];
+					$subject = "[Camagru] Comment notfication";
+					$header = "From: psentilh@student.42.fr";
+					$message = "Hello,
+					
+" . $_SESSION['user'] . " has dropped a comment on one of your photos. 
+						
+						
+---------------
+This is an automatic message, please do not reply.";
+			
+					$success = mail($email, $subject, $message, $header);
+					if (!$success)
+						echo error_get_last()['message'];
+					else
+						echo "\nemail notif like done and successfull\n";
+					}
 			}
 			else
 				echo "comment regex ERROR\n";

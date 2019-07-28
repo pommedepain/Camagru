@@ -19,6 +19,7 @@
 					console.log("SUCCESS");
 					let tab = JSON.parse(xhr.responseText);
 					console.log(tab);
+
 					for (let i = 0; i < tab['photo'].length; i++) 
 					{
 						/* Creation of the content div */
@@ -113,6 +114,12 @@
 						sub_div.appendChild(right_d);
 						sub_div.classList.add('display');
 						div.appendChild(sub_div);
+						sub_div.style.display = "none";
+					}
+					for (let j = 0; j < 5; j++)
+					{
+						let elem = document.getElementById('display' + j);
+						elem.style.display = "flex";
 					}
 				}
 				else if (xhr.responseText === "" || !xhr.responseText)
@@ -147,7 +154,6 @@
 						console.log("SUCCESS ACTIVITY");
 						let tab2 = JSON.parse(xhr2.responseText);
 						console.log(tab2);
-						console.log("coucou");
 						let img = document.getElementById('stylish').querySelectorAll("img");
 						for (let j = 0; j < img.length; j++) 
 						{
@@ -157,9 +163,9 @@
 							{
 								if (tab2['photo'][i] === src)
 								{
-									console.log(img[j]);
+									// console.log(img[j]);
 									let heart = img[j].parentElement.childNodes[2].childNodes[0];
-									if (tab2['liked'][i] == 1)
+									if (tab2['liked'][i] == 1 && tab2['user_logged'] === tab2['from'][i])
 									{
 										heart.innerHTML = '<i class="fa fa-heart" aria-hidden="true"></i>';
 										heart.classList.add("liked");
@@ -169,7 +175,7 @@
 									if (tab2['comment'][i] !== null)
 									{
 										let right_d = img[j].parentElement.parentElement.childNodes[1];
-										console.log(right_d);
+										// console.log(right_d);
 										if (right_d.childNodes.length !== 0)
 										{
 											let bubble = right_d.childNodes[0];
@@ -320,6 +326,10 @@
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
 				console.log(xhr.responseText);
+				let index = xhr.responseText.indexOf("User:");
+				let user = xhr.responseText.substring(index, xhr.responseText.indexOf("register_comment()"));
+				user = user.substring(6);
+				console.log(user);
 				let needle = xhr.responseText.indexOf("ERROR");
 				console.log("needle = " + needle);
 				let needle_LOG = xhr.responseText.indexOf("User not loggued in !");
@@ -329,7 +339,8 @@
 					console.log("new div");
 					let bubble = right_d.childNodes[0];
 					let mini_div = document.createElement('div');
-					mini_div.innerHTML = comment;
+					console.log(pseudo);
+					mini_div.innerHTML = "@" + user + ": " + comment;
 					bubble.appendChild(mini_div);
 					let new_count = counter.replace(/Comments: (\d+)/g, function(match, number) {
 						return "Comments: " + (parseInt(number)+1);
@@ -362,6 +373,9 @@
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
 				console.log(xhr.responseText);
+				let index = xhr.responseText.indexOf("User:");
+				let user = xhr.responseText.substring(index, xhr.responseText.indexOf("register_comment()"));
+				user = user.substring(6);
 				let needle = xhr.responseText.indexOf("ERROR");
 				console.log("needle = " + needle);
 				let needle_LOG = xhr.responseText.indexOf("User not loggued in !");
@@ -372,7 +386,7 @@
 					let bubble = document.createElement('div');
 					bubble.setAttribute('id', "bubble");
 					let mini_div = document.createElement('div');
-					mini_div.innerHTML = "@" + pseudo + ": " + comment;
+					mini_div.innerHTML = "@" + user + ": " + comment;
 					bubble.appendChild(mini_div);
 					right_d.appendChild(bubble);
 					let new_count = counter.replace(/Comments: (\d+)/g, function(match, number) {
@@ -401,6 +415,41 @@
 			clean[i].childNodes[0].value = "";
 	}
 
+	let listElm = document.querySelector('#stylish');
+	console.log(listElm);
+
+	setTimeout(function () {
+		let divs = document.querySelectorAll('.display');
+		console.log(divs);
+		console.log(document.querySelector('#stylish').childElementCount)
+	}
+	, 20);
+
+	/* Detect when scrolled to bottom. */
+	listElm.addEventListener('scroll', function() {
+  		if (listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
+			console.log("scrollTop: " + listElm.scrollTop + " & clienHeigh: " + listElm.clientHeight + " & scrollHeight: " + listElm.scrollHeight);
+			loadMore();
+  		}
+	});
+
+	// Add 5 items.
+	// let num = 5;
+	
+	// function loadMore() 
+	// {
+	// 	let j = document.querySelector('#stylish').childElementCount;
+	// 	console.log(j);
+	// 	for (let i = 0; i < 5; i++) 
+	// 	{
+	// 		let elem = document.getElementById('display' + num);
+	// 		elem.style.display = "flex";
+	// 		num++;
+	// 	}
+	// }
+
+	// // Initially load some items.
+	// loadMore();
 
 	window.addEventListener('load', display_history, false);
 })();

@@ -65,6 +65,7 @@ Class MontageManager
 	{
 		if (!is_numeric($id = $this->id_exists($pdo, $pseudo)))
 			return "Pb with id_exists:\n$id";
+
 		$req = $pdo->query("SELECT `id_user`,`path_save`,`creation_date`
 						FROM db_camagru.photos
 						WHERE `id_user` = $id
@@ -93,6 +94,9 @@ Class MontageManager
 
 	public function get_all_activity($pdo)
 	{
+		if (!($pseudos = $this->get_id($pdo)))
+			return "Pb with get_id()";
+		
 		$db = "db_camagru";
 		$db_photo = "photos";
 		$db_account = "account";
@@ -103,12 +107,22 @@ Class MontageManager
 						FROM $db.`$db_photo`
 						INNER JOIN $db.`$db_account` ON $db.`$db_photo`.id_user = $db.`$db_account`.id
 						INNER JOIN $db.`$db_activity` ON $db.`$db_photo`.path_save = $db.`$db_activity`.photo
-						LEFT JOIN $db.`$comments` ON $db.`$db_activity`.photo = $db.`$comments`.photo
+						LEFT JOIN $db.`$comments` ON $db.`$db_activity`.photo = $db.`$comments`.photo AND $db.`$db_activity`.id_user = $db.`$comments`.id_user
 						ORDER BY `creation_date` DESC");
 		if (!$res = $req->fetchAll())
 			return false;
 		else
+		{
+			for ($i = 0; $i < count($res); $i++)
+			{
+				for ($j = 0; $j < count($pseudos); $j++)
+				{
+					if ($res[$i]['From'] == $pseudos[$j]['id'])
+						$res[$i]['From'] = $pseudos[$j]['pseudo'];
+				}
+			}
 			return ($res);
+		}
 	}
 
 	public function del_photo_usr($pdo, $pseudo, $photo)
@@ -254,7 +268,19 @@ Class MontageManager
 		foreach ($ret as $elem)
 		{
 			/* Updates row of activity with the right number of comments if the user already liked the photo */
-			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 1)
+			if ($elem['id_user'] === $id && $elem['photo'] === $photo && ($elem['liked'] == 1 /*|| $elem['comments'] > 0*/))
+			{
+				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `comments`= `comments` + 1
+									WHERE `photo`=:photo AND `id_user`=:id");
+				if ($req->execute(array(
+					'photo' => $photo,
+					'id' => $id
+				)))
+					return true;
+				else
+					return false;
+			}
+			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 0 && $elem['comments'] > 0)
 			{
 				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `comments`= `comments` + 1
 									WHERE `photo`=:photo AND `id_user`=:id");

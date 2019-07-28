@@ -1,6 +1,34 @@
 
 window.addEventListener("load", status_info);
 
+function notification_email(state)
+{
+	console.log(state.checked);
+	let submit = "submit"
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', '../../controller/Cmanage_account.php', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send(`submit=${submit}&state=${state.checked}`);
+	xhr.addEventListener('readystatechange', function() {
+		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
+		{
+			console.log(xhr.responseText);
+			let needle_ERR = xhr.responseText.indexOf("ERROR");
+			console.log("needle_ERR = " + needle_ERR);
+			if (needle_ERR < 0)
+			{
+				console.log("change registered");
+			}
+			else if (needle_ERR >= 0)
+			{
+				console.log("Pb with change");
+			}
+		}
+		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
+    		alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
+		});
+}
+
 function status_info()
 {
 	let group = document.getElementById("group").innerHTML;
@@ -28,6 +56,36 @@ function status_info()
 		document.getElementById("group").style.fontWeight = "bold";
 		document.getElementById("group").style.display = "inline";
 	}
+
+	let submit = "submit";
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', '../../controller/Csend_again.php', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.send(`submit=${submit}`);
+	xhr.addEventListener('readystatechange', function() {
+		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
+		{
+			console.log(xhr.responseText);
+			let needle_ERR = xhr.responseText.indexOf("ERROR");
+			console.log("needle_ERR = " + needle_ERR);
+			let notif = xhr.responseText.substring(xhr.responseText.indexOf("="))
+			notif = notif.substring(2);
+			if (needle_ERR < 0)
+			{
+				console.log(notif);
+				if (notif === "true\n")
+					document.getElementsByClassName("switch_4")[0]['checked'] = true;
+				else if (notif === "false\n")
+					document.getElementsByClassName("switch_4")[0]['checked'] = false;
+			}
+			else if (needle_ERR >= 0)
+			{
+				console.log("ERROR with controller");
+			}
+		}
+		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
+    		alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);
+		});
 }
 
 function send_it()

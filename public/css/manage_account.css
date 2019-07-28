@@ -8,7 +8,8 @@
 .cont{
 	border-radius: 0.5em;
 	box-shadow: 0 0 1em 0 rgba(51,51,51,0.25);
-	display: block;
+	display: flex;
+	flex-direction: column;
 	max-width: 32%;
 	overflow: hidden;
 	-webkit-transform: translate(-50%, -50%);
@@ -225,4 +226,122 @@
 #status
 {
 	margin-top: 3%;
+}
+
+.wrapper{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-direction: row;
+	/* width: 20%; */
+	margin-top: 5%;
+	margin-left: -1%;
+	-ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
+	-webkit-transform: translateY(-50%);
+	        transform: translateY(-50%);
+}
+#notifs_email
+{
+	position: absolute;
+	left: 18%;
+	margin-top: 2.5%;
+}
+
+.switch_box{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	/* max-width: 200px; */
+	/* min-width: 200px; */
+	/* height: 200px; */
+	/* -webkit-box-pack: center;
+	    -ms-flex-pack: center; */
+	        /* justify-content: center; */
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
+}
+
+.input_wrapper{
+  width: 15.5%;
+  height: 3vh;
+  position: relative;
+  cursor: pointer;
+}
+
+.input_wrapper input[type="checkbox"]{
+  width: 100%;
+  height: 3.2vh;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: #315e7f;
+  border-radius: 2px;
+  position: relative;
+  outline: 0;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.input_wrapper input[type="checkbox"]:after{
+  position: absolute;
+  content: "";
+  top: 7%;
+  left: 5%;
+  width: 45%;
+  height: 2.75vh;
+  background: #dfeaec;
+  z-index: 2;
+  border-radius: 2px;
+  -webkit-transition: all .35s;
+  transition: all .35s;
+}
+
+.input_wrapper svg{
+  position: absolute;
+  top: 50%;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  fill: #fff;
+  -webkit-transition: all .35s;
+  transition: all .35s;
+  z-index: 1;
+}
+
+.input_wrapper .is_checked{
+  width: 25%;
+  left: 18%;
+  -webkit-transform: translateX(190%) translateY(-30%) scale(0);
+          transform: translateX(190%) translateY(-30%) scale(0);
+}
+
+.input_wrapper .is_unchecked{
+  width: 20%;
+  right: 10%;
+  -webkit-transform: translateX(0) translateY(-30%) scale(1);
+          transform: translateX(0) translateY(-30%) scale(1);
+}
+
+/* Checked State */
+.input_wrapper input[type="checkbox"]:checked{
+  background: #23da87;
+}
+
+.input_wrapper input[type="checkbox"]:checked:after{
+  left: calc(100% - 37px);
+}
+
+.input_wrapper input[type="checkbox"]:checked + .is_checked{
+  -webkit-transform: translateX(0) translateY(-30%) scale(1);
+          transform: translateX(0) translateY(-30%) scale(1);
+}
+
+.input_wrapper input[type="checkbox"]:checked ~ .is_unchecked{
+  -webkit-transform: translateX(-190%) translateY(-30%) scale(0);
+          transform: translateX(-190%) translateY(-30%) scale(0);
 }

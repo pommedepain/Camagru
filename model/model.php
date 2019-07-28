@@ -55,7 +55,7 @@ Class AccountManager
 
 	public function get_all_infos($pdo)
 	{
-		$req = $pdo->query("SELECT `pseudo`,`email`,`firstname`,`lastname`,`group` FROM db_camagru.account");
+		$req = $pdo->query("SELECT `pseudo`,`email`,`firstname`,`lastname`,`group`,`notifications` FROM db_camagru.account");
 		if (!$res = $req->fetchAll())
 			return false;
 		else
@@ -331,5 +331,24 @@ Class AccountManager
 			return "Erase email infos OK\n";
 		else
 			return "Erase email infos didn't work\n";
+	}
+
+	public function notif_email($pdo, $state, $pseudo)
+	{
+		if (!is_numeric($id = $this->id_exists($pdo, $pseudo)))
+			return false;
+		if ($state === 'true')
+			$value = 1;
+		else if ($state === 'false')
+			$value = 0;
+
+		$db = "db_camagru";
+		$db_account = "account";
+		$req = $pdo->prepare("UPDATE $db.`$db_account` SET `notifications`=:notifications
+							WHERE `id`=:id");
+		if ($req->execute(array(':notifications' => $value, ':id' => $id)))
+			return true;
+		else
+			return false;
 	}
 }

@@ -47,7 +47,20 @@ This is an automatic message, please do not reply.";
 	else
 		echo "Mail syntax ERROR\n";
 }
-else
-	echo "ERROR number of datas\n";
 
-?>
+else if (isset($_POST['submit']) && !empty($_POST['submit']) && $_POST['submit'] === "submit")
+{
+	echo "check notif triggered\n";
+
+	$db = new AccountManager();
+	$pdo = $db->db_connect();
+
+	if (!($res = $db->get_user_infos($pdo, $_SESSION['user'])))
+		echo "Pb with get_user_infos() ERROR\n";
+	else if ($res['notifications'] == 1)
+		echo "Notifications = true\n";
+	else if ($res['notifications'] == 0)
+		echo "Notifications = false\n";
+}
+else
+	echo "Pb with nb of argv ERROR\n";

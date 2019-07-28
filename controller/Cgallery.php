@@ -35,6 +35,7 @@ else if (isset($_POST['activity']))
 		if (!empty($ret = $db->get_all_activity($pdo)))
 		{
 			$tab2 = array();
+			$tab2['user_logged'] = $_SESSION['user'];
 			foreach ($ret as $element)
 			{
 				$tab2['id'][] = $element['id_user'];

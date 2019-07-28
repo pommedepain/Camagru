@@ -13,8 +13,8 @@ ob_start();
 	</div>
 </div>
 <div id="content">
-	<div id="stylish">
-	</div>
+	<ul id="stylish">
+	</ul>
 </div>
 <script src="./public/js/gallery.js"></script>
 
