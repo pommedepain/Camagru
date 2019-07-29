@@ -10,15 +10,14 @@
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{	
-				console.log(xhr.responseText)
+				/* console.log(xhr.responseText) */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
-				// if (needle < 0 && !xhr.responseText !== "" && xhr.responseText)
-				if (xhr.responseText)
+				/* console.log("needle = " + needle); */
+				if (xhr.responseText && needle < 0)
 				{
-					console.log("SUCCESS");
+					/* console.log("SUCCESS"); */
 					let tab = JSON.parse(xhr.responseText);
-					console.log(tab);
+					/* console.log(tab); */
 
 					for (let i = 0; i < tab['photo'].length; i++) 
 					{
@@ -59,8 +58,6 @@
 						span.classList.add('heart');
 						in_span.classList.add('fa');
 						in_span.classList.add('fa-heart-o');
-						// if (tab['photo'][i])
-						// 	in_span.classList.add('liked"');
 						in_span.style.fontSize = "2.5vw";
 						span.style.width = "2.5vw";
 						in_span.setAttribute('aria-hidden', "true");
@@ -124,11 +121,11 @@
 				}
 				else if (xhr.responseText === "" || !xhr.responseText)
 				{
-					console.log("SUCCESS but nothing to display");
+					/* console.log("SUCCESS but nothing to display"); */
 				}
 				else
 				{
-					console.log("FAIL");
+					/* console.log("FAIL"); */
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -144,16 +141,16 @@
 			xhr2.addEventListener('readystatechange', function() {
 				if (xhr2.readyState == XMLHttpRequest.DONE && xhr2.status == 200)
 				{	
-					console.log(xhr2.responseText)
+					/* console.log(xhr2.responseText) */
 					let needle = xhr2.responseText.indexOf("ERROR");
-					console.log("needle = " + needle);
+					/* console.log("needle = " + needle); */
 					let needle_EMPTY = xhr2.responseText.indexOf("No activity to display");
-					console.log("needle_EMPTY = " + needle_EMPTY);
+					/* console.log("needle_EMPTY = " + needle_EMPTY); */
 					if (needle < 0 && needle_EMPTY < 0)
 					{
-						console.log("SUCCESS ACTIVITY");
+						/* console.log("SUCCESS ACTIVITY"); */
 						let tab2 = JSON.parse(xhr2.responseText);
-						console.log(tab2);
+						/* console.log(tab2); */
 						let img = document.getElementById('stylish').querySelectorAll("img");
 						for (let j = 0; j < img.length; j++) 
 						{
@@ -163,7 +160,7 @@
 							{
 								if (tab2['photo'][i] === src)
 								{
-									// console.log(img[j]);
+									/* console.log(img[j]); */
 									let heart = img[j].parentElement.childNodes[2].childNodes[0];
 									if (tab2['liked'][i] == 1 && tab2['user_logged'] === tab2['from'][i])
 									{
@@ -175,7 +172,7 @@
 									if (tab2['comment'][i] !== null)
 									{
 										let right_d = img[j].parentElement.parentElement.childNodes[1];
-										// console.log(right_d);
+										/* console.log(right_d); */
 										if (right_d.childNodes.length !== 0)
 										{
 											let bubble = right_d.childNodes[0];
@@ -199,11 +196,11 @@
 					}
 					else if (needle_EMPTY >= 0)
 					{
-						console.log("No activity to display !");
+						/* console.log("No activity to display !"); */
 					}
 					else
 					{
-						console.log("FAIL");
+						/* console.log("FAIL"); */
 					}
 				}
 				else if (xhr2.readyState === XMLHttpRequest.DONE && xhr2.status != 200)
@@ -214,11 +211,11 @@
 
 	function heart(element)
 	{
-		console.log(element);
+		/* console.log(element); */
 		let photo = element.parentElement.parentElement.childNodes[1].src;
 		let pseudo = element.parentElement.parentElement.childNodes[0]['innerText'];
 		let counter = element.parentElement.parentElement.childNodes[3]['innerText'];
-		console.log(counter);
+		/* console.log(counter); */
 		if (element.classList.contains("liked"))
 		{
 			let like = "unliked";
@@ -246,8 +243,8 @@
 							return "Likes: " + (parseInt(number)-1);
 						});
 					element.parentElement.parentElement.childNodes[3].innerHTML = new_count;
-					console.log(new_count);
-					console.log("SUCCESS");
+					/* console.log(new_count); */
+					/* console.log("SUCCESS"); */
 				}
 				else if (needle_LOG >= 0)
 				{
@@ -256,7 +253,7 @@
 				}
 				else
 				{
-					console.log("ERROR");
+					/* console.log("ERROR"); */
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -273,13 +270,13 @@
 			xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let needle_ERR = xhr.responseText.indexOf("ERROR");
-				console.log("needle_ERR = " + needle_ERR);
+				/* console.log("needle_ERR = " + needle_ERR); */
 				let needle_nope = xhr.responseText.indexOf("Photo already liked by");
-				console.log("needle_nope = " + needle_nope);
+				/* console.log("needle_nope = " + needle_nope); */
 				let needle_LOG = xhr.responseText.indexOf("User not loggued in !");
-				console.log("needle_LOG = " + needle_LOG);
+				/* console.log("needle_LOG = " + needle_LOG); */
 				if (needle_ERR < 0 && needle_nope < 0 && needle_LOG < 0)
 				{
 					element.innerHTML = '<i class="fa fa-heart" aria-hidden="true"></i>';
@@ -290,7 +287,7 @@
 							return "Likes: " + (parseInt(number)+1);
 						});
 					element.parentElement.parentElement.childNodes[3].innerHTML = new_count;
-					console.log(new_count);
+					/* console.log(new_count); */
 				}
 				else if (needle_LOG >= 0)
 				{
@@ -299,7 +296,7 @@
 				}
 				else
 				{
-					console.log("ERROR");
+					/* console.log("ERROR"); */
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -310,8 +307,8 @@
 
 	function addComment (elem, comment)
 	{
-		console.log(comment);
-		console.log(elem);
+		/* console.log(comment); */
+		/* console.log(elem); */
 		let photo = elem.parentElement.parentElement.parentElement.childNodes[1].src;
 		let pseudo = elem.parentElement.parentElement.parentElement.childNodes[0]['innerText'];
 		let right_d = elem.parentElement.parentElement.parentElement.parentElement.childNodes[1];
@@ -325,38 +322,46 @@
 			xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let index = xhr.responseText.indexOf("User:");
 				let user = xhr.responseText.substring(index, xhr.responseText.indexOf("register_comment()"));
 				user = user.substring(6);
-				console.log(user);
+				/* console.log(user); */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				let needle_LOG = xhr.responseText.indexOf("User not loggued in !");
-				console.log("needle_LOG = " + needle_LOG);
-				if (needle < 0 && needle_LOG < 0)
+				/* console.log("needle_LOG = " + needle_LOG); */
+				let needle_syntax = xhr.responseText.indexOf("comment regex");
+				if (needle < 0 && needle_LOG < 0 && needle_syntax < 0)
 				{
-					console.log("new div");
+					/* console.log("new div"); */
 					let bubble = right_d.childNodes[0];
 					let mini_div = document.createElement('div');
-					console.log(pseudo);
+					/* console.log(pseudo); */
 					mini_div.innerHTML = "@" + user + ": " + comment;
 					bubble.appendChild(mini_div);
 					let new_count = counter.replace(/Comments: (\d+)/g, function(match, number) {
 						return "Comments: " + (parseInt(number)+1);
 					});
 					elem.parentElement.parentElement.parentElement.childNodes[3].innerHTML = new_count;
-					console.log(new_count);
-					console.log("SUCCESS");
+					/* console.log(new_count); */
+					/* console.log("SUCCESS"); */
 				}
 				else if (needle_LOG >= 0)
 				{
 					let nope = document.getElementById('alert');
 					nope.style.display = "inline";
 				}
+				else if (needle_syntax >= 0)
+				{
+					let nope = document.getElementsByTagName('small');
+					/* console.log(nope[0]['innerText']); */
+					nope[0]['innerText'] = " Your comment doesn't conform to the syntax rules.";
+					document.getElementById('alert').style.display = "inline";
+				}
 				else
 				{
-					console.log("ERROR");
+					/* console.log("ERROR"); */
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -372,17 +377,17 @@
 			xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let index = xhr.responseText.indexOf("User:");
 				let user = xhr.responseText.substring(index, xhr.responseText.indexOf("register_comment()"));
 				user = user.substring(6);
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				let needle_LOG = xhr.responseText.indexOf("User not loggued in !");
-				console.log("needle_LOG = " + needle_LOG);
+				/* console.log("needle_LOG = " + needle_LOG); */
 				if (needle < 0 && needle_LOG < 0)
 				{
-					console.log("old div");
+					/* console.log("old div"); */
 					let bubble = document.createElement('div');
 					bubble.setAttribute('id', "bubble");
 					let mini_div = document.createElement('div');
@@ -393,8 +398,8 @@
 						return "Comments: " + (parseInt(number)+1);
 					});
 					elem.parentElement.parentElement.parentElement.childNodes[3].innerHTML = new_count;
-					console.log(new_count);
-					console.log("SUCCESS");
+					/* console.log(new_count); */
+					/* console.log("SUCCESS"); */
 				}
 				else if (needle_LOG >= 0)
 				{
@@ -403,7 +408,7 @@
 				}
 				else
 				{
-					console.log("ERROR");
+					/* console.log("ERROR"); */
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -415,41 +420,32 @@
 			clean[i].childNodes[0].value = "";
 	}
 
-	let listElm = document.querySelector('#stylish');
-	console.log(listElm);
-
-	setTimeout(function () {
-		let divs = document.querySelectorAll('.display');
-		console.log(divs);
-		console.log(document.querySelector('#stylish').childElementCount)
-	}
-	, 20);
-
-	/* Detect when scrolled to bottom. */
-	listElm.addEventListener('scroll', function() {
-  		if (listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
-			console.log("scrollTop: " + listElm.scrollTop + " & clienHeigh: " + listElm.clientHeight + " & scrollHeight: " + listElm.scrollHeight);
-			loadMore();
-  		}
-	});
-
-	// Add 5 items.
-	// let num = 5;
-	
-	// function loadMore() 
-	// {
-	// 	let j = document.querySelector('#stylish').childElementCount;
-	// 	console.log(j);
-	// 	for (let i = 0; i < 5; i++) 
-	// 	{
-	// 		let elem = document.getElementById('display' + num);
-	// 		elem.style.display = "flex";
-	// 		num++;
-	// 	}
-	// }
-
-	// // Initially load some items.
-	// loadMore();
 
 	window.addEventListener('load', display_history, false);
 })();
+
+let listElm = document.querySelector('#stylish');
+
+/* Detect when scrolled to bottom. */
+listElm.addEventListener('scroll', function() {
+	if (listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
+		loadMore();
+	}
+});
+
+let num = 5;
+
+function loadMore() 
+{
+	let j = document.querySelector('#stylish').childElementCount;
+	/* console.log(j); */
+	for (let i = 0; i < 5; i++) 
+	{
+		if (num !== j)
+		{
+			let elem = document.getElementById('display' + num);
+			elem.style.display = "flex";	
+			num++;
+		}
+	}
+}

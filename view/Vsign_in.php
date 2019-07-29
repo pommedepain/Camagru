@@ -26,6 +26,7 @@ ob_start();
 				</div>
 			</div>
 			<div id="success"></div>
+			<div id="status">Status: <div id="group"><?php if (isset($_SESSION['group'])){ echo $_SESSION['group']; }?></div></div>
 			<p id="forgot">Forgot Password ? <a href="index.php?action=reset_passwd">Reset your password</a></p>
 		</div>
 	</div>

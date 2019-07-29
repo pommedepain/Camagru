@@ -9,7 +9,7 @@ ob_start();
 <div id="capsule">
 	<div class="alert" id="alert">
   		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>  
-  		<strong>Oops!</strong> You need to be logged in to like or comment a photo
+  		<strong>Oops!</strong><small> You need to be logged in to like or comment a photo</small>
 	</div>
 </div>
 <div id="content">

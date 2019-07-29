@@ -171,10 +171,10 @@ Class AccountManager
 		$req->bindParam('anonym_id', $anonym_id, PDO::PARAM_STR);
 		$req->bindParam('key_mail', $key_mail, PDO::PARAM_STR);
 		$req->bindParam('id', $id, PDO::PARAM_INT);
-		if ($req->execute())
-			return "update_email_table() worked";
+		if (!($req->execute()))
+			return "update_email_table ERROR";
 		else
-			return "update_email_table() ERROR";
+			return "update_email_table worked";
 	}
 
 	public function update_reset_passwd($pdo, $pseudo, $rand_str)

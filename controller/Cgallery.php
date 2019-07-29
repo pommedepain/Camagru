@@ -20,7 +20,6 @@ if (isset($_POST["div"]))
 			$tab['comments'][] = $elem['comments'];
 		}
 		echo json_encode($tab);
-		//print_r($res);
 	}
 	else
 		echo "get_all_photos() ERROR\n";

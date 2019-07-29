@@ -213,7 +213,7 @@ Class MontageManager
 					'photo' => $photo,
 					'id' => $id
 				)))
-					return true /*$elem['id_user'] . " === " . $id . " && " . $elem['photo'] . " === " . $photo . " && " . $elem['liked'] . " === 1 && " . $like . " == unliked && " . $elem['comments'] . " === 0"*/;
+					return true;
 				else
 					return false;
 			}
@@ -226,7 +226,7 @@ Class MontageManager
 					'photo' => $photo,
 					'id' => $id
 				)))
-					return true /*$elem['id_user'] . " === " . $id . " && " . $elem['photo'] . " === " . $photo . " && " . $elem['liked'] . " === 1 && " . $like . " == unliked && " . $elem['comments'] . " > 0"*/;
+					return true;
 				else
 					return false;
 			}
@@ -239,7 +239,7 @@ Class MontageManager
 					'photo' => $photo,
 					'id' => $id
 				)))
-					return true /*$elem['id_user'] . " === " . $id . " && " . $elem['photo'] . " === " . $photo . " && " . $elem['liked'] . " === 0 && " . $like . " == liked && " . $elem['comments'] . " > 0"*/;
+					return true;
 				else
 					return false;
 			}
@@ -253,7 +253,7 @@ Class MontageManager
 			'photo' => $photo,
 			'liked' => $liked
 		)))
-			return true /*"id: " . $id . " && photo: " . $photo . " && liked: " . $like*/;
+			return true;
 		else
 			return false;
 	}
@@ -268,7 +268,7 @@ Class MontageManager
 		foreach ($ret as $elem)
 		{
 			/* Updates row of activity with the right number of comments if the user already liked the photo */
-			if ($elem['id_user'] === $id && $elem['photo'] === $photo && ($elem['liked'] == 1 /*|| $elem['comments'] > 0*/))
+			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 1)
 			{
 				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `comments`= `comments` + 1
 									WHERE `photo`=:photo AND `id_user`=:id");
@@ -280,6 +280,7 @@ Class MontageManager
 				else
 					return false;
 			}
+			/* Updates row of activity with the right number of comments if the user didn't liked the photo but already commented it*/
 			if ($elem['id_user'] === $id && $elem['photo'] === $photo && $elem['liked'] == 0 && $elem['comments'] > 0)
 			{
 				$req = $pdo->prepare("UPDATE db_camagru.`gallery_activity` SET `comments`= `comments` + 1

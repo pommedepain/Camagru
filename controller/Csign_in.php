@@ -30,17 +30,31 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 				echo "Password OK\n";
 				if ($res = $db->get_user_infos($pdo, $pseudo))
 				{
-					//print_r($res);
-					$_SESSION['user'] = $res['pseudo'];
-					$_SESSION['email'] = $res['email'];
-					$_SESSION['first_name'] = $res['firstname'];
-					$_SESSION['last_name'] = $res['lastname'];
-					$_SESSION['group'] = $res['group'];
-					echo $_SESSION['user'] . "\n";
-					echo $_SESSION['email'] . "\n";
-					echo $_SESSION['first_name'] . "\n";
-					echo $_SESSION['last_name'] . "\n";
-					echo $_SESSION['group'] . "\n";
+					if ($res['group'] !== "not_confirmed")
+					{
+						//print_r($res);
+						$_SESSION['user'] = $res['pseudo'];
+						$_SESSION['email'] = $res['email'];
+						$_SESSION['first_name'] = $res['firstname'];
+						$_SESSION['last_name'] = $res['lastname'];
+						$_SESSION['group'] = $res['group'];
+						echo $_SESSION['user'] . "\n";
+						echo $_SESSION['email'] . "\n";
+						echo $_SESSION['first_name'] . "\n";
+						echo $_SESSION['last_name'] . "\n";
+						echo $_SESSION['group'] . "\n";
+					}
+					else
+					{
+						$_SESSION['group'] = $res['group'];
+						$_SESSION['user_to_be'] = $res['pseudo'];
+						$_SESSION['email'] = $res['email'];
+						echo $res['pseudo'] . "\n";
+						echo $res['email'] . "\n";
+						echo $res['firstname'] . "\n";
+						echo $res['lastname'] . "\n";
+						echo $res['group'] . "\n";
+					}
 				}
 				else
 					echo "ERROR with get_info_user\n";				

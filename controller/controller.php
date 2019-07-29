@@ -2,11 +2,6 @@
 
 require_once('require.php');
 
-function start()
-{
-	require_once("./view/Vindex.php");
-}
-
 function register()
 {
 	require_once('./view/Vregister.php');

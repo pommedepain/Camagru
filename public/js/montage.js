@@ -19,8 +19,14 @@
 		photo = document.getElementById('result');
 		button = document.getElementById('takepic');
 		canvas_skrs = document.getElementById('add_stickers');
-		
-		video.style.width = "95%";
+
+		/* console.log(navigator.appVersion); */
+		if (navigator.appVersion.indexOf("Chrome/") != -1)
+		{
+			video.style.width = "95%";
+			canvas.style.width = "95%";
+			canvas_skrs.style.width = "95%";
+		}
 		if (video.offsetWidth >= 720)
 			width = 720;
 		else
@@ -34,6 +40,7 @@
 		canvas_skrs.setAttribute('height', width);
 		overlay.setAttribute('width', width);
 		overlay.setAttribute('height', width);
+		/* console.log("VideoHeight: " + video.offsetHeight + " & VideoWidth: " + video.offsetWidth); */
 		
 		navigator.mediaDevices.getUserMedia({ video: { width: width, height: width }, audio: false })
 			.then(function(stream) {
@@ -41,7 +48,7 @@
 				video.play();
 			})
 			.catch(function(err) {
-				console.log("An error occured: " + err);
+				/* console.log("An error occured: " + err);*/
 			});
 
 		video.addEventListener('canplay', function(ev){
@@ -82,14 +89,15 @@
 
 	function addStickers()
 	{
-		console.log("addStickers() triggered");
-		console.log("width: " + width);
-		console.log("height: " + height);
+		/* console.log("addStickers() triggered"); */
+		/* console.log("width: " + width); */
+		/* console.log("height: " + height); */
 		let div = document.getElementById('overlay').querySelectorAll("img");
-		console.log(div);
+		/* console.log(div); */
 		let context_skrs = canvas_skrs.getContext('2d');
 		if (width && height && div[0])
 		{
+			let x = 0;
 			canvas_skrs.height = height;
 			canvas_skrs.width = width;
 			for (let i = 0; i < div.length ; i++)
@@ -99,19 +107,22 @@
 					let img_width = div[i]['width'];
 					let img_height = div[i]['height'];
 					/* Needs to be -100 at school and -17 on personnal computer */
-					let x = (div[i]['offsetLeft'] - 140);
-					console.log("x: " + x);
+					if (navigator.appVersion.indexOf("Chrome/") != -1)
+						x = (div[i]['offsetLeft'] - 115);
+					else
+						x = (div[i]['offsetLeft'] / 10);
+					/* console.log("x: " + x); */
 					let y = div[i]['offsetTop'];
-					console.log("y: " + y);
+					/* console.log("y: " + y); */
 					context_skrs.drawImage(image, x, y, img_width, img_height);
 				});
 				image.src = div[i]['src'];
 			}
 			setTimeout(function() {
 				window.data_skrs = canvas_skrs.toDataURL('image/png');
-				console.log("draw");
+				/* console.log(window.data_skrs); */
 				return (window.data_skrs);
-			}, 5);
+			}, 30);
 		}
 		else
 		{
@@ -122,21 +133,22 @@
 
 	function takepicture()
 	{
-		console.log("takepicture() triggered");
+		/* console.log("takepicture() triggered"); */
 		let context = canvas.getContext('2d');
 		let div = document.getElementById('overlay').querySelectorAll("img");
 		if (width && height && div[0])
 		{
 			canvas.height = height;
 			addStickers();
-			console.log("canvas height = " + canvas.height);
+			/* console.log("canvas height = " + canvas.height); */
 			canvas.width = width;
-			console.log("canvas width = " + canvas.width);
+			/* console.log("canvas width = " + canvas.width); */
 			context.drawImage(video, 0, 0, width, height);
 			let data = canvas.toDataURL('image/png');
 			setTimeout(function () {
 				if (data && window.data_skrs)
 				{
+					/* console.log(window.data_skrs); */
 					let xhr = new XMLHttpRequest();
 					xhr.open('POST', '../../controller/Cmontage.php', true);
 					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -144,15 +156,15 @@
 					xhr.addEventListener('readystatechange', function() {
 						if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 						{
-							console.log(xhr.responseText);
+							/* console.log(xhr.responseText); */
 							let needle = xhr.responseText.indexOf("ERROR");
-							console.log("needle = " + needle);
+							/* console.log("needle = " + needle); */
 							if (needle < 0)
 							{
 								/* Displays the newly taken picture in the frame below the camera */
-								console.log("SUCCESS");
+								/* console.log("SUCCESS"); */
 								name = xhr.responseText.match(/\d+/)[0];
-								console.log(name);
+								/* console.log(name); */
 								photo.setAttribute('src', '../public/img/photos_user/' + name + '.png');
 								photo.style.display = "inline";
 								document.getElementById("cadre").style.display = "inline";
@@ -174,7 +186,7 @@
 								linky.style.cursor= "pointer";
 								linky.style.position = "absolute";
 								sub_div.setAttribute("id", "image_div" + increment);
-								console.log(document.getElementById("image_div" + increment));
+								/* console.log(document.getElementById("image_div" + increment)); */
 								linky.addEventListener("click", function () {
 									del(sub_div);
 								}, false);
@@ -184,7 +196,7 @@
 
 								/* Remove all stickers previously selected from the camera */
 								let stickers = document.getElementById('overlay').querySelectorAll("img");
-								console.log(stickers);
+								/* console.log(stickers); */
 								for (let i = 0; i < stickers.length; i++) 
 								{
 									if (stickers[i]['id'] !== 'webcam')
@@ -218,15 +230,15 @@
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText)
+				/* console.log(xhr.responseText) */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				if (needle < 0 && !xhr.responseText !== "" && xhr.responseText)
 				{
-					console.log("SUCCESS");
+					/* console.log("SUCCESS"); */
 					let tab = JSON.parse(xhr.responseText);
 					let size = div.offsetWidth;
-					console.log(tab);
+					/* console.log(tab); */
 					for (let i = 0; i < tab['photo'].length; i++) 
 					{
 						let sub_div = document.createElement("div");
@@ -252,11 +264,11 @@
 				}
 				else if (xhr.responseText === "" || !xhr.responseText)
 				{
-					console.log("SUCCESS but nothing to display");
+					/* console.log("SUCCESS but nothing to display"); */
 				}
 				else
 				{
-					console.log("FAIL");
+					/* console.log("FAIL"); */
 					document.getElementById('camera-cont').style.display = "none";
 					let message = document.getElementById('subtitle');
 					message.style.fontFamily = "VT323, monospace";
@@ -272,11 +284,11 @@
 
 	function del(id)
 	{
-		console.log(id);
+		/* console.log(id); */
 		let src = id.querySelectorAll("img");
 		src = src[0]['src'];
 		let name = src.replace("http://localhost:8080/public/img/photos_user/", "");
-		console.log(name);
+		/* console.log(name); */
 
 		let xhr = new XMLHttpRequest();
 		xhr.open('POST', '../../controller/Cdel.php', true);
@@ -285,16 +297,16 @@
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				if (needle < 0)
 				{
-					console.log("photo del");
+					/* console.log("photo del"); */
 					window.location.href = './index.php?action=montage';
 				}
-				else
-					console.log("Pb with del photo");
+				/* else */
+					/* console.log("Pb with del photo"); */
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
 				alert('Une erreur est survenue !\n\nCode :' + xhr.status + '\nTexte : ' + xhr.statusText);

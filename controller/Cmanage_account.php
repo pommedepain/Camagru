@@ -50,7 +50,7 @@ if (isset($_POST["submit"]))
 
 		if (isset($_POST["last_name"]) && !empty($_POST["last_name"]))
 		{
-			if (preg_match_all(" #^[a-zA-Z-àæéèêçàùûîïÀÆÉÈÊÇÀÛÙÜÎÏ]{2,18}$# ", $_POST["last_name"]))
+			if (preg_match_all(" #^[a-zA-Z-àæéèêçàùûîïÀÆÉÈÊÇÀÛÙÜÎÏ ]{2,18}$# ", $_POST["last_name"]))
 			{
 				echo "Last name OK\n";
 				$last_name =  $_POST["last_name"];
@@ -66,24 +66,31 @@ if (isset($_POST["submit"]))
 		1 lower case, 1 upper case and 1 number. Everything else (like whitespaces) are forbidden */
 		if (isset($_POST["o_passwd"]) && isset($_POST["passwd1"]) && isset($_POST["passwd2"]))
 		{
-			if (!empty($_POST["o_passwd"]) && !empty($_POST["passwd1"]) && !empty($_POST["passwd2"]) && $_POST["passwd1"] == $_POST["passwd2"])
+			if (!empty($_POST["o_passwd"]) && !empty($_POST["passwd1"]) && !empty($_POST["passwd2"]) && $_POST["passwd1"] === $_POST["passwd2"])
 			{
-				if (preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["o_passwd"])
-					&& preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd1"])
-					&& preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd2"]))
-	   			{
-					$o_passwd = hash("whirlpool", $_POST["o_passwd"]);
-					if ($db->check_passwd($pdo, $_SESSION['user'], $o_passwd))
-					{
-						$passwd = hash("whirlpool", $_POST["passwd1"]);
-						echo "New Password OK\n";
+				if ($_POST["o_passwd"] !== $_POST["passwd1"])
+				{
+					if (preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["o_passwd"])
+						&& preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd1"])
+						&& preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd2"]))
+	   				{
+						$o_passwd = hash("whirlpool", $_POST["o_passwd"]);
+						if ($db->check_passwd($pdo, $_SESSION['user'], $o_passwd))
+						{
+							$passwd = hash("whirlpool", $_POST["passwd1"]);
+							echo "New Password OK\n";
+						}
+						else
+							echo "New Password ERROR\n";
 					}
 					else
-						echo "New Password ERROR\n";
+						echo "Password syntax ERROR\n";
 				}
 				else
-					echo "Password syntax ERROR\n";
+					echo "Same old and new password ERROR\n";
 			}
+			else if (!empty($_POST["o_passwd"]) && !empty($_POST["passwd1"]) && !empty($_POST["passwd2"]) && $_POST["passwd1"] !== $_POST["passwd2"])
+				echo "New passwords don't match ERROR\n";
 		}
 
 		if (isset($_POST['email']) && !empty($_POST['email']))

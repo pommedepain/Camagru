@@ -1,11 +1,5 @@
 <?php
 
-$PARAM_host='mysql:127.0.0.1';
-$PARAM_db_name='db_camagru';
-$db_dsn = "$PARAM_host;dbname=$PARAM_db_name";
-$PARAM_user='root';
-$PARAM_passwd='philou1696';
-
 if (!($connect = new PDO($db_dsn, $PARAM_user, $PARAM_passwd, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION))))
         die ("Failed to connect to host ($db_host)" . $err->getMessage() . "N° : " . $err->getCode());
 
@@ -47,4 +41,3 @@ $connect->exec("CREATE TABLE IF NOT EXISTS db_camagru.comments (
         `photo` VARCHAR(255) NOT NULL,
         `comment` TEXT(1000) NOT NULL,
         `creation_date` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)");
-?>

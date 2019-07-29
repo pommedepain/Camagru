@@ -218,3 +218,12 @@
 {
 	color: white;
 }
+#group
+{
+	display: none;
+}
+#status
+{
+	margin-top: 3%;
+	display: none;
+}

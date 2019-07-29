@@ -3,7 +3,6 @@ body
 	padding: 0%;
 	margin: 0%;
 	font-family: 'VT323', monospace;
-	/* background-image: url("https://previews.123rf.com/images/sergt/sergt1605/sergt160500009/57935442-tv-bruit-blanc-sur-l-%C3%A9cran-lcd-r%C3%A9sum%C3%A9-de-fond.jpg"); */
 	background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/5a/No_Signal_23.JPG");
 	background-repeat: no-repeat;
 	background-position: center 100px;
@@ -39,15 +38,12 @@ header
 	flex-direction: column;
 	justify-content: center;
 	margin-left: 3%;
-	/* border: 1px red solid; */
 }
 h1
 {
 	color: black;
-	/* margin-left: 20%; */
 	font-size: 3.5vw;
 	margin: 0;
-	/* border: 1px solid green; */
 	font-family: 'Ruslan Display', cursive;
 }
 span.emoji
@@ -62,7 +58,6 @@ h3
 {
 	margin: 0;
 	position: relative;
-	/* border: 1px green solid; */
 }
 .account
 {
@@ -120,7 +115,6 @@ h3
 }
 #loggued_on
 {
-	/* border: 1px solid black; */
 	position: relative;
 	top:10%;
 }
@@ -128,7 +122,6 @@ h3
 {
 	display: inline-block;
 	color: black;
-	/* position: relative; */
 }  
 #welcome::before 
 {

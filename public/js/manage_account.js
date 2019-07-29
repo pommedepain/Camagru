@@ -3,7 +3,7 @@ window.addEventListener("load", status_info);
 
 function notification_email(state)
 {
-	console.log(state.checked);
+	/* console.log(state.checked); */
 	let submit = "submit"
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', '../../controller/Cmanage_account.php', true);
@@ -12,16 +12,16 @@ function notification_email(state)
 	xhr.addEventListener('readystatechange', function() {
 		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 		{
-			console.log(xhr.responseText);
+			/* console.log(xhr.responseText); */
 			let needle_ERR = xhr.responseText.indexOf("ERROR");
-			console.log("needle_ERR = " + needle_ERR);
+			/* console.log("needle_ERR = " + needle_ERR); */
 			if (needle_ERR < 0)
 			{
-				console.log("change registered");
+				/* console.log("change registered"); */
 			}
 			else if (needle_ERR >= 0)
 			{
-				console.log("Pb with change");
+				/* console.log("Pb with change"); */
 			}
 		}
 		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -31,6 +31,7 @@ function notification_email(state)
 
 function status_info()
 {
+	document.getElementById('status').style.display = "inline";
 	let group = document.getElementById("group").innerHTML;
 
 	if (group == "not_confirmed")
@@ -65,14 +66,14 @@ function status_info()
 	xhr.addEventListener('readystatechange', function() {
 		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 		{
-			console.log(xhr.responseText);
+			/* console.log(xhr.responseText); */
 			let needle_ERR = xhr.responseText.indexOf("ERROR");
-			console.log("needle_ERR = " + needle_ERR);
+			/* console.log("needle_ERR = " + needle_ERR); */
 			let notif = xhr.responseText.substring(xhr.responseText.indexOf("="))
 			notif = notif.substring(2);
 			if (needle_ERR < 0)
 			{
-				console.log(notif);
+				/* console.log(notif); */
 				if (notif === "true\n")
 					document.getElementsByClassName("switch_4")[0]['checked'] = true;
 				else if (notif === "false\n")
@@ -80,7 +81,7 @@ function status_info()
 			}
 			else if (needle_ERR >= 0)
 			{
-				console.log("ERROR with controller");
+				/* console.log("ERROR with controller"); */
 			}
 		}
 		else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)
@@ -92,7 +93,7 @@ function send_it()
 {
 	let email_send = document.getElementById("email").value;
 	let pseudo = document.getElementById("pseudo").value;
-	console.log(pseudo);
+	/* console.log(pseudo); */
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', '../../controller/Csend_again.php', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -100,12 +101,12 @@ function send_it()
 	xhr.addEventListener('readystatechange', function() {
 		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 		{
-			console.log(xhr.responseText);
+			/* console.log(xhr.responseText); */
 			/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
 			let needle_ERR = xhr.responseText.indexOf("ERROR");
 			let needle_ret = xhr.responseText.indexOf("Csend_again.php done and successful");
-			console.log("needle_ERR = " + needle_ERR);
-			console.log("needle_ret = " + needle_ret);
+			/* console.log("needle_ERR = " + needle_ERR); */
+			/* console.log("needle_ret = " + needle_ret); */
 			if (needle_ERR < 0 && needle_ret >= 0)
 			{
 				document.getElementById("success").innerHTML = "A new confirmation email has been sent.";
@@ -124,28 +125,28 @@ function send_it()
 
 function manage_account()
 {
-	console.log('manage_account triggered');
+	/* console.log('manage_account triggered'); */
 	let pseudo = document.getElementById("pseudo").value;
-	console.log(pseudo);
+	/* console.log(pseudo); */
 	let first_name = document.getElementById("first_name").value;
-	console.log(first_name);
+	/* console.log(first_name); */
 	let last_name = document.getElementById("last_name").value;
-	console.log(last_name);
+	/* console.log(last_name); */
 	let email = document.getElementById("email").value;
-	console.log(email);
+	/* console.log(email); */
 	let o_passwd = document.getElementById("o_passwd").value;
 	let passwd1 = document.getElementById("passwd1").value;
 	let passwd2 = document.getElementById("passwd2").value;
 	let submit = document.getElementById("submit").value;
-	console.log(submit);
+	/* console.log(submit); */
 	let group = document.getElementById("group").innerHTML;
-	console.log(group);
+	/* console.log(group); */
 
 	if (group == "Account not verified.")
 		group = "not_confirmed";
 	else if (group == "Account verified.")
 		group = "member";
-	console.log(group);
+	/* console.log(group); */
 
 	/* Connects the JS to the controller and retrieves the "echo();" */
 	if (pseudo && email)
@@ -173,16 +174,41 @@ function manage_account()
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
 				let needle_ERR = xhr.responseText.indexOf("ERROR");
 				let needle_ret = xhr.responseText.indexOf("change_user_infos OK");
-				console.log("needle_ERR = " + needle_ERR);
-				console.log("needle_ret = " + needle_ret);
-				if (needle_ERR < 0 && needle_ret >= 0)
+				let needle_passwd = xhr.responseText.indexOf("New Password ERROR");
+				let needle_syntax = xhr.responseText.indexOf("syntax");
+				let needle_opasswd = xhr.responseText.indexOf("Same old and new password");
+
+				/* console.log("needle_ERR = " + needle_ERR); */
+				/* console.log("needle_ret = " + needle_ret); */
+				/* console.log("needle_opasswd = " + needle_opasswd); */
+				if (needle_ERR < 0 && needle_ret >= 0 && needle_opasswd < 0 && needle_passwd < 0 && needle_syntax < 0)
 				{
-					document.getElementById("success").innerHTML = "The changes have been successfully saved !";
+					let succ = document.getElementById("success");
+					succ.innerHTML = "The changes have been successfully saved !";
+					succ.style.color = "green";
 					setTimeout("window.location.href = './index.php?action=manage_account'", 3000);
+				}
+				else if (needle_opasswd >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.style.color = "red";
+					succ.innerHTML = "ERROR<br />Please choose a new password that differs from the current one.<br />The changes haven't been saved.";
+				}
+				else if (needle_passwd >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.style.color = "red";
+					succ.innerHTML = "ERROR<br />Incorrect password.";
+				}
+				else if (needle_syntax >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.style.color = "red";
+					succ.innerHTML = "ERROR<br />Incorrect syntax:<br />- Password must be at least 6 characters long and must contain 1 lower case letter, 1 upper case letter and 1 number.<br />- Emails must conform to the usual syntax rules.";
 				}
 				else if (needle_ERR >= 0)
 				{

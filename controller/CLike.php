@@ -15,21 +15,21 @@ if (isset($_POST["pseudo"]) && isset($_POST["photo"]) && isset($_POST['like'])
 		if (!($ret = $db->user_activity_like($pdo, $photo, $_POST['like'], $_SESSION['user'])))
 			echo "\nuser_activity_like() ERROR|\n" . $_SESSION['user'] . "\n";
 		else if ($ret === "Photo already " . $_POST['like'] . " by " . $_SESSION['user'])
-			echo "$ret\n";
+			echo "ret: $ret\n";
 		else if ($ret === true)
 		{
 			echo "\nuser_activity_like() SUCCESS\n" .  $_SESSION['user'] . "\n";
 			if (!$db->alter_like($pdo, $photo, $_POST['like']))
 				echo "alter_like() ERROR|\n";
 			else
-				echo "alter_like() SUCCESS: $photo == " . $_POST['like'];
+				echo "alter_like() SUCCESS: $photo == " . $_POST['like'] ."\n";
 		}
 
 		$db2 = new AccountManager();
 		$pdo2 = $db2->db_connect();
 		if (!($return = $db2->get_user_infos($pdo2, $pseudo)))
 			echo "get_user_infos() ERROR\n";
-		else if ($return['notifications'] === 1)
+		else if ($return['notifications'] == 1)
 		{
 			$email = $return['email'];
 			$subject = "[Camagru] Like notfication";
@@ -48,6 +48,8 @@ This is an automatic message, please do not reply.";
 			else
 				echo "\nemail notif like done and successfull\n";
 		}
+		else
+			echo "notifications !== 1";
 	}
 	else if (!isset($_SESSION['user']) || empty($_SESSION['user']))
 		echo "User not loggued in !\n";

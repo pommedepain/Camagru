@@ -9,8 +9,8 @@ if (isset($_POST["submit"]) && isset($_POST["passwd1"]) && isset($_POST["passwd2
 		$db = new AccountManager();
 		$pdo = $db->db_connect();
 
-		if (preg_match_all(" #^[a-zA-Z0-9_]{3,16}$# ", $_POST["passwd1"])
-			&& preg_match_all(" #^[a-zA-Z0-9_]{3,16}$# ", $_POST["passwd2"]))
+		if (preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd1"])
+			&& preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd2"]))
 		{
 			echo "passwd1 & passwd2 OK\n";
 			$passwd = hash("whirlpool", $_POST["passwd1"]);

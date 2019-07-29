@@ -233,7 +233,6 @@
 	display: -ms-flexbox;
 	display: flex;
 	flex-direction: row;
-	/* width: 20%; */
 	margin-top: 5%;
 	margin-left: -1%;
 	-ms-flex-wrap: wrap;
@@ -327,7 +326,6 @@
           transform: translateX(0) translateY(-30%) scale(1);
 }
 
-/* Checked State */
 .input_wrapper input[type="checkbox"]:checked{
   background: #23da87;
 }

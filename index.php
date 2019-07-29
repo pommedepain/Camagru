@@ -6,7 +6,7 @@ require_once('controller/controller.php');
 if (isset($_GET['action']))
 {
 	if ($_GET['action'] == 'start')
-		start();
+		gallery();
 	else if ($_GET['action'] == 'register')
 		register();
 	else if ($_GET['action'] == 'sign_in')
@@ -27,4 +27,4 @@ if (isset($_GET['action']))
 		gallery();
 }
 else
-	start();
+	gallery();

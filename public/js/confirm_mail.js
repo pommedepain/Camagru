@@ -3,15 +3,15 @@ window.addEventListener("load", confirm_mail);
 
 function confirm_mail()
 {
-	console.log("confirm mail triggered");
+	/* console.log("confirm mail triggered"); */
 
 	let win = window.location.href;
-	console.log(win);
+	/* console.log(win); */
 	let url = new URL(win);
 	let anonym_id = url.searchParams.get("log");
-	console.log(anonym_id);
+	/* console.log(anonym_id); */
 	let key = url.searchParams.get("key");
-	console.log(key);
+	/* console.log(key); */
 
 	if (anonym_id && key)
 	{
@@ -22,12 +22,12 @@ function confirm_mail()
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				if (needle < 0)
 				{
-					console.log("Account's now officially a member.")
+					/* console.log("Account's now officially a member.") */
 					setTimeout("window.location.href = './index.php'", 3000);
 				}
 				else

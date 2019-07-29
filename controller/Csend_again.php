@@ -2,22 +2,23 @@
 
 require_once('../require.php');
 
-if (isset($_POST['email_send']) && !empty($_POST['email_send']) && isset($_POST['pseudo']) && !empty($_POST['pseudo']))
+if (isset($_POST['send']) && !empty($_POST['send']) && $_POST['send'] === "send" 
+	&& isset($_SESSION['user_to_be']) && !empty($_SESSION['user_to_be']) && isset($_SESSION['email']) && !empty($_SESSION['email']))
 {
-	if (preg_match_all(" #^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$# ", $_POST['email_send']))
+	if (preg_match_all(" #^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$# ", $_SESSION['email']))
 	{
 		$db = new AccountManager();
 		$pdo = $db->db_connect();
 
-		$res = $db->get_user_infos($pdo, $_POST['pseudo']);
-		if ($res['email'] === $_POST['email_send'])
+		$res = $db->get_user_infos($pdo, $_SESSION['user_to_be']);
+		if ($res['email'] === $_SESSION['email'])
 		{
 			echo "function email_send triggered\n";
-			$email = $_POST['email_send'];
+			$email = $_SESSION['email'];
 			$group = "not_confirmed";
 			$anonym_id = md5(rand(0, 100000));
 			$key = md5(rand(0, 100000));
-			if ($db->update_email_table($pdo, $_POST['pseudo'], $anonym_id, $key) !== "update_email_table() worked")
+			if ($db->update_email_table($pdo, $_SESSION['user_to_be'], $anonym_id, $key) !== "update_email_table() worked")
 				echo "ERROR update_email_table\n";
 			else
 			{
@@ -47,7 +48,6 @@ This is an automatic message, please do not reply.";
 	else
 		echo "Mail syntax ERROR\n";
 }
-
 else if (isset($_POST['submit']) && !empty($_POST['submit']) && $_POST['submit'] === "submit")
 {
 	echo "check notif triggered\n";

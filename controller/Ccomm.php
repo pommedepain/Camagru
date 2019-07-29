@@ -34,7 +34,7 @@ if (isset($_POST["pseudo"]) && isset($_POST["photo"]) && isset($_POST['comment']
 				$pdo2 = $db2->db_connect();
 				if (!($return = $db2->get_user_infos($pdo2, $pseudo)))
 					echo "get_user_infos() ERROR\n";
-				else if ($return['notifications'] === 1)
+				else if ($return['notifications'] == 1)
 				{
 					$email = $return['email'];
 					$subject = "[Camagru] Comment notfication";
@@ -52,7 +52,9 @@ This is an automatic message, please do not reply.";
 						echo error_get_last()['message'];
 					else
 						echo "\nemail notif like done and successfull\n";
-					}
+				}
+				else
+					echo "notifications !== 1";
 			}
 			else
 				echo "comment regex ERROR\n";

@@ -1,6 +1,6 @@
 function reset_passwd()
 {
-	console.log('reset_passwd triggered');
+	/* console.log('reset_passwd triggered'); */
 	let pseudo = document.getElementById("pseudo").value;
 	let email = document.getElementById("email").value;
 	let submit = document.getElementById("submit").value;
@@ -23,9 +23,9 @@ function reset_passwd()
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				if (needle < 0)
 				{
 					let succ = document.getElementById("success");

@@ -6,14 +6,14 @@ function getStickers(source, num)
 		let video = document.getElementById('webcam');
 		
 		width = video.width;
-		console.log("width canvas: " + width);
+		/* console.log("width canvas: " + width); */
 		height = video.height;
-		console.log("height canvas: " + height);
-		console.log(num);
+		/* console.log("height canvas: " + height); */
+		/* console.log(num); */
 		let img_width = document.getElementById('rand_sticker_' + num).offsetWidth;
 		let img_height = document.getElementById('rand_sticker_' + num).offsetHeight;
-		console.log("getStickers() triggered");
-		console.log(source);
+		/* console.log("getStickers() triggered"); */
+		/* console.log(source); */
 		addStickersToCam(source);
 
 
@@ -77,7 +77,7 @@ function sizeMinus()
 	
 	if (div[0])
 	{
-		// console.log(div);
+		/* console.log(div); */
 		let sticker = null;
 		for (let i = 0; i < div.length; i++)
 		{
@@ -98,7 +98,7 @@ function sizeMinus()
 				let left = 0.5 * (width - sticker.width);
 				sticker.style.top = top + "px";
 				sticker.style.left = left + "px";
-				// console.log(sticker);
+				/* console.log(sticker); */
 				sticker.style.cursor = "pointer";
 				sticker.addEventListener("click", moveStickers(sticker));
 				div[i].parentNode.replaceChild(sticker, div[i]);
@@ -113,7 +113,7 @@ function sizePlus()
 	
 	if (div[0])
 	{
-		//console.log(div);
+		/* console.log(div); */
 		let sticker = null;
 		for (let i = 0; i < div.length; i++)
 		{
@@ -134,7 +134,7 @@ function sizePlus()
 				let left = 0.5 * (width - sticker.width);
 				sticker.style.top = top + "px";
 				sticker.style.left = left + "px";
-				//console.log(sticker);
+				/* console.log(sticker); */
 				sticker.style.cursor = "pointer";
 				sticker.addEventListener("click", moveStickers(sticker));
 				div[i].parentNode.replaceChild(sticker, div[i]);
@@ -175,7 +175,7 @@ function LoadImage()
 			let img = document.createElement("img");
 			img.width = width;
 			img.height = width;
-			console.log("img.width: " + img.width + " & height: " + img.height);
+			/* console.log("img.width: " + img.width + " & height: " + img.height); */
 			img.setAttribute('src', e.target.result);
 
 			let div = document.getElementById('overlay');

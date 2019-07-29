@@ -1,6 +1,6 @@
 function formControl()
 {
-	console.log('formControl triggered');
+	/* console.log('formControl triggered'); */
 	let pseudo = document.getElementById("pseudo").value;
 	let first_name = document.getElementById("first_name").value;
 	let last_name = document.getElementById("last_name").value;
@@ -40,10 +40,10 @@ function formControl()
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
 				let needle = xhr.responseText.indexOf("ERROR");
-				console.log("needle = " + needle);
+				/* console.log("needle = " + needle); */
 				if (needle < 0)
 				{
 					document.getElementById("success").innerHTML = "Your account has been successfully created !";
