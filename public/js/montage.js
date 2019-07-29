@@ -273,7 +273,7 @@
 					let message = document.getElementById('subtitle');
 					message.style.fontFamily = "VT323, monospace";
 					message.style.paddingTop = "2%";
-					message.innerHTML = message.innerHTML.replace("Who do you want to be ?", "You need to be loggued in to have access to this page !");
+					message.innerHTML = message.innerHTML.replace("Who do you want to be ?", "You need to be logged in to have access to this page !");
 					document.getElementById('link_no_log').style.display = "flex";
 				}
 			}

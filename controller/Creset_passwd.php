@@ -17,7 +17,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["email"])
 				$pseudo = $_POST["pseudo"];
 			}
 			else
-				echo "Pseudo NOT IN DB\n";
+				echo "Pseudo NOT IN DB ERROR\n";
 		}
 		else
 			echo "Pseudo ERROR";

@@ -60,7 +60,7 @@ function status_info()
 
 	let submit = "submit";
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '../../controller/Csend_again.php', true);
+	xhr.open('POST', '../../controller/Csend_again_account.php', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(`submit=${submit}`);
 	xhr.addEventListener('readystatechange', function() {
@@ -95,7 +95,7 @@ function send_it()
 	let pseudo = document.getElementById("pseudo").value;
 	/* console.log(pseudo); */
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '../../controller/Csend_again.php', true);
+	xhr.open('POST', '../../controller/Csend_again_account.php', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send(`email_send=${email_send}&pseudo=${pseudo}`);
 	xhr.addEventListener('readystatechange', function() {

@@ -95,7 +95,7 @@ Class MontageManager
 	public function get_all_activity($pdo)
 	{
 		if (!($pseudos = $this->get_id($pdo)))
-			return "Pb with get_id()";
+			return false;
 		
 		$db = "db_camagru";
 		$db_photo = "photos";

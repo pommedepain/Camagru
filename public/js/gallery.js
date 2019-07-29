@@ -113,10 +113,22 @@
 						div.appendChild(sub_div);
 						sub_div.style.display = "none";
 					}
-					for (let j = 0; j < 5; j++)
+					let h = document.querySelector('#stylish').childElementCount;
+					if (h >= 5)
 					{
-						let elem = document.getElementById('display' + j);
-						elem.style.display = "flex";
+						for (let j = 0; j < 5; j++)
+						{
+							let elem = document.getElementById('display' + j);
+							elem.style.display = "flex";
+						}
+					}
+					else
+					{
+						for (let j = 0; j < h; j++)
+						{
+							let elem = document.getElementById('display' + j);
+							elem.style.display = "flex";
+						}
 					}
 				}
 				else if (xhr.responseText === "" || !xhr.responseText)
@@ -226,13 +238,13 @@
 			xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				console.log(xhr.responseText);
+				/* console.log(xhr.responseText); */
 				let needle_ERR = xhr.responseText.indexOf("ERROR");
-				console.log("needle_ERR = " + needle_ERR);
+				/* console.log("needle_ERR = " + needle_ERR); */
 				let needle_nope = xhr.responseText.indexOf("Photo already liked by");
-				console.log("needle_nope = " + needle_nope);
+				/* console.log("needle_nope = " + needle_nope); */
 				let needle_LOG = xhr.responseText.indexOf("User not loggued in !");
-				console.log("needle_LOG = " + needle_LOG);
+				/* console.log("needle_LOG = " + needle_LOG); */
 				if (needle_ERR < 0 && needle_nope < 0 && needle_LOG < 0)
 				{
 					element.innerHTML = '<i class="fa fa-heart-o" aria-hidden="true"></i>';
@@ -425,6 +437,7 @@
 })();
 
 let listElm = document.querySelector('#stylish');
+let j = document.querySelector('#stylish').childElementCount;
 
 /* Detect when scrolled to bottom. */
 listElm.addEventListener('scroll', function() {
@@ -437,7 +450,6 @@ let num = 5;
 
 function loadMore() 
 {
-	let j = document.querySelector('#stylish').childElementCount;
 	/* console.log(j); */
 	for (let i = 0; i < 5; i++) 
 	{

@@ -40,14 +40,45 @@ function formControl()
 		xhr.addEventListener('readystatechange', function() {
 			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
 			{
-				/* console.log(xhr.responseText); */
+				/*console.log(xhr.responseText);*/
 				/* Check if the datas have been successfully sent to the db thanks to the string created by XHR */
 				let needle = xhr.responseText.indexOf("ERROR");
-				/* console.log("needle = " + needle); */
-				if (needle < 0)
+				let needle_pseudo = xhr.responseText.indexOf("Pseudo already taken");
+				let needle_passwd = xhr.responseText.indexOf("Passwords don't match");
+				let needle_syntax = xhr.responseText.indexOf("syntax ERROR");
+				/*console.log("needle = " + needle);
+				console.log("needle_pseudo = " + needle_pseudo);
+				console.log("needle_passwd = " + needle_passwd);*/
+				if (needle < 0 && needle_pseudo < 0 && needle_passwd < 0 && needle_syntax < 0)
 				{
-					document.getElementById("success").innerHTML = "Your account has been successfully created !";
-					setTimeout("window.location.href = './index.php?action=sign_in'", 3000);
+					let succ = document.getElementById("success");
+					succ.innerHTML = "Your account has been successfully created !";
+					succ.style.color = "green";
+					// setTimeout("window.location.href = './index.php?action=sign_in'", 3000);
+				}
+				else if (needle_pseudo >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.innerHTML = "Pseudo already taken, please choose another.";
+					succ.style.color = "red";
+				}
+				else if (needle_passwd >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.innerHTML = "Passwords don't match !";
+					succ.style.color = "red";
+				}
+				else if (needle_syntax >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.innerHTML = "ERROR<br />Incorrect syntax:<br />- Password must be at least 6 characters long and must contain 1 lower case letter, 1 upper case letter and 1 number.<br />- Email must conform to the usual syntax rules.";
+					succ.style.color = "red";
+				}
+				else if (needle >= 0)
+				{
+					let succ = document.getElementById("success");
+					succ.innerHTML = "ERROR<br />We couldn't register your infos for some reason... Please try again !";
+					succ.style.color = "red";
 				}
 			}
 			else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200)

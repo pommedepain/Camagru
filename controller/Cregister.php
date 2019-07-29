@@ -4,8 +4,8 @@ require_once('../require.php');
 
 if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"]) && isset($_POST["passwd2"]) && isset($_POST["email"]))
 {
-	if ($_POST["submit"] == "submit" && !empty($_POST["pseudo"]) && !empty($_POST["passwd1"]) && !empty($_POST["passwd2"]) 
-		&& !empty($_POST["email"]) && ($_POST["passwd1"] == $_POST["passwd2"]))
+	if ($_POST["submit"] === "submit" && !empty($_POST["pseudo"]) && !empty($_POST["passwd1"]) && !empty($_POST["passwd2"]) 
+		&& !empty($_POST["email"]))
 	{
 		$db = new AccountManager();
 		$pdo = $db->db_connect();
@@ -65,13 +65,19 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 
 		/* Check that the password is at least 6 characters long (without any upper limit), and that it contains at least
 		1 lower case, 1 upper case and 1 number. Everything else (like whitespaces) are forbidden */
-		if (preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd1"]))
+		if (preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd1"])
+			&& preg_match_all(" #^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){6,}# ", $_POST["passwd2"]))
 	   	{
-			$passwd = hash("whirlpool", $_POST["passwd1"]);
-			echo "Password OK\n";
+			if ($_POST["passwd1"] === $_POST["passwd2"])
+			{
+				$passwd = hash("whirlpool", $_POST["passwd1"]);
+				echo "Password OK\n";
+			}
+			else
+				echo "Passwords don't match\n";
 		}
 		else
-			echo "Password ERROR\n";
+			echo "Password syntax ERROR\n";
 
 		if (preg_match_all(" #^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$# ", $_POST["email"]))
 		{
@@ -79,7 +85,7 @@ if (isset($_POST["submit"]) && isset($_POST["pseudo"]) && isset($_POST["passwd1"
 			$email = $_POST["email"];
 		}
 		else
-			echo "Mail ERROR\n";
+			echo "Mail syntax ERROR\n";
 
 		/* If everything is valid, creates a unique key (that'll be later used to confirm the email while being sure of 
 		the identity of the user), and send the confirmation email 
@@ -109,7 +115,11 @@ This is an automatic message, please do not reply.";
 			if (!$success)
 				echo error_get_last()['message'];
 		}
+		else
+			echo "Pb with nb argv for connexion with db ERROR\n";
 	}
+	else
+		echo "datas are empty ERROR\n";
 }
 else
 	echo "ERROR number of datas\n";

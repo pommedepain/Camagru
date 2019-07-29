@@ -3,14 +3,14 @@
 require_once('../require.php');
 
 if (isset($_POST['send']) && !empty($_POST['send']) && $_POST['send'] === "send" 
-	&& isset($_SESSION['user_to_be']) && !empty($_SESSION['user_to_be']) && isset($_SESSION['email']) && !empty($_SESSION['email']))
+	&& isset($_SESSION['user_to_be']) && !empty($_SESSION['user']) && isset($_SESSION['email']) && !empty($_SESSION['email']))
 {
 	if (preg_match_all(" #^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$# ", $_SESSION['email']))
 	{
 		$db = new AccountManager();
 		$pdo = $db->db_connect();
 
-		$res = $db->get_user_infos($pdo, $_SESSION['user_to_be']);
+		$res = $db->get_user_infos($pdo, $_SESSION['user']);
 		if ($res['email'] === $_SESSION['email'])
 		{
 			echo "function email_send triggered\n";
@@ -18,7 +18,7 @@ if (isset($_POST['send']) && !empty($_POST['send']) && $_POST['send'] === "send"
 			$group = "not_confirmed";
 			$anonym_id = md5(rand(0, 100000));
 			$key = md5(rand(0, 100000));
-			if ($db->update_email_table($pdo, $_SESSION['user_to_be'], $anonym_id, $key) !== "update_email_table worked")
+			if ($db->update_email_table($pdo, $_SESSION['user'], $anonym_id, $key) !== "update_email_table() worked")
 				echo "ERROR update_email_table\n";
 			else
 			{
@@ -55,7 +55,7 @@ else if (isset($_POST['submit']) && !empty($_POST['submit']) && $_POST['submit']
 	$db = new AccountManager();
 	$pdo = $db->db_connect();
 
-	if (!($res = $db->get_user_infos($pdo, $_SESSION['user_to_be'])))
+	if (!($res = $db->get_user_infos($pdo, $_SESSION['user'])))
 		echo "Pb with get_user_infos() ERROR\n";
 	else if ($res['notifications'] == 1)
 		echo "Notifications = true\n";
