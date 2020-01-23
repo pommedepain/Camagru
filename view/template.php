@@ -5,7 +5,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Ruslan+Display&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
 		<title><?= $title ?></title>
-		<link rel="shortcut icon" href="myfavicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="./public/img/myfavicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="./public/css/index.css">
 		<?= $stylesheet ?>
 		<link rel="stylesheet" type="text/css" href="./public/css/create.css">
